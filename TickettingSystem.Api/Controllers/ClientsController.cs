@@ -13,13 +13,38 @@ namespace TickettingSystem.Api.Controllers
     /// Endpoints to manage Staff
     /// </summary>
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize]
     public class ClientsController : ControllerBase
-    { 
+    {
+        public async Task<IActionResult> GetAllStaffs()
+        {
+
+            return Ok();
+        }
+        public async Task<IActionResult> GetStaffById()
+        {
+
+            return Ok();
+        }
         public async Task<IActionResult> CreateStaff()
         { 
+
+            return Ok();
+        }
+        public async Task<IActionResult> AssignRightsToStaff()
+        {
+
+            return Ok();
+        }
+        public async Task<IActionResult> ResetStaffPassword()
+        {
+
+            return Ok();
+        }
+        public async Task<IActionResult> BlockAccess()
+        {
 
             return Ok();
         }
