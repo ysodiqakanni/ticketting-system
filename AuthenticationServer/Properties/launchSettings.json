@@ -4,8 +4,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:1662",
-      "sslPort": 44355
+      "applicationUrl": "http://localhost:33648",
+      "sslPort": 44378
     }
   },
   "profiles": {
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "TickettingSystem.Api": {
+    "AuthenticationServer": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",

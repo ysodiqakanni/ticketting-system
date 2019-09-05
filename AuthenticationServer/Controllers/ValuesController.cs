@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace TickettingSystem.Api.Controllers
+namespace AuthenticationServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -12,7 +12,7 @@ namespace TickettingSystem.Api.Controllers
     {
         // GET api/values
         [HttpGet]
-        public ActnResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<string>> Get()
         {
             return new string[] { "value1", "value2" };
         }
