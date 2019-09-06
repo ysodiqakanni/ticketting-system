@@ -1,0 +1,352 @@
+body{
+    font-family: 'Open Sans', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+}
+ul.tab-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 2px solid #55C1FF;
+    background-color: #55C1FF;
+}
+
+ul.tab-list li {
+    display: inline-block;
+}
+
+ul.tab-list li a {
+    font-size: 18px;
+    padding: 20px 54.3px;
+    display: inline-block;
+    background: #55C1FF;
+    color: #ffff;
+    text-decoration: none;
+    font-weight: 700;
+    background: #55C1FF;
+}
+
+input[type="text"] {}
+
+.search-option input[type="text"] {
+    width: 79%;
+    padding: 12px 30px;
+    color: #000;
+    font-size: 16px;
+    border: transparent;
+}
+
+.search-option {
+    border: 1px solid #f1f1f1;
+    box-shadow: 2px 0px 3px #ddd;
+    margin-top: 20px;
+}
+
+.search-option input[type="submit"] {
+    font-size: 16px;
+    padding: 8px 25px 8px 55px;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid #55C1FF;
+    background-color: #55C1FF;
+    color: #fff;
+    font-weight: 400;
+    width: 130px;
+}
+
+.search-option .btn {
+    background: #EB5757;
+    color: #fff;
+    padding: 8px 35px;
+    display: inline-block;
+    margin-top: -5px;
+    width: 130px;
+}
+
+.search-option input[type="text"]:focus {
+    outline: none;
+}
+span.glyphicon.glyphicon-search.hp-search {
+    position: absolute;
+    right: 18%;
+    top: 106px;
+    color: #fff;
+    display: block;
+}
+.data-table-section th {
+    background: #55C1FF;
+    padding: 12px;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+}
+
+.data-table-section {
+    background: #F2F2F2;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.data-table-section td {
+    padding: 12px;
+    border: 1px solid #DDDDDD;
+    color: #000;
+}
+th.round-1 {
+    border-radius: 7px 0px 0px 0px;
+}
+th.round-2 {
+    border-radius: 0px 7px 0px 0px;
+}
+td.round-3 {
+    border-radius: 0px 0px 0px 7px;
+}
+td.round-4 {
+    border-radius: 0px 0px 7px 0px;
+}
+input:focus {
+    outline: none;
+}
+
+.single-form-opt label {
+    width: 30%;
+    padding: 10px 0;
+    display: inline-block;
+    float: left;
+    font-size: 14px;
+}
+.single-form-opt.tck label {
+    width: 15%;
+}
+.single-form-opt input[type="text"], .single-form-opt input[type="email"] {
+    width: 70%;
+    padding: 6px 10px;
+    display: inline-block;
+}
+.single-form-opt.tck input[type="text"] {
+    width: 55%;
+}
+input[type="address"] {
+    width: 85.5%;
+    padding: 6px 10px;
+}
+label.address {
+    width: 14.5%;
+}
+.data-form-section input {
+    margin-bottom: 20px;
+    background: #F2F2F2;
+    border: 1px solid #F2F2F2;
+}
+.notes {
+    background: #F2F2F2;
+    border-radius: 5px;
+    margin-top: 25px;
+}
+h3.heading-note {
+    font-weight: 400;
+    margin-top: -8px;
+}
+.notes p {
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0px 6px 15px;
+}
+.notes p:nth-child(6){
+    border-bottom: none;
+    margin-bottom: 0px;
+}
+a.note-btn {
+    background: #D6D6D6;
+    color: #000;
+    text-align: center;
+    display: block;
+    padding: 6px 0;
+    text-decoration: none;
+}
+.finally-btn .btn {
+    background: #EB5757;
+    color: #fff;
+    width: 200px;
+    margin-left: 25px;
+    padding: 10px;
+}
+.finally-btn {text-align: right;padding-top: 30px;}
+
+a.update-btn.btn {
+    background: #55C1FF;
+}
+.tab-list li.active a {
+    background: #fff;
+    color: #000;
+}
+.single-trade-form-opt label {
+    padding: 10px 0;
+    display: inline-block;
+    float: left;
+    font-size: 14px;
+    width: 30%;
+}
+
+.single-trade-form-opt input[type="text"] {
+    width: 70%;
+    padding: 6px 10px;
+    display: inline-block;
+}
+.single-trade-form-opt input[type="submit"] {
+    background: #55C1FF;
+    width: 70%;
+    padding: 8px;
+    color: #fff;
+    float: right;
+    border-radius: 5px;
+    padding-left: 35px;
+} 
+.data-form-section.trade-form {
+    padding-top: 65px;
+}
+.trade-seceond-form input[type="text"] {
+    width: 80%;
+    padding: 6px 10px;
+    margin-bottom: 30px;
+    display: block;
+    background: #F2F2F2;
+    border: 1px solid #F2F2F2;
+}
+
+.trade-seceond-form label {
+    width: 18%;
+    display: inline-block;
+    float: left;
+    font-weight: 400;
+}
+.walet label {
+    float: none;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.walet input[type="count"] {
+    width: 28%;
+    padding: 6px 10px;
+    background: #F2F2F2;
+    border: 1px solid #F2F2F2;
+}
+.trade-seceond-form {
+    padding-top: 45px;
+}
+.trade-seceond-form input[type="submit"] {
+    width: 46.4%;
+    padding: 8px 10px;
+    background: #6FCF97;
+    border: 1px solid #6FCF97;
+    color: #fff;
+    font-weight: 700;
+    margin-top: 30px;
+}
+.section-padding {
+    padding-bottom: 50px;
+}
+.membership-heading h2 {
+    text-align: center;
+    font-weight: 700;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.single-ticket-box-item {
+    width: 100%;
+    display: table;
+    height: 190px;
+    box-shadow: 0px 4px 10px 3px #EEEEEE;
+}
+
+.single-ticket-box-tablecell {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+.ticket h3 {
+    font-weight: 700;
+    padding-top: 25px;
+    padding-bottom: 20px;
+}
+.ticket-assign {
+    padding-top: 25px;
+}
+.single-comment {
+    height: 75px;
+    padding: 20px;
+    box-shadow: -1px 1px 5px 3px #E2E2E2;
+    margin-bottom: 15px;
+}
+.client-comment {
+    padding: 20px;
+    box-shadow: 1px 0px 0px 5px #F6F6F6;
+    margin-top: 32px;
+}
+p.somoy {
+    font-size: 12px;
+}
+
+p.somoy span {
+    color: #73C6FD;
+}
+.somoy {
+    font-size: 12px;
+}
+.somoy span {
+    color: #73C6FD;
+}
+.custom-ticket-btn .btn {
+    padding: 8px 35px;
+    background: #6FCF97;
+    color: #fff;
+    font-weight: 700;
+    margin-right: 15px;
+    display: inline-block;
+}
+
+.custom-ticket-btn {
+    padding-top: 30px;
+}
+a.btn.close-btn {
+    background: #EB5757;
+}
+.single-form-opt-staff label {
+    width: 14%;
+}
+
+.single-form-opt-staff input[type="text"] {
+    width: 34% !important;
+}
+.staff-note {
+    padding-top: 65px;
+}
+.sa-left-content span, .sa-right-content span {
+    display: block;
+    border-bottom: 1px solid #D6D6D6;
+    padding: 10px;
+}
+
+.sa-left-content, .sa-right-content {
+    background: #F2F2F2;
+    border-radius: 5px;
+}
+
+.sa-left, .sa-right {
+    padding-top: 10px;
+}
+
+.sa-left h3, .sa-right h3 {
+    padding-bottom: 10px;
+}
+.single-trade-form-opt .glyphicon.glyphicon-search {
+    left: 162px;
+    top: 12px;
+    color: #fff;
+}
+
+
+
+

@@ -1,0 +1,66 @@
+/* Medium Layout: 1280px. */
+@media only screen and (min-width: 992px) and (max-width: 1200px) { 
+ .tab-list li a {
+    font-size: 16px!important;
+    padding: 20px 33px !important;
+}
+.search-option input[type="text"] {
+    width: 70%;
+}    
+span.glyphicon.glyphicon-search.hp-search {
+    right: 26%;
+    top: 103px;
+}    
+    
+    
+}
+/* Tablet Layout: 768px. */
+@media only screen and (min-width: 768px) and (max-width: 991px) { 
+body{
+    font-size: 14px;
+    }
+ .tab-list li a {
+    font-size: 14px !important;
+    padding: 15px 20.9px !important;
+}
+.search-option input[type="text"] {
+    width: 62%;
+}    
+span.glyphicon.glyphicon-search.hp-search {
+    top: 90px;
+    right: 32%;
+}  
+h3.heading-note {
+    margin: 0;
+    padding-top: 50px;
+}    
+.single-form-opt-staff label {
+    width: 30%;
+}    
+.single-form-opt-staff input[type="text"] {
+    width: 70% !important;
+}    
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+/* Mobile Layout: 320px. */
+@media only screen and (max-width: 767px) { 
+ 
+    
+}
+/* Wide Mobile Layout: 480px. */
+@media only screen and (min-width: 480px) and (max-width: 767px) { 
+
+}

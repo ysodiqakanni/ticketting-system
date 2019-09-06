@@ -1,0 +1,935 @@
+﻿
+@{
+    Layout = null;
+    ViewData["Title"] = "Dashboard";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Title Here</title>
+
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/css/fontawesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet">
+    <link href="~/assets/css/responsive.css" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class="section-padding">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="custom-tab">
+                        <ul class="tab-list">
+                            <li class="active"><a data-toggle="tab" href="#custom-tab-1">Dashboard</a></li>
+                            <li><a data-toggle="tab" href="#custom-tab-2">Client</a></li>
+                            <li><a data-toggle="tab" href="#custom-tab-3">Trades</a></li>
+                            <li><a data-toggle="tab" href="#custom-tab-4">Exchanges</a></li>
+                            <li><a data-toggle="tab" href="#custom-tab-5">Memberships</a></li>
+                            <li><a data-toggle="tab" href="#custom-tab-6">Tickets</a></li>
+                            <li><a data-toggle="tab" href="#custom-tab-7">Staff</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="custom-tab-1" class="tab-pane fade in active">
+
+                            </div>
+                            <div id="custom-tab-2" class="tab-pane fade">
+                                <div class="search-option">
+                                    <input type="text" placeholder="Search for client">
+                                    <input type="submit" value="Search">
+                                    <a href="" class="btn">Cancel</a><span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="data-table-section">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <th class="round-1">User Id</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Referred by</th>
+                                            <th>Joined On</th>
+                                            <th class="round-2">KYC Level</th>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Jhon Doe Wills</td>
+                                            <td>exampleemail@gmail.com</td>
+                                            <td>Mr Will Smith jr</td>
+                                            <td>10/12/2018</td>
+                                            <td>Primary</td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Jhon Doe Wills</td>
+                                            <td>exampleemail@gmail.com</td>
+                                            <td>Mr Will Smith jr</td>
+                                            <td>10/12/2018</td>
+                                            <td>Primary</td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Jhon Doe Wills</td>
+                                            <td>exampleemail@gmail.com</td>
+                                            <td>Mr Will Smith jr</td>
+                                            <td>10/12/2018</td>
+                                            <td>Primary</td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Jhon Doe Wills</td>
+                                            <td>exampleemail@gmail.com</td>
+                                            <td>Mr Will Smith jr</td>
+                                            <td>10/12/2018</td>
+                                            <td>Primary</td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Jhon Doe Wills</td>
+                                            <td>exampleemail@gmail.com</td>
+                                            <td>Mr Will Smith jr</td>
+                                            <td>10/12/2018</td>
+                                            <td>Primary</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="round-3">10</td>
+                                            <td>Jhon Doe Wills</td>
+                                            <td>exampleemail@gmail.com</td>
+                                            <td>Mr Will Smith jr</td>
+                                            <td>10/12/2018</td>
+                                            <td class="round-4">Primary</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div style="height: 40px;"></div>
+
+                                <div class="data-form-section">
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Name</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Surname</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="single-form-opt">
+                                                            <label class="address" for="address">Address</label>
+                                                            <input type="address">
+                                                        </div>
+                                                        <div class="single-form-opt">
+                                                            <label class="address" for="address"></label>
+                                                            <input type="address">
+                                                        </div>
+                                                        <div class="single-form-opt">
+                                                            <label class="address" for="address"></label>
+                                                            <input type="address">
+                                                        </div>
+                                                        <div class="single-form-opt">
+                                                            <label class="address" for="address"></label>
+                                                            <input type="address">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Nationality</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Language</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">DOB</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Reffered by</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Joined on</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Ref URL</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="user">User id</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="email">Email Address</label>
+                                                            <input type="email">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="level">KYC Level</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="date">Date</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <h3 class="heading-note">Notes</h3>
+                                                        <div class="notes">
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <a href="" class="note-btn">+ Add New Note</a>
+                                                        </div>
+                                                        <div class="finally-btn">
+                                                            <a href="" class="reset-btn btn">Reset Pwd</a>
+                                                            <a href="" class="update-btn btn">Update</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="custom-tab-3" class="tab-pane fade">
+
+                                <div class="data-table-section">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <th class="round-1">User Id</th>
+                                            <th>Date time</th>
+                                            <th>Exchange</th>
+                                            <th>Operation</th>
+                                            <th class="round-2">Price</th>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Excepteur sint occaecat cupidatat non proident</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Excepteur sint occaecat cupidatat non proident</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Excepteur sint occaecat cupidatat non proident</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Excepteur sint occaecat cupidatat non proident</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Excepteur sint occaecat cupidatat non proident</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="round-3">10</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Excepteur sint occaecat cupidatat non proident</td>
+                                            <td class="round-4">$100</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="data-form-section trade-form">
+                                    <form action="#">
+                                        <div class="trades-form-sec">
+                                            <div class="row">
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="single-trade-form-opt">
+                                                        <label for="">User Id</label>
+                                                        <input type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="single-trade-form-opt">
+                                                        <label for="">Date From</label>
+                                                        <input type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="single-trade-form-opt">
+                                                        <label for="">Date To</label>
+                                                        <input type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="single-trade-form-opt">
+                                                        <label for="">Exchange</label>
+                                                        <input type="text">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-sm-6">
+                                                    <div class="single-trade-form-opt">
+                                                        <label for="">Curr Pair</label>
+                                                        <input type="text">
+                                                        <input type="submit" value="Search">
+
+                                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="data-table-section">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <th class="round-1">Date time</th>
+                                            <th>Exchange</th>
+                                            <th>Operation</th>
+                                            <th>Price</th>
+                                            <th>Arbitrage</th>
+                                            <th class="round-2">Social</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="round-3">10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Bye/Sell/Transfer</td>
+                                            <td>$100</td>
+                                            <td>Yes/No</td>
+                                            <td class="round-4">Yes/No</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="trade-seceond-form">
+                                    <form action="#">
+                                        <div class="col-md-7">
+                                            <label for="id">Transaction ID</label>
+                                            <input type="text">
+                                            <div class="walet">
+                                                <label for="">Wallet From</label>
+                                                <input type="count">
+                                                <label style="margin-left: 35px;" for="">Wallet To</label>
+                                                <input type="count">
+                                            </div>
+                                            <input type="submit" value="Send">
+                                            <input style="background: #EB5757; border: 1px solid #EB5757; margin-left: 30px;" type="submit" value="Cancel">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="custom-tab-4" class="tab-pane fade">
+                                <div class="search-option">
+                                    <input type="text" placeholder="Search for client">
+                                    <input type="submit" value="Search">
+                                    <a href="" class="btn">Cancel</a><span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="data-table-section">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <th class="round-1">Exchange name</th>
+                                            <th>Enabled</th>
+                                            <th>APIs entered</th>
+                                            <th class="round-2">Verifyed connection</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Lorem</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Add necessary text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lorem</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Add necessary text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lorem</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Add necessary text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lorem</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Add necessary text</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Lorem</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Add necessary text</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="round-3">Lorem</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>Add necessary text</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div style="height: 20px;"></div>
+                            </div>
+                            <div id="custom-tab-5" class="tab-pane fade">
+                                <div class="membership-heading">
+                                    <h2>Available Membership packages</h2>
+                                </div>
+
+                                <div class="data-table-section">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <th class="round-1">Membership name</th>
+                                            <th>Enabled</th>
+                                            <th>Description</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th class="round-2">Price</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr Adam Smith</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>10/02/2019</td>
+                                            <td>10/02/2019</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr Adam Smith</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>10/02/2019</td>
+                                            <td>10/02/2019</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr Adam Smith</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>10/02/2019</td>
+                                            <td>10/02/2019</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="round-3">Mr Adam Smith</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>10/02/2019</td>
+                                            <td>10/02/2019</td>
+                                            <td class="round-4">$100</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="membership-heading">
+                                    <h2>Membership packages Purchased</h2>
+                                </div>
+
+                                <div class="data-table-section">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <th class="round-1">Membership name</th>
+                                            <th>Enabled</th>
+                                            <th>Description</th>
+                                            <th>Purchased on</th>
+                                            <th>Played</th>
+                                            <th class="round-2">Currency</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr Adam Smith</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>10/02/2019</td>
+                                            <td>10/02/2019</td>
+                                            <td>Dollar</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr Adam Smith</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>10/02/2019</td>
+                                            <td>10/02/2019</td>
+                                            <td>Dollar</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr Adam Smith</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>10/02/2019</td>
+                                            <td>10/02/2019</td>
+                                            <td>Dollar</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr Adam Smith</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>10/02/2019</td>
+                                            <td>10/02/2019</td>
+                                            <td>Dollar</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr Adam Smith</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>10/02/2019</td>
+                                            <td>10/02/2019</td>
+                                            <td>Dollar</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr Adam Smith</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>10/02/2019</td>
+                                            <td>10/02/2019</td>
+                                            <td>Dollar</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="round-3">Mr Adam Smith</td>
+                                            <td>10/12/2018</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>10/02/2019</td>
+                                            <td>10/02/2019</td>
+                                            <td class="round-4">Dollar</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+
+                            </div>
+                            <div id="custom-tab-6" class="tab-pane fade">
+                                <div class="search-option">
+                                    <input type="text" placeholder="Search for client">
+                                    <input type="submit" value="Search">
+                                    <a href="" class="btn">Cancel</a>
+                                    <span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="data-table-section">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <th class="round-1">Client Name</th>
+                                            <th>Enabled</th>
+                                            <th>Description</th>
+                                            <th class="round-2">Price</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr Jhon Willson</td>
+                                            <td>10/12/18</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mr Jhon Willson</td>
+                                            <td>10/12/18</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="round-3">Mr Jhon Willson</td>
+                                            <td>10/12/18</td>
+                                            <td>Lorem ipsum dolor sit amet.</td>
+                                            <td class="round-4">$100</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="ticket">
+                                            <h3>Tickets</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="single-ticket-box-item">
+                                            <div class="single-ticket-box-tablecell">
+                                                <h3>Ticket</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="single-ticket-box-item">
+                                            <div class="single-ticket-box-tablecell">
+                                                <h3>Ticket</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="single-ticket-box-item">
+                                            <div class="single-ticket-box-tablecell">
+                                                <h3>Ticket</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="single-ticket-box-item">
+                                            <div class="single-ticket-box-tablecell">
+                                                <h3>Ticket</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height: 20px;"></div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="single-ticket-box-item">
+                                            <div class="single-ticket-box-tablecell">
+                                                <h3>Ticket</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="single-ticket-box-item">
+                                            <div class="single-ticket-box-tablecell">
+                                                <h3>Ticket</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="single-ticket-box-item">
+                                            <div class="single-ticket-box-tablecell">
+                                                <h3>Ticket</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="single-ticket-box-item">
+                                            <div class="single-ticket-box-tablecell">
+                                                <h3>Ticket</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="height: 40px;"></div>
+
+                                <div class="data-form-section">
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h3 class="heading-note">Client</h3>
+                                                <div class="client-comment">
+                                                    <div class="single-comment">
+                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
+                                                    </div>
+                                                    <div class="single-comment">
+                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
+                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
+                                                    </div>
+                                                    <div class="single-comment">
+                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
+                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
+                                                    </div>
+                                                    <div style="margin-bottom: 0;" class="single-comment">
+                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
+                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h3 class="heading-note">Notes</h3>
+                                                <div class="notes">
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                    <a href="" class="note-btn">+ Add New Note</a>
+                                                </div>
+
+                                                <div class="ticket-assign">
+                                                    <div class="single-form-opt tck">
+                                                        <label for="level">Assigned to</label>
+                                                        <input type="text">
+                                                    </div>
+                                                    <div class="single-form-opt tck">
+                                                        <label for="date">Re-Assign</label>
+                                                        <input type="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="height: 40px;"></div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h3 class="heading-note">Staff</h3>
+                                                <div class="client-comment">
+                                                    <div class="single-comment">
+                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
+                                                    </div>
+                                                    <div class="single-comment">
+                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
+                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
+                                                    </div>
+                                                    <div class="single-comment">
+                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
+                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
+                                                    </div>
+                                                    <div style="margin-bottom: 0;" class="single-comment">
+                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
+                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
+                                                    </div>
+                                                </div>
+                                                <div class="custom-ticket-btn">
+                                                    <a href="" class="btn response-btn">Send Response</a>
+                                                    <a href="" class="btn close-btn">Close Ticket</a>
+                                                    <a href="" class="btn update-btn">Update</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div id="custom-tab-7" class="tab-pane fade">
+                                <div class="search-option">
+                                    <input type="text" placeholder="Search for client">
+                                    <input type="submit" value="Search">
+                                    <a href="" class="btn">Cancel</a>
+                                    <span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="data-table-section">
+                                    <table style="width:100%">
+                                        <tr>
+                                            <th class="round-1">User Id</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Referred by</th>
+                                            <th>Joined On</th>
+                                            <th class="round-2">KYC Level</th>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Jhon Doe Wills</td>
+                                            <td>exampleemail@gmail.com</td>
+                                            <td>Mr Will Smith jr</td>
+                                            <td>10/12/2018</td>
+                                            <td>Primary</td>
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>Jhon Doe Wills</td>
+                                            <td>exampleemail@gmail.com</td>
+                                            <td>Mr Will Smith jr</td>
+                                            <td>10/12/2018</td>
+                                            <td>Primary</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="round-3">10</td>
+                                            <td>Jhon Doe Wills</td>
+                                            <td>exampleemail@gmail.com</td>
+                                            <td>Mr Will Smith jr</td>
+                                            <td>10/12/2018</td>
+                                            <td class="round-4">Primary</td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div style="height: 40px;"></div>
+
+                                <div class="data-form-section">
+                                    <form action="#">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Name</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Surname</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="single-form-opt">
+                                                            <label class="address" for="address">Address</label>
+                                                            <input type="address">
+                                                        </div>
+                                                        <div class="single-form-opt">
+                                                            <label class="address" for="address"></label>
+                                                            <input type="address">
+                                                        </div>
+                                                        <div class="single-form-opt">
+                                                            <label class="address" for="address"></label>
+                                                            <input type="address">
+                                                        </div>
+                                                        <div class="single-form-opt">
+                                                            <label class="address" for="address"></label>
+                                                            <input type="address">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12 col-sm-6">
+                                                        <div class="single-form-opt single-form-opt-staff">
+                                                            <label for="name">Nationality</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-6">
+                                                        <div class="single-form-opt single-form-opt-staff">
+                                                            <label for="name">DOB</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Hired On</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Fired On</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Hired By</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="name">Resigned On</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="user">Department</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
+                                                            <label for="text">Manager</label>
+                                                            <input type="text">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12 staff-note">
+                                                        <h3 class="heading-note">Notes</h3>
+                                                        <div class="notes">
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <a href="" class="note-btn">+ Add New Note</a>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="sa-left">
+                                                                    <h3>Territory</h3>
+                                                                    <div class="sa-left-content">
+                                                                        <span>Territory 1</span>
+                                                                        <span>Territory 1</span>
+                                                                        <span>Territory 1</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="sa-right">
+                                                                    <h3>Languages</h3>
+                                                                    <div class="sa-right-content">
+                                                                        <span>Languages 1</span>
+                                                                        <span>Languages 1</span>
+                                                                        <span>Languages 1</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="finally-btn">
+                                                            <a href="" style="background: #55C1FF;" class="reset-btn btn">New</a>
+                                                            <a href="" style="background: #6FCF97;" class="update-btn btn">Update</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script> 
+    <script src="~/assets/js/main.js"></script>
+</body>
+</html>
+
+
