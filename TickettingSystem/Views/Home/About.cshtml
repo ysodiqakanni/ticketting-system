@@ -1,7 +1,81 @@
-﻿@{
-    ViewData["Title"] = "About";
-}
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
+﻿@{ Layout = null;}
 
-<p>Use this area to provide additional information.</p>
+<div class="table-responsive">
+    <table id="TripTable" class="table color-bordered-table primary-bordered-tabler">
+        <thead>
+            <tr>
+                <th></th>
+                <th>DateStarted</th>
+                <th>DateEnded</th>
+                <th>LocationFrom</th>
+                <th>LocationTo</th>
+                <th>EntityName</th>
+                <th>Is Active</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>DateStarted</th>
+                <th>DateEnded</th>
+                <th>LocationFrom</th>
+                <th>LocationTo</th>
+                <th>EntityName</th>
+                <th>Is Active</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script src="~/assets/js/jquery.min.js"></script> 
+<script src="~/assets/datatables.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var table1 = $('#viewwarning1').DataTable();
+        hideAllTables();
+
+        $('#ViewalltripBtn').click(function () {
+            hideAllTables();
+            table1.destroy();
+            table1 = $('#TripTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                'responsive': true,
+                'searching': true,
+                'lengthChange': true,
+                'ordering': true,
+                'info': true,
+                "processing": true,
+                "serverSide": true,
+                'paging': true,
+                "ajax": {
+
+                    url: "/Asset/GetTripsByAssetJSON",
+                    type: 'POST'
+                },
+                "language": {
+                    "search": "",
+                    "searchPlaceholder": "Search..."
+                },
+                "columns": [
+                    { "data": "Actions", "orderable": false },
+                    { "data": "DateStarted" },
+                    { "data": "DateEnded", "orderable": false },
+                    { "data": "LocationFrom", "orderable": false },
+                    { "data": "LocationTo", "orderable": false },
+                    { "data": "EntityName", "orderable": false },
+                    { "data": "IsActive" }
+                ]
+            });
+            $('#viewalltrip').show();
+        });
+
+    });
+
+    function hideAllTables() {
+        $('#viewalltrip').hide();
+    }
+
+</script>
