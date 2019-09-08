@@ -8,6 +8,7 @@ namespace TickettingSystem.Data.Contracts
     public interface IUnitOfWork : IDisposable
     {
         IBaseRepository<Client> ClientRepository { get; set; }
+        IBaseRepository<Trade> TradeRepository { get; set; }
         int Save();
     }
 }

@@ -15,6 +15,7 @@ namespace TickettingSystem.Data.Implementations
             context = new AppDbContext();
         }
         public IBaseRepository<Client> ClientRepository { get; set; }
+        public IBaseRepository<Trade> TradeRepository { get; set; }
 
         public void Dispose()
         {
