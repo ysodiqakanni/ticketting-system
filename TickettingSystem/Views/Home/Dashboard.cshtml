@@ -81,6 +81,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="row">
+                                                    @Html.Hidden("hiddenClientID")
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Name</label>
@@ -115,6 +116,10 @@
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Nationality</label>
+                                                            @*<select id="txtClientNationailty">
+                                                                <option value="German">German</option>
+                                                                <option value="French">French</option>
+                                                            </select>*@
                                                             <input type="text"  id="txtClientNationailty">
                                                         </div>
                                                     </div>
@@ -128,26 +133,26 @@
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">DOB</label>
-                                                            <input type="text">
+                                                            <input type="date" id="txtClientDOB">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Reffered by</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtClientReferedBy" readonly>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Joined on</label>
-                                                            <input type="text">
+                                                            <input type="date" id="txtClientJoinedOn" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Ref URL</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtClientRefUrl" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -157,25 +162,25 @@
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="user">User id</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtClientUserId" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="email">Email Address</label>
-                                                            <input type="email">
+                                                            <input type="email" id="txtClientEmail" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="level">KYC Level</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtClientKycLevel" readonly>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="date">Date</label>
-                                                            <input type="text">
+                                                            <input type="date" id="txtClientDate" readonly>
                                                         </div>
                                                     </div>
 
@@ -191,8 +196,8 @@
                                                             <a href="" class="note-btn">+ Add New Note</a>
                                                         </div>
                                                         <div class="finally-btn">
-                                                            <a href="" class="reset-btn btn">Reset Pwd</a>
-                                                            <a href="" class="update-btn btn">Update</a>
+                                                            <a href="#" class="reset-btn btn" id="btnResetClientPassword">Reset Pwd</a>
+                                                            <a href="#" class="update-btn btn" id="btnUpdateClient">Update</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -893,51 +898,11 @@
     <script src="~/assets/js/jquery.min.js"></script>
     <script src="~/assets/js/bootstrap.min.js"></script> 
     <script src="~/assets/js/main.js"></script>
+    
+
 </body>
 </html>
 
-<script type="text/javascript"> 
-    $("#btnSearchClients").on("click", function () {
-        alert("search clicked!");
-    })
-    $("#btnCancelClientSearch").on("click", function () {
-        $("#txtSearchClients").val("");
-    })
-    $(".clientDaraRow").on("click", function () {
-        var id = $(this).find('td:first').html(); 
+<script src="~/assets/js/Client.js"></script>
 
-        var url = "/Home/clients/" + id;
-        $.ajax({
-            type: "GET",
-            url: url,
-            contentType: "application/json",
-            processData: false,
-            success: function (response) {
-                if (response.success) { 
-                    var client = response.msg.result;
-                    $("#txtClientName").val(client.name);
-                    $("#txtClientSurname").val(client.name); txtClientNationailty
-                    $("#txtClientAddressLine1").val(client.address);
-                    $("#txtClientNationailty").val(client.nationality);
-                    $("#txtClientLanguage").val(client.language);
-                }
-                else {
-                    alert(response.msg);
-                }
-            },
-            error: function () {
-                alert("An error occured");
-            },
-        })
-        // get client by Id
-        // populate details section
-        // refresg tables
-        
-    })
-    //$("#tblClients tr").click(function () {
-    //    //$(this).addClass('selected').siblings().removeClass('selected');
-    //    var value = $(this).find('td:first').html();
-    //    alert(value);
-    //});
-</script>
 

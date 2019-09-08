@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TickettingSystem.DTOs;
+using TickettingSystem.Models;
 
 namespace TickettingSystem.ApiHelper
 {
@@ -35,6 +36,7 @@ namespace TickettingSystem.ApiHelper
                 {
                     ID = id,
                     Name = "Tester",
+                    Surname = "Mayor",
                     Address = "Shomolu Ave gbagura",
                     DateOfBirth = DateTime.Now.AddDays(-8888),
                     Email = "tester@gmail.com",
@@ -42,9 +44,18 @@ namespace TickettingSystem.ApiHelper
                     KycLevel = "Secondary",
                     Language = "English",
                     Nationality = "Brazilian",
-                    ReferredBy = "Refererrrr JJ"
+                    ReferredBy = "Refererrrr JJ",
+                    RefUrl = "www.urlforref.com"
                 };
             });
+        }
+        public static async Task ResetPassword(int clientId)
+        {
+            return;
+        }
+        public static async Task Update(ClientUpdateViewModel model)
+        {
+            return;
         }
     }
     
