@@ -1,7 +1,8 @@
-﻿@using  TickettingSystem.DTOs;
-@{ 
+﻿@model TickettingSystem.Models.DashboardViewModel
+@using  TickettingSystem.DTOs;
+@{
     Layout = null;
-    ViewData["Title"] = "Dashboard"; 
+    ViewData["Title"] = "Dashboard";
 }
 
 
@@ -49,29 +50,30 @@
                                     <a href="#" class="btn" id="btnCancelClientSearch">Cancel</a><span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
                                 </div>
 
-                                <div class="data-table-section">
-                                    <table id="tblClients" style="width:100%">
-                                        <tr>
-                                            <th class="round-1">User Id</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Referred by</th>
-                                            <th>Joined On</th>
-                                            <th class="round-2">KYC Level</th>
-                                        </tr>
-
-                                        @foreach (var client in ViewBag.AllClients as List<ClientDTO>)
-                                        {
-                                            <tr class="clientDataRow">
-                                                <td>@client.ID</td>
-                                                <td>@client.Name</td>
-                                                <td>@client.Email</td>
-                                                <td>@client.ReferredBy</td>
-                                                <td>@client.JoinedDate.ToString("MM/dd/yyyy")</td>
-                                                <td>@client.KycLevel</td>
+                                <div class="data-table-section" id="clientTableDiv">
+                                    @*<table id="tblClients" style="width:100%">
+                                            <tr>
+                                                <th class="round-1">User Id</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Referred by</th>
+                                                <th>Joined On</th>
+                                                <th class="round-2">KYC Level</th>
                                             </tr>
-                                        } 
-                                    </table>
+
+                                            @foreach (var client in ViewBag.AllClients as List<ClientDTO>)
+                                            {
+                                                <tr class="clientDataRow">
+                                                    <td>@client.ID</td>
+                                                    <td>@client.Name</td>
+                                                    <td>@client.Email</td>
+                                                    <td>@client.ReferredBy</td>
+                                                    <td>@client.JoinedDate.ToString("MM/dd/yyyy")</td>
+                                                    <td>@client.KycLevel</td>
+                                                </tr>
+                                            }
+                                        </table>*@
+                                    @{await Html.RenderPartialAsync("_ClientListPartial", Model);}
                                 </div>
 
                                 <div style="height: 40px;"></div>
@@ -117,16 +119,16 @@
                                                         <div class="single-form-opt">
                                                             <label for="name">Nationality</label>
                                                             @*<select id="txtClientNationailty">
-                                                                <option value="German">German</option>
-                                                                <option value="French">French</option>
-                                                            </select>*@
-                                                            <input type="text"  id="txtClientNationailty">
+                                                                    <option value="German">German</option>
+                                                                    <option value="French">French</option>
+                                                                </select>*@
+                                                            <input type="text" id="txtClientNationailty">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Language</label>
-                                                            <input type="text"  id="txtClientLanguage">
+                                                            <input type="text" id="txtClientLanguage">
                                                         </div>
                                                     </div>
 
@@ -207,11 +209,11 @@
                                                                         </div>
                                                                         <div class="modal-body">
                                                                             <div class="single-form-opt">
-                                                                                <label class="address" >Notes</label>
+                                                                                <label class="address">Notes</label>
                                                                                 <textarea type="text" class="form-control" id="txtNewNote"></textarea>
-                                                                            </div> 
-                                                                         
-                                                                          
+                                                                            </div>
+
+
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <div>
@@ -926,9 +928,9 @@
     </div>
 
     <script src="~/assets/js/jquery.min.js"></script>
-    <script src="~/assets/js/bootstrap.min.js"></script> 
+    <script src="~/assets/js/bootstrap.min.js"></script>
     <script src="~/assets/js/main.js"></script>
-    
+
 
 </body>
 </html>

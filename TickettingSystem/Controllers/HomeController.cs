@@ -14,11 +14,14 @@ namespace TickettingSystem.Controllers
     public class HomeController : Controller
     {
         [Route("dashboard")]
-        public IActionResult Dashboard()
+        public async Task<IActionResult> Dashboard()
         {
             var allClients = ClientsApi.GetAllClients();
             ViewBag.AllClients = allClients.Result;
-            return View();
+
+            var model = new DashboardViewModel();
+            model.Clients = await ClientsApi.SearchClients("");
+            return View(model);
         }
 
         [Route("clients/{id}")]
@@ -76,6 +79,14 @@ namespace TickettingSystem.Controllers
             {
                 return Json(new { success = false, msg = "Error creating note!" });
             }
+        }
+
+        [Route("SearchClients/{searchStr}")]
+        public async Task<PartialViewResult> SearchClients(string searchStr)
+        {
+            var model = new DashboardViewModel();
+            model.Clients = await ClientsApi.SearchClients(searchStr);
+            return PartialView("_ClientListPartial", model);
         }
 
         [Route("")]

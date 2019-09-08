@@ -1,0 +1,32 @@
+﻿@model TickettingSystem.Models.DashboardViewModel
+<table id="tblClients" style="width:100%">
+    <tr>
+        <th class="round-1">User Id</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Referred by</th>
+        <th>Joined On</th>
+        <th class="round-2">KYC Level</th>
+    </tr>
+    @if (Model.Clients.Count < 1)
+    {
+        <tr><td> No Records Found! </td></tr>
+    }
+    else
+    {
+        foreach (var client in Model.Clients)
+        {
+            <tr class="clientDataRow">
+                <td>@client.ID</td>
+                <td>@client.Name</td>
+                <td>@client.Email</td>
+                <td>@client.ReferredBy</td>
+                <td>@client.JoinedDate.ToString("MM/dd/yyyy")</td>
+                <td>@client.KycLevel</td>
+            </tr>
+        }
+    }
+
+</table>
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/assets/js/Client.js"></script>

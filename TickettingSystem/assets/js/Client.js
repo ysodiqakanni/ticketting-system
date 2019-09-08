@@ -3,8 +3,28 @@ $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 });
 
-$("#btnSearchClients").on("click", function () {
-    alert("search clicked!");
+$("#btnSearchClients").on("click", function () { 
+
+    const searchStr = "strdiid";
+    var url = "/home/SearchClients/" + searchStr;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) { 
+                $("#clientTableDiv").html(response); 
+            }
+            else {
+                alert("searching error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    }) 
 })
 $("#btnCancelClientSearch").on("click", function () {
     $("#txtSearchClients").val("");

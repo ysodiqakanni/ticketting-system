@@ -28,6 +28,23 @@ namespace TickettingSystem.ApiHelper
             //    return responseBody;
             //}
         }
+        public static Task<List<ClientListViewModel>> SearchClients(string searchStr)
+        {
+            var clients = new List<ClientListViewModel>
+            {
+                new ClientListViewModel{ID = 1, Name = "John Doe", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Wolex"},
+                new ClientListViewModel{ID = 3, Name = "Bad ROugue", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Joy"}
+            };
+            return Task.Run(() => { return clients; });
+
+            //using (HttpClient client = new HttpClient())
+            //{
+            //    HttpResponseMessage msg = await client.GetAsync("");
+            //    msg.EnsureSuccessStatusCode();
+            //    var responseBody = await msg.Content.ReadAsAsync<List<ClientDTO>>();
+            //    return responseBody;
+            //}
+        }
         public static Task<ClientDTO> GetClientById(int id)
         {
             return Task.Run(() =>
