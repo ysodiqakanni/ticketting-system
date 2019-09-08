@@ -57,6 +57,10 @@ namespace TickettingSystem.ApiHelper
         {
             return;
         }
+        public static async Task CreateNewNote(string note)
+        {
+            return;
+        }
     }
     
 }

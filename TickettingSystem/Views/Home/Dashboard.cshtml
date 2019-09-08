@@ -62,7 +62,7 @@
 
                                         @foreach (var client in ViewBag.AllClients as List<ClientDTO>)
                                         {
-                                            <tr class="clientDaraRow">
+                                            <tr class="clientDataRow">
                                                 <td>@client.ID</td>
                                                 <td>@client.Name</td>
                                                 <td>@client.Email</td>
@@ -187,13 +187,43 @@
                                                     <div class="col-md-12">
                                                         <h3 class="heading-note">Notes</h3>
                                                         <div class="notes">
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <a href="" class="note-btn">+ Add New Note</a>
+                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            @*<p ondblclick="popNote(this)" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>*@
+                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            <a href="#" class="note-btn" data-toggle="modal" data-target="#addNoteModal">+ Add New Note</a>
+                                                            @*<button type="button" class="note-btn" data-toggle="modal" data-target="#addNoteModal">+ Add New Note</button>*@
+                                                            <!-- Modal -->
+                                                            <div class="modal fade" id="addNoteModal" role="dialog">
+                                                                <div class="modal-dialog">
+
+                                                                    <!-- Modal content-->
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                            <h4 class="modal-title">Add a new Note</h4>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="single-form-opt">
+                                                                                <label class="address" >Notes</label>
+                                                                                <textarea type="text" class="form-control" id="txtNewNote"></textarea>
+                                                                            </div> 
+                                                                         
+                                                                          
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <div>
+                                                                                <button type="button" id="btnAddNote" class="btn btn-success col-lg-6 col-lg-offset-4">OK</button>
+                                                                            </div>
+                                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
                                                         </div>
                                                         <div class="finally-btn">
                                                             <a href="#" class="reset-btn btn" id="btnResetClientPassword">Reset Pwd</a>

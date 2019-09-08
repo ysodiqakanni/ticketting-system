@@ -1,11 +1,19 @@
 ﻿
-
+$(document).ready(function () {
+    $('[data-toggle="popover"]').popover();
+});
 
 $("#btnSearchClients").on("click", function () {
     alert("search clicked!");
 })
 $("#btnCancelClientSearch").on("click", function () {
     $("#txtSearchClients").val("");
+    const anyUnsavedChanges = true;
+    if (anyUnsavedChanges) {
+        if (confirm("Are You Sure That You Want to Abandon Changes?")) {
+            removeSelectedClientRecords();
+        }
+    }
 })
 $("#btnResetClientPassword").on("click", function () {
     let selectedClientId = $("#hiddenClientID").val();
@@ -79,7 +87,7 @@ $("#btnUpdateClient").on("click", function () {
         }) 
     }
 })
-$(".clientDaraRow").on("click", function () {
+$(".clientDataRow").on("click", function () {
     var id = $(this).find('td:first').html();
     $("#hiddenClientID").val(id);
     var url = "/Home/clients/" + id;
@@ -116,11 +124,71 @@ $(".clientDaraRow").on("click", function () {
     })
     // get client by Id
     // populate details section
-    // refresg tables
+    // refresh tables
 
 })
-    //$("#tblClients tr").click(function () {
-    //    //$(this).addClass('selected').siblings().removeClass('selected');
-    //    var value = $(this).find('td:first').html();
-    //    alert(value);
-    //});
+$("#btnAddNote").on("click", function (e) {
+    const note = $("#txtNewNote").val();
+    if (!note) {
+        alert("Note can not be empty!");
+        return;
+    }
+    e.preventDefault();
+
+    var url = "/home/createNote/" + note;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                alert(response.msg);
+                $("#txtNewNote").val("");
+                // Todo: re-render notes partial
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    }) 
+})
+function removeSelectedClientRecords() {
+    $("#hiddenClientID").val("");
+    $("#txtClientName").val("");
+    $("#txtClientSurname").val("");
+    $("#txtClientAddressLine1").val("");
+    $("#txtClientNationailty").val("");
+    $("#txtClientLanguage").val("");
+    $("#txtClientSurname").val("");
+    $("#txtClientReferedBy").val("");
+    $("#txtClientRefUrl").val("");
+    $("#txtClientUserId").val("");
+    $("#txtClientEmail").val("");
+    $("#txtClientKycLevel").val("");
+    document.getElementById("txtClientDOB").valueAsDate = new Date();
+    document.getElementById("txtClientJoinedOn").valueAsDate = new Date();
+    document.getElementById("txtClientDate").valueAsDate = new Date();
+}
+
+//$(".notes").dblclick(function () {
+//    alert("The paragraph was double-clicked");
+//    $(this).popover("show");
+//});
+
+//function popNote(el) {
+//    $(el).popover("show");
+//}
+
+//$('body').on('click', function (e) {
+//    //did not click a popover toggle or popover
+//    if ($(e.target).data('toggle') !== 'popover'
+//        && $(e.target).parents('.popover.in').length === 0) {
+//        $('[data-toggle="popover"]').popover('hide');
+//    }
+//});
+ 

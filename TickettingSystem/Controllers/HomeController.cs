@@ -63,6 +63,21 @@ namespace TickettingSystem.Controllers
             return Json(new { success = false, msg = "Fill in all required fields" });
         }
 
+        [Route("createNote/{note}")]
+        public async Task<IActionResult> createNote(string note)
+        {
+            if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
+            try
+            {
+                await ClientsApi.CreateNewNote(note);
+                return Json(new { success = true, msg = "Note saved!" });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false, msg = "Error creating note!" });
+            }
+        }
+
         [Route("")]
         [Route("index")]
         [Route("~/")]
