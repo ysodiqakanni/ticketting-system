@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.Data.Contracts;
 using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace TickettingSystem.Data.Implementations
 { 

@@ -21,6 +21,7 @@ namespace TickettingSystem.Controllers
 
             var model = new DashboardViewModel();
             model.Clients = await ClientsApi.SearchClients("");
+            model.Trades = await TradesApi.SearchTrades("");
             return View(model);
         }
 
@@ -89,6 +90,23 @@ namespace TickettingSystem.Controllers
             return PartialView("_ClientListPartial", model);
         }
 
+        [Route("trades/all")]
+        public IActionResult GetTrades()
+        {
+          
+            var trades = TradesApi.GetAllTrades();
+            if (trades == null) return Json(new { success = false, msg = "record not found!" });
+            return Json(new { success = true, msg = trades });
+        }
+
+        [Route("trades/{id}")]
+        public IActionResult GetTradeById(int? id)
+        {
+            if (id == null) throw new ArgumentNullException("Invalid request sent!");
+            var theTrade = TradesApi.GetTradeById(id.Value);
+            if (theTrade == null) return Json(new { success = false, msg = "record not found!" });
+            return Json(new { success = true, msg = theTrade });
+        }
         [Route("")]
         [Route("index")]
         [Route("~/")]

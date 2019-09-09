@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using TickettingSystem.Core;
 using TickettingSystem.Data.Contracts;
 
@@ -9,7 +10,8 @@ namespace TickettingSystem.Data.Implementations
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private DbContext context;
+        private Microsoft.EntityFrameworkCore.DbContext context;
+
         public UnitOfWork()
         {
             context = new AppDbContext();
