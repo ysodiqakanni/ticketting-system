@@ -45,26 +45,37 @@ namespace TickettingSystem.ApiHelper
             //    return responseBody;
             //}
         }
-        public static Task<ClientDTO> GetClientById(int id)
+        public static async Task<ClientDTO> GetClientById(int id)
         {
-            return Task.Run(() =>
+            using (HttpClient client = new HttpClient())
             {
-                return new ClientDTO
-                {
-                    ID = id,
-                    Name = "Tester",
-                    Surname = "Mayor",
-                    Address = "Shomolu Ave gbagura",
-                    DateOfBirth = DateTime.Now.AddDays(-8888),
-                    Email = "tester@gmail.com",
-                    JoinedDate = DateTime.Now.AddYears(-2),
-                    KycLevel = "Secondary",
-                    Language = "English",
-                    Nationality = "Brazilian",
-                    ReferredBy = "Refererrrr JJ",
-                    RefUrl = "www.urlforref.com"
-                };
-            });
+                client.BaseAddress = new Uri("http://localhost:5000/api/v1/");
+
+                HttpResponseMessage msg = await client.GetAsync("clients/{id}");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<ClientDTO>();
+                return responseBody;
+            }
+            
+
+            //return Task.Run(() =>
+            //{
+            //    return new ClientDTO
+            //    {
+            //        ID = id,
+            //        Name = "Tester",
+            //        Surname = "Mayor",
+            //        Address = "Shomolu Ave gbagura",
+            //        DateOfBirth = DateTime.Now.AddDays(-8888),
+            //        Email = "tester@gmail.com",
+            //        JoinedDate = DateTime.Now.AddYears(-2),
+            //        KycLevel = "Secondary",
+            //        Language = "English",
+            //        Nationality = "Brazilian",
+            //        ReferredBy = "Refererrrr JJ",
+            //        RefUrl = "www.urlforref.com"
+            //    };
+            //});
         }
         public static async Task ResetPassword(int clientId)
         {

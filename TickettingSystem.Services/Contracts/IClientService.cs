@@ -9,5 +9,6 @@ namespace TickettingSystem.Services.Contracts
     public interface IClientService
     {
         Task<IList<Client>> GetAllAsync();
+        Task<Client> GetClientById(int id);
     }
 }

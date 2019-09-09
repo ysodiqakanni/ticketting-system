@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TickettingSystem.Services.Implementations;
 
 namespace TickettingSystem.Api.Controllers
 {
@@ -18,29 +19,18 @@ namespace TickettingSystem.Api.Controllers
     [Authorize]
     public class ClientsController : ControllerBase
     {
-        public async Task<IActionResult> Search()
-        { 
-            return Ok();
-        }
-        public async Task<IActionResult> Get()
+        private readonly ClientService _clientService;
+
+        public ClientsController(ClientService clientService)
         {
-            return Ok();
+            _clientService = clientService;
         }
-        public async Task<IActionResult> ResetVerificationStatus()
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetClientById(int id)
         {
-            return Ok();
-        }
-        public async Task<IActionResult> GetImages()
-        {
-            return Ok();
-        }
-        public async Task<IActionResult> BlockAccess()
-        {
-            return Ok();
-        }
-        public async Task<IActionResult> GetTradingActivities()
-        {
-            return Ok();
+            var client = await _clientService.GetClientById(id);
+            return Ok(client);
         }
     }
 }
