@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
+using TickettingSystem.Core;
 
 namespace TickettingSystem.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext() : base ("DefaultConnection")
+        public DbSet<Client> Clients { get; set; }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
-        }   
+        }
     }
 }

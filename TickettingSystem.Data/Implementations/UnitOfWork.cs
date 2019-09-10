@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using TickettingSystem.Core;
 using TickettingSystem.Data.Contracts;
@@ -9,10 +9,12 @@ namespace TickettingSystem.Data.Implementations
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private DbContext context;
-        public UnitOfWork()
+        private AppDbContext context;
+        public UnitOfWork(AppDbContext _context)
         {
-            context = new AppDbContext();
+            context = _context;
+            ClientRepository = new ClientRepository(_context);
+            TradeRepository = new TradeRepository(_context);
         }
         public IBaseRepository<Client> ClientRepository { get; set; }
         public IBaseRepository<Trade> TradeRepository { get; set; }

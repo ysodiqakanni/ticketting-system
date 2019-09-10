@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TickettingSystem.Services.Implementations;
+using TickettingSystem.Data.Contracts; 
+using TickettingSystem.Services.Contracts; 
 
 namespace TickettingSystem.Api.Controllers
 {
@@ -16,13 +17,13 @@ namespace TickettingSystem.Api.Controllers
     [Produces("application/json")]
     [Route("api/v1/[controller]")]
     [ApiController]
-    [Authorize]
     public class ClientsController : ControllerBase
     {
-        private readonly ClientService _clientService;
+        private readonly IClientService _clientService;
+        IUnitOfWork uow;
 
-        public ClientsController(ClientService clientService)
-        {
+        public ClientsController(IClientService clientService)
+        { 
             _clientService = clientService;
         }
 

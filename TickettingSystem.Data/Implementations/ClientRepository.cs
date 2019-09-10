@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 using TickettingSystem.Core;
 using TickettingSystem.Data.Contracts;

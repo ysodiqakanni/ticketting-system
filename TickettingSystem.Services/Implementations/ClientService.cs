@@ -22,6 +22,10 @@ namespace TickettingSystem.Services.Implementations
 
         public async Task<Client> GetClientById(int id)
         {
+            var x1 = uow.ClientRepository.GetAll();
+            var x2 = uow.ClientRepository.Get(id);
+            
+
             return await uow.ClientRepository.FindAsync(x => x.ID == id);
         }
     }
