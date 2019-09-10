@@ -107,6 +107,19 @@ namespace TickettingSystem.Controllers
             if (theTrade == null) return Json(new { success = false, msg = "record not found!" });
             return Json(new { success = true, msg = theTrade });
         }
+        [Route("trades/search")]
+        
+        public IActionResult SearchTrade([FromQuery] TradeSearchModel tradeSearch)
+        {
+            var trades = TradesApi.GetAllTrades();
+            if (trades == null) return Json(new { success = false, msg = "record not found!" });
+            return Json(new { success = true, msg = trades });
+            //var result=(await TradesApi.GetAllTrades()).Where(trade=>tradeSearch.UserId)
+            //return Json(new { success = true, msg = theTrade });
+        }
+
+
+
         [Route("")]
         [Route("index")]
         [Route("~/")]

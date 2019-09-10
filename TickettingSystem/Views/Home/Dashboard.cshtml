@@ -251,32 +251,32 @@
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">User Id</label>
-                                                        <input type="text">
+                                                        <input id="srchUserId" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">Date From</label>
-                                                        <input type="text">
+                                                        <input id="tradeFromDate" type="date">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">Date To</label>
-                                                        <input type="text">
+                                                        <input id="tradeToDate" type="date">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">Exchange</label>
-                                                        <input type="text">
+                                                        <input id="tradeSrExch" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">Curr Pair</label>
                                                         <input type="text">
-                                                        <input type="submit" value="Search">
+                                                        <input id="btnSearchTrades" type="submit" value="Search">
 
                                                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                     </div>
@@ -286,7 +286,7 @@
                                     </form>
                                 </div>
                                 <div class="data-table-section">
-                                    <table style="width:100%">
+                                    <table  id="tbTradeSearchResult" style="width:100%">
                                         <tr>
                                             <th class="round-1">Date time</th>
                                             <th>Exchange</th>
@@ -295,14 +295,14 @@
                                             <th>Arbitrage</th>
                                             <th class="round-2">Social</th>
                                         </tr>
-                                        <tr>
+                                        @*<tr>
                                             <td class="round-3">10/12/2018</td>
                                             <td>Lorem ipsum dolor sit amet.</td>
                                             <td>Bye/Sell/Transfer</td>
                                             <td>$100</td>
                                             <td>Yes/No</td>
                                             <td class="round-4">Yes/No</td>
-                                        </tr>
+                                        </tr>*@
                                     </table>
                                 </div>
                                 <div class="trade-seceond-form">
