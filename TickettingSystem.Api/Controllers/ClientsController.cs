@@ -27,6 +27,14 @@ namespace TickettingSystem.Api.Controllers
             _clientService = clientService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var clients = await _clientService.GetAllAsync();
+            return Ok(clients);
+        }
+
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClientById(int id)
         {
