@@ -515,56 +515,15 @@
                             </div>
                             <div id="custom-tab-4" class="tab-pane fade">
                                 <div class="search-option">
-                                    <input type="text" placeholder="Search for client">
-                                    <input type="submit" value="Search">
+                                    <input type="text" id="txtUserIdForExchangeSearch" placeholder="Search for client">
+                                    <input type="submit" id="btnSearchExchanges" value="Search">
                                     <a href="" class="btn">Cancel</a><span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
                                 </div>
 
-                                <div class="data-table-section">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th class="round-1">Exchange name</th>
-                                            <th>Enabled</th>
-                                            <th>APIs entered</th>
-                                            <th class="round-2">Verifyed connection</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="round-3">Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                    </table>
+                                <div id="divClientExchanges" class="data-table-section">
+
+                                    @{await Html.RenderPartialAsync("_ExchangeListPartial", Model);}
+
                                 </div>
 
                                 <div style="height: 20px;"></div>

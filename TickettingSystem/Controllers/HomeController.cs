@@ -23,6 +23,9 @@ namespace TickettingSystem.Controllers
             model.Clients = await ClientsApi.SearchClients("");
             model.Trades = await TradesApi.SearchTrades("");
             model.Notes = await ClientsApi.GetAllNotes();
+            // initially, no client is selected!
+            // so search results (D) should contain each of the known exchanges 
+            model.Exchanges = await ExchangeApi.GetAllKnownExchanges();
             return View(model);
         }
 
@@ -125,6 +128,14 @@ namespace TickettingSystem.Controllers
             return Json(new { success = true, msg = trades });
             //var result=(await TradesApi.GetAllTrades()).Where(trade=>tradeSearch.UserId)
             //return Json(new { success = true, msg = theTrade });
+        }
+
+        [Route("exchanges/{userId}")]
+        public async Task<PartialViewResult> Exchanges(string userId)
+        {
+            var model = new DashboardViewModel();
+            model.Exchanges = await ExchangeApi.SearchExchangesByUserId(userId);
+            return PartialView("_ExchangeListPartial", model);
         }
 
 

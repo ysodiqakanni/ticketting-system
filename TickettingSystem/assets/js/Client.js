@@ -118,8 +118,7 @@ $("#btnUpdateClient").on("click", function () {
             return;
         }
         // call the update api
-        let url = "/home/UpdateClient";
-        let url1 = "/home/ResetPassword";
+        let url = "/home/UpdateClient"; 
         $.ajax({
             url: url,
             type: "PUT",
@@ -228,7 +227,7 @@ $(".clientDataRow").on("click", function () {
     })
 
     // populate client's exchanges
-
+    searchExchanges(id);
 })
 $("#btnAddNote").on("click", function (e) {
     const note = $("#txtNewNote").val();
@@ -260,6 +259,15 @@ $("#btnAddNote").on("click", function (e) {
             alert("An unknown error has occured");
         },
     })
+})
+
+$("#btnSearchExchanges").on("click", function () {
+    var userId = $("#txtUserIdForExchangeSearch").val();;
+    if (!userId) {
+        alert("Enter a user ID to fetch exchanges");
+        return;
+    }
+    searchExchanges(userId);
 })
 
 function removeSelectedClientRecords() {
@@ -295,6 +303,27 @@ var searchClients = function (searchStr) {
             }
             else {
                 alert("searching error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+}
+var searchExchanges = function (userId) {
+    var url = "/home/exchanges/" + userId;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) {
+                $("#divClientExchanges").html(response);
+            }
+            else {
+                alert("loading error");
             }
         },
         error: function () {

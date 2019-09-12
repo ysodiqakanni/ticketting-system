@@ -1,0 +1,26 @@
+﻿@model TickettingSystem.Models.DashboardViewModel
+
+<table style="width:100%">
+    <tr>
+        <th class="round-1">Exchange name</th>
+        <th>Enabled</th>
+        <th>APIs entered</th>
+        <th class="round-2">Verifyed connection</th>
+    </tr>
+    @foreach (var exchange in Model.Exchanges)
+    {
+        var date = exchange.DateEnabled.ToString("dd/mm/yyyy");
+        var api = exchange.APIsEntered ?? "NONE ENTERED"; // String.IsNullOrEmpty(exchange.APIsEntered) ? "NONE ENTERED" : exchange.APIsEntered;
+        if (exchange.DateEnabled == default(DateTime))
+        {
+            date = "";
+        }
+        <tr>
+            <td>@exchange.ExchangeName</td>
+            <td>@date</td>
+            <td>@api</td>
+            <td><input type="button" value="Connect" /></td>
+        </tr>
+    }
+
+</table>
