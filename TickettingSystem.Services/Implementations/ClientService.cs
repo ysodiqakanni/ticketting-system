@@ -28,5 +28,10 @@ namespace TickettingSystem.Services.Implementations
 
             return await uow.ClientRepository.FindAsync(x => x.ID == id);
         }
+
+        public async Task<Client> UpdateClient(Client model)
+        {
+            return await uow.ClientRepository.UpdateAsync(model, model.ID);
+        }
     }
 }

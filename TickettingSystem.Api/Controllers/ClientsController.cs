@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TickettingSystem.Core;
 using TickettingSystem.Data.Contracts; 
 using TickettingSystem.Services.Contracts; 
 
 namespace TickettingSystem.Api.Controllers
 {
-    
+
     /// <summary>
     /// Endpoints to manage Clients
     /// </summary>
@@ -23,8 +24,15 @@ namespace TickettingSystem.Api.Controllers
         IUnitOfWork uow;
 
         public ClientsController(IClientService clientService)
-        { 
+        {
             _clientService = clientService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllClients()
+        {
+            var clients = await _clientService.GetAllAsync();
+            return Ok(clients);
         }
 
         [HttpGet("{id}")]
@@ -33,5 +41,19 @@ namespace TickettingSystem.Api.Controllers
             var client = await _clientService.GetClientById(id);
             return Ok(client);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateClient(Client client)
+        {
+            var clientToUpdate = await _clientService.GetClientById(client.ID);
+            clientToUpdate.Language = client.Language;
+            clientToUpdate.Nationality = client.Nationality;
+            clientToUpdate.DateOfBirth = client.DateOfBirth;
+            clientToUpdate.Address = client.Address;
+            var clientUpdate = await _clientService.UpdateClient(clientToUpdate);
+            return Ok(clientUpdate);
+        }
+
+
     }
 }

@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.DTOs;
 using TickettingSystem.Models;
@@ -10,24 +13,29 @@ namespace TickettingSystem.ApiHelper
 {
     public static class ClientsApi
     {
-        public static  Task<List<ClientDTO>> GetAllClients()
+        public static async Task<List<ClientDTO>> GetAllClients()
         {
-            var clients = new List<ClientDTO>
-            {
-                new ClientDTO{ID = 1, Name = "John Doe", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Wolex"},
-                new ClientDTO{ID = 2, Name = "John kay", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primary", ReferredBy = "Tunde"},
-                new ClientDTO{ID = 3, Name = "Bad ROugue", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Joy"}
-            };
-            return Task.Run(() => { return clients; });
-
-            //using (HttpClient client = new HttpClient())
+            //var clients = new List<ClientDTO>
             //{
-            //    HttpResponseMessage msg = await client.GetAsync("");
-            //    msg.EnsureSuccessStatusCode();
-            //    var responseBody = await msg.Content.ReadAsAsync<List<ClientDTO>>();
-            //    return responseBody;
-            //}
+            //    new ClientDTO{ID = 1, Name = "John Doe", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Wolex"},
+            //    new ClientDTO{ID = 2, Name = "John kay", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primary", ReferredBy = "Tunde"},
+            //    new ClientDTO{ID = 3, Name = "Bad ROugue", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Joy"}
+            //};
+            //return Task.Run(() => { return clients; });
+
+
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:1662/api/v1/");
+
+                HttpResponseMessage msg = await client.GetAsync("clients");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<ClientDTO>>();
+                return responseBody;
+            }
         }
+
         public static Task<List<ClientListViewModel>> SearchClients(string searchStr)
         {
             var clients = new List<ClientListViewModel>
@@ -81,9 +89,21 @@ namespace TickettingSystem.ApiHelper
         {
             return;
         }
-        public static async Task Update(ClientUpdateViewModel model)
+        public static async Task<ClientDTO> Update(ClientUpdateViewModel model)
         {
-            return;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:5000/api/v1/");
+                string jsonStr = JsonConvert.SerializeObject(model);
+
+                HttpContent httpContent = new StringContent(jsonStr, Encoding.UTF8, "application/json");
+               
+                HttpResponseMessage msg = await client.PutAsync("clients", httpContent);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<ClientDTO>();
+                return responseBody;
+            }
+
         }
         public static async Task CreateNewNote(string note)
         {
