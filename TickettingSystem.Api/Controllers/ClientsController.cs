@@ -42,6 +42,13 @@ namespace TickettingSystem.Api.Controllers
             return Ok(client);
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchClient([FromQuery(Name ="searchStr")] string searchStr)
+        {
+            var searchResult = await _clientService.SearchClient(searchStr);
+            return Ok(searchResult);
+        }
+
         [HttpPut]
         public async Task<IActionResult> UpdateClient(Client client)
         {

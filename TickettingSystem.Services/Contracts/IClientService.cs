@@ -11,6 +11,6 @@ namespace TickettingSystem.Services.Contracts
         Task<IList<Client>> GetAllAsync();
         Task<Client> GetClientById(int id);
         Task<Client> UpdateClient(Client model);
-
+        Task<IList<Client>> SearchClient(string searchStr);
     }
 }

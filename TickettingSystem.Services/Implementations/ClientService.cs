@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.Core;
@@ -23,6 +24,16 @@ namespace TickettingSystem.Services.Implementations
         public async Task<Client> GetClientById(int id)
         {  
             return await uow.ClientRepository.FindAsync(x => x.ID == id);
+        }
+
+        public async Task<IList<Client>> SearchClient(string searchStr)
+        {
+            var clients = await uow.ClientRepository.FindAllAsync(
+               x => x.ID.ToString() == searchStr || x.Name.ToLower().Contains(searchStr.ToLower())
+                || x.Surname.ToLower().Contains(searchStr.ToLower())
+                || x.Email.ToLower().Contains(searchStr.ToLower())
+                || x.DateOfBirth.ToString("d").Contains(searchStr));
+            return clients.ToList();
         }
 
         public async Task<Client> UpdateClient(Client model)
