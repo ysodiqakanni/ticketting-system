@@ -6,5 +6,9 @@ namespace TickettingSystem.Models
         public ExchangeViewModel()
         {
         }
+        public String Name { get; set; }
+        public DateTime Enabled { get; set; }
+        public String EnteredApi { get; set; }
+        public String VerifiedConnection { get; set; }
     }
 }

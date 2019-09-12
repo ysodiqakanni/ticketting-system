@@ -1,5 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model TickettingSystem.Models.DashboardViewModel
+<table id="tblExchange" style="width:100%">
+    <tr>
+        <th class="round-1">Exchange Name</th>
+        <th>Enabled</th>
+        <th>Apis Entered</th>
+        <th>Verified Connection</th>
+
+    </tr>
+    @if (Model.Exchanges.Count < 1)
+    {
+        <tr><td> No Records Found! </td></tr>
+    }
+    else
+    {
+        foreach (var exchange in Model.Exchanges)
+        {
+            <tr class="clientDataRow">
+                <td>@exchange.Name</td>
+                <td>@exchange.Enabled.ToString("MM/dd/yyyy")</td>
+                <td>@exchange.EnteredApi</td>
+                <td>@exchange.VerifiedConnection</td>
+          
+            </tr>
+        }
+    }
+
+</table>
+<script src="~/assets/js/jquery.min.js"></script>
+<script src="~/assets/js/Client.js"></script>

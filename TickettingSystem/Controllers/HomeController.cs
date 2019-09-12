@@ -22,6 +22,7 @@ namespace TickettingSystem.Controllers
             var model = new DashboardViewModel();
             model.Clients = await ClientsApi.SearchClients("");
             model.Trades = await TradesApi.SearchTrades("");
+            model.Exchanges = await ExchangeApi.getAllExchange();
             return View(model);
         }
 
@@ -107,8 +108,16 @@ namespace TickettingSystem.Controllers
             if (theTrade == null) return Json(new { success = false, msg = "record not found!" });
             return Json(new { success = true, msg = theTrade });
         }
+
+        [Route("exchanges/{id}")]
+        public IActionResult GetExchangesById(int? id)
+        {
+            if (id == null) throw new ArgumentNullException("Invalid request sent!");
+            var exchanges = ExchangeApi.getExchangeByUserId(id.Value);
+            if (exchanges == null) return Json(new { success = false, msg = "record not found!" });
+            return Json(new { success = true, msg = exchanges });
+        }
         [Route("trades/search")]
-        
         public IActionResult SearchTrade([FromQuery] TradeSearchModel tradeSearch)
         {
             var trades = TradesApi.GetAllTrades();

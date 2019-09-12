@@ -79,6 +79,61 @@ table.deleteRow(i -1);
             },
         }) 
     })
+
+    $("#btnSearchExchanges").on("click", function () { 
+        /*var getTodate;
+        var getFromDate;
+        var getUserId;
+        var getExchange;
+        if (getTodate.getTime() < getFromdate.getTime()) {
+            alert("to date must come after from date");
+        }*/
+        var url = "/home/trades/search";
+        $.ajax({
+            url: url,
+            type: "GET",
+            url: url,
+            contentType: "application/json",
+            processData: false,
+            success: function (response) {
+                 if (response.success) {
+                    var searchResult = response.msg.result;
+                    var table = document.getElementById("tbTradeSearchResult");
+                    for(var i = 2; i <table.rows.length; i++)
+{
+table.deleteRow(i -1);
+                    }
+                    
+                    for (var i = 0; i < searchResult.length; i++){
+                         var tr = table.insertRow(-1);
+                        var tabCell1 = tr.insertCell(-1);
+                        var date = new Date(searchResult[i].createdOn);
+                  
+                     tabCell1.innerHTML =  date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate();
+
+                     var tabCell2 = tr.insertCell(-1);
+                        tabCell2.innerHTML = searchResult[i].exchange;
+                           var tabCell3 = tr.insertCell(-1);
+                        tabCell3.innerHTML = searchResult[i].operation;
+                                    var tabCell4 = tr.insertCell(-1);
+                        tabCell4.innerHTML = searchResult[i].price;
+                                  var tabCell5 = tr.insertCell(-1);
+                        tabCell5.innerHTML = "Yes";
+                                var tabCell6 = tr.insertCell(-1);
+                     tabCell6.innerHTML ="No";
+                    }
+
+                
+                }
+                else {
+                    alert("searching error");
+                }
+            },
+            error: function () {
+                alert("An unknown error has ;occured");
+            },
+        }) 
+    })
     $("#btnCancelClientSearch").on("click", function () {
         $("#txtSearchClients").val("");
         const anyUnsavedChanges = true;
