@@ -22,6 +22,7 @@ namespace TickettingSystem.Controllers
             var model = new DashboardViewModel();
             model.Clients = await ClientsApi.SearchClients("");
             model.Trades = await TradesApi.SearchTrades("");
+            model.Notes = await ClientsApi.GetAllNotes();
             return View(model);
         }
 
@@ -82,12 +83,20 @@ namespace TickettingSystem.Controllers
             }
         }
 
-        [Route("SearchClients/{searchStr}")]
-        public async Task<PartialViewResult> SearchClients(string searchStr)
+        [Route("SearchClients/{searchStr?}")]
+        public async Task<PartialViewResult> SearchClients(string searchStr = "")
         {
             var model = new DashboardViewModel();
             model.Clients = await ClientsApi.SearchClients(searchStr);
             return PartialView("_ClientListPartial", model);
+        }
+
+        [Route("notes")]
+        public async Task<PartialViewResult> Notes()
+        {
+            var model = new DashboardViewModel();
+            model.Notes = await ClientsApi.GetAllNotes();
+            return PartialView("_NotesPartial", model);
         }
 
         [Route("trades/all")]
