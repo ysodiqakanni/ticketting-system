@@ -15,12 +15,12 @@ namespace TickettingSystem.ApiHelper
         {
             var trades = new List<TradeDTO>
             {
-                new TradeDTO{ID=1,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
-                new TradeDTO{ID=2,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
-                 new TradeDTO{ID=3,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
-                  new TradeDTO{ID=4,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
-                   new TradeDTO{ID=5,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
-                    new TradeDTO{ID=6,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
+                new TradeDTO{ID=1,Exchange="Lorem ipsum dolor sit amet",Operation="BUY",UserId=1,CreatedOn=DateTime.Now,Price=600},
+                new TradeDTO{ID=2,Exchange="Lorem ipsum dolor sit amet",Operation="TRANSFER",UserId=1,CreatedOn=DateTime.Now,Price=600},
+                 new TradeDTO{ID=3,Exchange="Lorem ipsum dolor sit amet",Operation="SELL",UserId=1,CreatedOn=DateTime.Now,Price=600},
+                  new TradeDTO{ID=4,Exchange="Lorem ipsum dolor sit amet",Operation="SELL",UserId=1,CreatedOn=DateTime.Now,Price=600},
+                   new TradeDTO{ID=5,Exchange="Lorem ipsum dolor sit amet",Operation="TRANSFER",UserId=1,CreatedOn=DateTime.Now,Price=600},
+                    new TradeDTO{ID=6,Exchange="Lorem ipsum dolor sit amet",Operation="BUY",UserId=1,CreatedOn=DateTime.Now,Price=600},
             };
             return Task.Run(() => { return trades; });
         }
@@ -44,12 +44,12 @@ namespace TickettingSystem.ApiHelper
         {
             var clients = new List<TradeViewModel>
             {
-                new TradeViewModel{ID=1,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
-                  new TradeViewModel{ID=2,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
-                 new TradeViewModel{ID=3,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
-                  new TradeViewModel{ID=4,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
-                   new TradeViewModel{ID=5,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
-                    new TradeViewModel{ID=6,Exchange="",Operation="",UserId=1,CreatedOn=DateTime.Now,Price=600},
+                new TradeViewModel{ID=1,Exchange="Lorem ipsum dolor sit amet",Operation="BUY",UserId=1,CreatedOn=DateTime.Now,Price=600},
+              new TradeViewModel{ID=2,Exchange="Lorem ipsum dolor sit amet",Operation="TRANSFER",UserId=1,CreatedOn=DateTime.Now,Price=600},
+                 new TradeViewModel{ID=3,Exchange="Lorem ipsum dolor sit amet",Operation="SELL",UserId=1,CreatedOn=DateTime.Now,Price=600},
+                  new TradeViewModel{ID=4,Exchange="Lorem ipsum dolor sit amet",Operation="SELL",UserId=1,CreatedOn=DateTime.Now,Price=600},
+                   new TradeViewModel{ID=5,Exchange="Lorem ipsum dolor sit amet",Operation="TRANSFER",UserId=1,CreatedOn=DateTime.Now,Price=600},
+                    new TradeViewModel{ID=6,Exchange="Lorem ipsum dolor sit amet",Operation="BUY",UserId=1,CreatedOn=DateTime.Now,Price=600},
             };
             return Task.Run(() => { return clients; });
 

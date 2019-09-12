@@ -148,6 +148,8 @@ $(".clientDataRow").on("click", function () {
     var id = $(this).find('td:first').html();
     $("#hiddenClientID").val(id);
     var url = "/Home/clients/" + id;
+
+    // populate client's details
     $.ajax({
         type: "GET",
         url: url,
@@ -180,6 +182,8 @@ $(".clientDataRow").on("click", function () {
             alert("An error occured");
         },
     })
+
+    // populate client's trades
     $.ajax({
         type: "GET",
         url: "/home/trades/search?UserId=" + id,
@@ -205,7 +209,7 @@ $(".clientDataRow").on("click", function () {
                     var tabCell3 = tr.insertCell(-1);
                     tabCell3.innerHTML = searchResult[i].operation;
                     var tabCell4 = tr.insertCell(-1);
-                    tabCell4.innerHTML = searchResult[i].price;
+                    tabCell4.innerHTML = "$"+ searchResult[i].price;
                     var tabCell5 = tr.insertCell(-1);
                     tabCell5.innerHTML = "Yes";
                     var tabCell6 = tr.insertCell(-1);
@@ -222,9 +226,8 @@ $(".clientDataRow").on("click", function () {
             alert("An error occured");
         },
     })
-    // get client by Id
-    // populate details section
-    // refresh tables
+
+    // populate client's exchanges
 
 })
 $("#btnAddNote").on("click", function (e) {
