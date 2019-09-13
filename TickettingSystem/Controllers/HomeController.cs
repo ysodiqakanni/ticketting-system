@@ -130,11 +130,19 @@ namespace TickettingSystem.Controllers
             //return Json(new { success = true, msg = theTrade });
         }
 
-        [Route("exchanges/{userId}")]
+        [Route("exchanges/{userId?}")]
         public async Task<PartialViewResult> Exchanges(string userId)
         {
             var model = new DashboardViewModel();
-            model.Exchanges = await ExchangeApi.SearchExchangesByUserId(userId);
+            if (String.IsNullOrEmpty(userId))
+            {
+                model.Exchanges = new List<ExchangeListViewModel>();
+            }
+            else
+            {
+                model.Exchanges = await ExchangeApi.SearchExchangesByUserId(userId);
+            }
+           
             return PartialView("_ExchangeListPartial", model);
         }
 

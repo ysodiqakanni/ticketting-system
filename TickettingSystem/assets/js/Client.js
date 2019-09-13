@@ -262,12 +262,19 @@ $("#btnAddNote").on("click", function (e) {
 })
 
 $("#btnSearchExchanges").on("click", function () {
-    var userId = $("#txtUserIdForExchangeSearch").val();;
+    var userId = $("#txtUserIdForExchangeSearch").val();
     if (!userId) {
         alert("Enter a user ID to fetch exchanges");
         return;
     }
     searchExchanges(userId);
+})
+
+$("#btnCancelExchangeSearch").on("click", function () {
+    // clear search textbox
+    // refresh table
+    $("#txtUserIdForExchangeSearch").val("");
+    searchExchanges("");
 })
 
 function removeSelectedClientRecords() {
@@ -310,6 +317,7 @@ var searchClients = function (searchStr) {
         },
     })
 }
+
 var searchExchanges = function (userId) {
     var url = "/home/exchanges/" + userId;
     $.ajax({
@@ -353,3 +361,19 @@ var loadNotes = function () {
         },
     })
 } 
+
+var connectExchange = function (el) {
+    var connected = $(el).attr('data-connected');
+    if (String("true") == connected) {
+        // it's connected so disconnect it
+        $(el).attr('data-connected', "false");
+        el.style.backgroundColor = "red";
+        $(el).val("Connect");
+    }
+    else if (String("false") == connected) {
+        // it's disconnected, so connect it
+        $(el).attr('data-connected', "true");
+        el.style.backgroundColor = "green";
+        $(el).val("Disconnect");
+    } 
+}
