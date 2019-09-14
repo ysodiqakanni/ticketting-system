@@ -143,7 +143,13 @@ $("#btnUpdateClient").on("click", function () {
         })
     }
 })
-$(".clientDataRow").on("click", function () {
+$(".clientDataRow").on("click", function () {  // https://stackoverflow.com/a/26602984/7162741 this function got fired many times cuz the js file was loaded in some partial views
+
+    //alert("clicked!");
+
+    //$(this).off('click'); 
+    //return;
+
     var id = $(this).find('td:first').html();
     $("#hiddenClientID").val(id);
     var url = "/Home/clients/" + id;
@@ -228,6 +234,9 @@ $(".clientDataRow").on("click", function () {
 
     // populate client's exchanges
     searchExchanges(id);
+
+    // populate Membership tab
+    searchMemberships(id);
 })
 $("#btnAddNote").on("click", function (e) {
     const note = $("#txtNewNote").val();
@@ -329,6 +338,28 @@ var searchExchanges = function (userId) {
         success: function (response) {
             if (response) {
                 $("#divClientExchanges").html(response);
+            }
+            else {
+                alert("loading error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+}
+
+var searchMemberships = function (userId) {
+    var url = "/home/memberships/" + userId;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) {
+                $("#custom-tab-5").html(response);
             }
             else {
                 alert("loading error");

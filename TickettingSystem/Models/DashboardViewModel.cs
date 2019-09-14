@@ -11,5 +11,6 @@ namespace TickettingSystem.Models
         public List<TradeViewModel> Trades { get; set; }
         public List<NoteListViewModel> Notes { get; set; }
         public List<ExchangeListViewModel> Exchanges { get; set; }
+        public Membership MembershipData { get; set; }
     }
 }
