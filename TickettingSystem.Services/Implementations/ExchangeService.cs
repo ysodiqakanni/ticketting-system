@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.Core;
@@ -22,9 +23,10 @@ namespace TickettingSystem.Services.Implementations
             return allKnownExchanges;
         }
 
-        public Task<IList<Exchange>> SearchExchangesByUserId(string id)
+        public async Task<IList<Exchange>> SearchExchangesByUserId(string id)
         {
-            throw new NotImplementedException();
+            var allSearch = await uow.ExchangeRepository.FindAllAsync(x => x.ID.ToString() == id);
+            return allSearch.ToList();
         }
     }
 }

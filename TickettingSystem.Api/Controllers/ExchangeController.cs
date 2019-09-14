@@ -29,6 +29,13 @@ namespace TickettingSystem.Api.Controllers
             return Ok(allKnownExc);
         }
 
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchExchangesByUserId([FromQuery(Name = "userId")] string userId)
+        {
+            var searchResult = await _exchangeService.SearchExchangesByUserId(userId);
+            return Ok(searchResult);
+        }
+
 
 
     }
