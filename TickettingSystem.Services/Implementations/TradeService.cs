@@ -23,15 +23,15 @@ namespace TickettingSystem.Services.Implementations
             return await _uow.TradeRepository.GetAsync(id);   
         }
 
-        public async Task<ISet<Trade>> GetSearchedTradeLines(int? id, DateTime? startDate, 
-            DateTime? endDate, 
-            ExchangeEnum? exchangeCode, string currencyCode = "")
-        {
-            var searchResult = await _uow.TradeRepository.FindAllAsync(x => x.UserId == id 
-            || (x.DateCreated >= startDate && x.DateCreated <= endDate)
-            || x.ExchangeCode == exchangeCode || x.CurrencyCode.ToLower().Contains(currencyCode.ToLower()));
+        //public async Task<ISet<Trade>> GetSearchedTradeLines(int? id, DateTime? startDate, 
+        //    DateTime? endDate, 
+        //    ExchangeEnum? exchangeCode, string currencyCode = "")
+        //{
+        //    var searchResult = await _uow.TradeRepository.FindAllAsync(x => x.UserId == id 
+        //    || (x.DateCreated >= startDate && x.DateCreated <= endDate)
+        //    || x.ExchangeCode == exchangeCode || x.CurrencyCode.ToLower().Contains(currencyCode.ToLower()));
       
-            return searchResult.ToHashSet();
-        }
+        //    return searchResult.ToHashSet();
+        //}
     }
 }

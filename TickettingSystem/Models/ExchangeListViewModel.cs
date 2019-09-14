@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace TickettingSystem.Core
+namespace TickettingSystem.Models
 {
-    public class Exchange: Entity
+    public class ExchangeListViewModel
     {
         public string ExchangeName { get; set; }
         public DateTime DateEnabled { get; set; }

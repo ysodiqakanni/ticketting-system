@@ -7,9 +7,9 @@ namespace TickettingSystem.Core
 {
     public class Trade: Entity
     {
-        public int UserId { get; set; }
-        public string CurrencyCode { get; set; }
-        public ExchangeEnum ExchangeCode { get; set; }
+        //    public int UserId { get; set; }
+        //    public string CurrencyCode { get; set; }
+        //    public ExchangeEnum ExchangeCode { get; set; }
         //public DateTime? StartTime { get; set; }
         //public DateTime? EndDate { get; set; }
     }
