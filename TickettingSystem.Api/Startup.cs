@@ -42,6 +42,7 @@ namespace TickettingSystem.Api
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IClientService, ClientService>();
+            services.AddTransient<IClientNoteService, ClientNoteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

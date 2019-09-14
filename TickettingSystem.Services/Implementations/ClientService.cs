@@ -41,5 +41,6 @@ namespace TickettingSystem.Services.Implementations
         {
             return await uow.ClientRepository.UpdateAsync(model, model.ID);
         }
+
     }
 }

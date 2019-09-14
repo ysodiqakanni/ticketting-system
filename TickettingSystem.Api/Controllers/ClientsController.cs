@@ -63,8 +63,8 @@ namespace TickettingSystem.Api.Controllers
             return Ok(clientUpdate);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateNote(string notes)
+        [HttpPost("notes")]
+        public async Task<IActionResult> CreateNote([FromBody] string notes)
         {
             var addNote = await _clientNoteService.CreateNote(notes);
             return Ok(addNote);

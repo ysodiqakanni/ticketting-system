@@ -8,7 +8,7 @@ using TickettingSystem.Services.Contracts;
 
 namespace TickettingSystem.Services.Implementations
 {
-    class ClientNoteService : IClientNoteService
+    public class ClientNoteService : IClientNoteService
     {
 
         private readonly IUnitOfWork uow;
