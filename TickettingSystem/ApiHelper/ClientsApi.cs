@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using TickettingSystem.DTOs;
 using TickettingSystem.Models;
 
@@ -36,22 +37,28 @@ namespace TickettingSystem.ApiHelper
             }
         }
 
-        public static Task<List<ClientListViewModel>> SearchClients(string searchStr)
+        public static async Task<List<ClientListViewModel>> SearchClients(string searchStr)
         {
-            var clients = new List<ClientListViewModel>
-            {
-                new ClientListViewModel{ID = 1, Name = "John Doe", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Wolex"},
-                new ClientListViewModel{ID = 3, Name = "Bad ROugue", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Joy"}
-            };
-            return Task.Run(() => { return clients; });
-
-            //using (HttpClient client = new HttpClient())
+            //var clients = new List<ClientListViewModel>
             //{
-            //    HttpResponseMessage msg = await client.GetAsync("");
-            //    msg.EnsureSuccessStatusCode();
-            //    var responseBody = await msg.Content.ReadAsAsync<List<ClientDTO>>();
-            //    return responseBody;
-            //}
+            //    new ClientListViewModel{ID = 1, Name = "John Doe", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Wolex"},
+            //    new ClientListViewModel{ID = 3, Name = "Bad ROugue", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Joy"}
+            //};
+            //return Task.Run(() => { return clients; });
+
+            using (HttpClient client = new HttpClient())
+            {
+
+                var builder = new UriBuilder("http://localhost:5000/api/v1/clients/search");
+                var query = HttpUtility.ParseQueryString(builder.Query);
+                query["searchStr"] = searchStr;
+                builder.Query = query.ToString();
+                string url = builder.ToString();
+                HttpResponseMessage msg = await client.GetAsync(url);
+                msg.EnsureSuccessStatusCode();
+                var responsebody = await msg.Content.ReadAsAsync<List<ClientListViewModel>>();
+                return responsebody;
+            }
         }
         public static async Task<ClientDTO> GetClientById(int id)
         {
@@ -105,9 +112,21 @@ namespace TickettingSystem.ApiHelper
             }
 
         }
-        public static async Task CreateNewNote(string note)
+
+        public static async Task<ClientNoteDTO> CreateNewNote(string note)
         {
-            return;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://localhost:5000/api/v1/");
+                string jsonStr = note;
+
+                HttpContent httpContent = new StringContent(jsonStr, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage msg = await client.PostAsync("clients/notes", httpContent);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<ClientNoteDTO>();
+                return responseBody;
+            }
         }
     }
     

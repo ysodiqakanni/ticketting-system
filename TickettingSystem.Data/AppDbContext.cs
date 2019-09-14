@@ -9,6 +9,7 @@ namespace TickettingSystem.Data
     public class AppDbContext : DbContext
     {
         public DbSet<Client> Clients { get; set; }
+        public DbSet<ClientNote> ClientNotes { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

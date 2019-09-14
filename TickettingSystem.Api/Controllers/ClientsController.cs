@@ -21,11 +21,13 @@ namespace TickettingSystem.Api.Controllers
     public class ClientsController : ControllerBase
     {
         private readonly IClientService _clientService;
+        private readonly IClientNoteService _clientNoteService;
         IUnitOfWork uow;
 
-        public ClientsController(IClientService clientService)
+        public ClientsController(IClientService clientService, IClientNoteService clientNoteService )
         {
             _clientService = clientService;
+            _clientNoteService = clientNoteService;
         }
 
         [HttpGet]
@@ -61,6 +63,18 @@ namespace TickettingSystem.Api.Controllers
             return Ok(clientUpdate);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateNote(string notes)
+        {
+            var addNote = await _clientNoteService.CreateNote(notes);
+            return Ok(addNote);
+        }
 
+        [HttpGet("notes")]
+        public async Task<IActionResult> GetNotes()
+        {
+            var notes = await _clientNoteService.GetNotes();
+            return Ok(notes);
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace TickettingSystem.Services.Implementations
         {
             uow = _uow;
         }
+
         public async Task<IList<Client>> GetAllAsync()
         {
             return await uow.ClientRepository.GetAllAsync();

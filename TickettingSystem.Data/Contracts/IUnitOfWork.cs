@@ -9,6 +9,7 @@ namespace TickettingSystem.Data.Contracts
     {
         IBaseRepository<Client> ClientRepository { get; set; }
         IBaseRepository<Trade> TradeRepository { get; set; }
+        IBaseRepository<ClientNote> ClientNoteRepository { get; set; }
         int Save();
     }
 }

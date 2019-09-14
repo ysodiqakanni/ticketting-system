@@ -11,7 +11,7 @@ namespace TickettingSystem.Data.Implementations
     {
         public ClientRepository(DbContext ctx) : base(ctx)
         {
-
         }
+
     }
 }

@@ -17,7 +17,6 @@ namespace TickettingSystem.Core
         public string ReferredBy { get; set; }
         public string RefUrl { get; set; }
         public DateTime JoinedDate { get; set; }
-
         public Client()
         {
             JoinedDate = DateCreated;
