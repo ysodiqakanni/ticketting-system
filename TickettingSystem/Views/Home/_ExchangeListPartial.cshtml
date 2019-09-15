@@ -1,30 +1,26 @@
 ﻿@model TickettingSystem.Models.DashboardViewModel
-<table id="tblExchange" style="width:100%">
-    <tr>
-        <th class="round-1">Exchange Name</th>
-        <th>Enabled</th>
-        <th>Apis Entered</th>
-        <th>Verified Connection</th>
 
+<table style="width:100%">
+    <tr>
+        <th class="round-1">Exchange name</th>
+        <th>Enabled</th>
+        <th>APIs entered</th>
+        <th class="round-2">Verifyed connection</th>
     </tr>
-    @if (Model.Exchanges.Count < 1)
+    @foreach (var exchange in Model.Exchanges)
     {
-        <tr><td> No Records Found! </td></tr>
-    }
-    else
-    {
-        foreach (var exchange in Model.Exchanges)
+        var date = exchange.DateEnabled.ToString("dd/mm/yyyy");
+        var api = exchange.APIsEntered ?? "NONE ENTERED"; // String.IsNullOrEmpty(exchange.APIsEntered) ? "NONE ENTERED" : exchange.APIsEntered;
+        if (exchange.DateEnabled == default(DateTime))
         {
-            <tr class="clientDataRow">
-                <td>@exchange.Name</td>
-                <td>@exchange.Enabled.ToString("MM/dd/yyyy")</td>
-                <td>@exchange.EnteredApi</td>
-                <td>@exchange.VerifiedConnection</td>
-          
-            </tr>
+            date = "";
         }
+        <tr>
+            <td>@exchange.ExchangeName</td>
+            <td>@date</td>
+            <td>@api</td>
+            <td><input type="button" value="Connect" /></td>
+        </tr>
     }
 
 </table>
-<script src="~/assets/js/jquery.min.js"></script>
-<script src="~/assets/js/Client.js"></script>

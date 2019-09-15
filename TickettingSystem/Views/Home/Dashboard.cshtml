@@ -51,28 +51,7 @@
                                 </div>
 
                                 <div class="data-table-section" id="clientTableDiv">
-                                    @*<table id="tblClients" style="width:100%">
-                                            <tr>
-                                                <th class="round-1">User Id</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Referred by</th>
-                                                <th>Joined On</th>
-                                                <th class="round-2">KYC Level</th>
-                                            </tr>
 
-                                            @foreach (var client in ViewBag.AllClients as List<ClientDTO>)
-                                            {
-                                                <tr class="clientDataRow">
-                                                    <td>@client.ID</td>
-                                                    <td>@client.Name</td>
-                                                    <td>@client.Email</td>
-                                                    <td>@client.ReferredBy</td>
-                                                    <td>@client.JoinedDate.ToString("MM/dd/yyyy")</td>
-                                                    <td>@client.KycLevel</td>
-                                                </tr>
-                                            }
-                                        </table>*@
                                     @{await Html.RenderPartialAsync("_ClientListPartial", Model);}
                                 </div>
 
@@ -118,11 +97,230 @@
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Nationality</label>
-                                                            @*<select id="txtClientNationailty">
-                                                                    <option value="German">German</option>
-                                                                    <option value="French">French</option>
-                                                                </select>*@
-                                                            <input type="text" id="txtClientNationailty">
+                                                            <select id="txtClientNationailty" style="width:200px">
+                                                                <option value="">Select</option>
+                                                                <option value="AF">Afghan</option>
+                                                                <option value="AL">Albanian</option>
+                                                                <option value="DZ">Algerian</option>
+                                                                <option value="AS">American Samoan</option>
+                                                                <option value="AD">Andorran</option>
+                                                                <option value="AO">Angolan</option>
+                                                                <option value="AI">Anguillan</option>
+                                                                <option value="AG">Antiguan, Barbudan</option>
+                                                                <option value="AR">Argentine</option>
+                                                                <option value="AM">Armenian</option>
+                                                                <option value="AW">Aruban; Dutch</option>
+                                                                <option value="AU">Australian</option>
+                                                                <option value="AT">Austrian</option>
+                                                                <option value="AZ">Azerbaijani</option>
+                                                                <option value="BS">Bahamian</option>
+                                                                <option value="BH">Bahraini</option>
+                                                                <option value="BD">Bangladeshi</option>
+                                                                <option value="BB">Barbadian or Bajan (colloquial)</option>
+                                                                <option value="BY">Belarusian</option>
+                                                                <option value="BE">Belgian</option>
+                                                                <option value="BZ">Belizean</option>
+                                                                <option value="BJ">Beninese</option>
+                                                                <option value="BM">Bermudian</option>
+                                                                <option value="BT">Bhutanese</option>
+                                                                <option value="BO">Bolivian</option>
+                                                                <option value="BA">Bosnian, Herzegovinian</option>
+                                                                <option value="BW">Motswana (singular), Batswana (plural)</option>
+                                                                <option value="BR">Brazilian</option>
+                                                                <option value="VG">British Virgin Islander</option>
+                                                                <option value="BN">Bruneian</option>
+                                                                <option value="BG">Bulgarian</option>
+                                                                <option value="BF">Burkinabe</option>
+                                                                <option value="MM">Burmese</option>
+                                                                <option value="BI">Burundian</option>
+                                                                <option value="CV">Cabo Verdean</option>
+                                                                <option value="KH">Cambodian</option>
+                                                                <option value="CM">Cameroonian</option>
+                                                                <option value="CA">Canadian</option>
+                                                                <option value="KY">Caymanian</option>
+                                                                <option value="CF">Central African</option>
+                                                                <option value="TD">Chadian</option>
+                                                                <option value="CL">Chilean</option>
+                                                                <option value="CN">Chinese</option>
+                                                                <option value="CX">Christmas Island</option>
+                                                                <option value="CC">Cocos Islander</option>
+                                                                <option value="CO">Colombian</option>
+                                                                <option value="KM">Comoran</option>
+                                                                <option value="CD">Congolese or Congo</option>
+                                                                <option value="CG">Congolese or Congo</option>
+                                                                <option value="CK">Cook Islander</option>
+                                                                <option value="CR">Costa Rican</option>
+                                                                <option value="HR">Croatian</option>
+                                                                <option value="CU">Cuban</option>
+                                                                <option value="CY">Cypriot</option>
+                                                                <option value="DK">Danish</option>
+                                                                <option value="DJ">Djiboutian</option>
+                                                                <option value="DM">Dominican</option>
+                                                                <option value="DO">Dominican</option>
+                                                                <option value="EC">Ecuadorian</option>
+                                                                <option value="EG">Egyptian</option>
+                                                                <option value="SV">Salvadoran</option>
+                                                                <option value="GQ">Equatorial Guinean or Equatoguinean</option>
+                                                                <option value="ER">Eritrean</option>
+                                                                <option value="EE">Estonian</option>
+                                                                <option value="ET">Ethiopian</option>
+                                                                <option value="FK">Falkland Island</option>
+                                                                <option value="FO">Faroese</option>
+                                                                <option value="FJ">Fijian</option>
+                                                                <option value="FI">Finnish</option>
+                                                                <option value="FR">French</option>
+                                                                <option value="PF">French Polynesian</option>
+                                                                <option value="GA">Gabonese</option>
+                                                                <option value="GM">Gambian</option>
+                                                                <option value="GE">Georgian</option>
+                                                                <option value="DE">German</option>
+                                                                <option value="GH">Ghanaian</option>
+                                                                <option value="GI">Gibraltar</option>
+                                                                <option value="GR">Greek</option>
+                                                                <option value="GL">Greenlandic</option>
+                                                                <option value="GD">Grenadian</option>
+                                                                <option value="GU">Guamanian</option>
+                                                                <option value="GT">Guatemalan</option>
+                                                                <option value="GG">Channel Islander</option>
+                                                                <option value="GW">Bissau-Guinean</option>
+                                                                <option value="GN">Guinean</option>
+                                                                <option value="GY">Guyanese</option>
+                                                                <option value="HT">Haitian</option>
+                                                                <option value="VA">none</option>
+                                                                <option value="HN">Honduran</option>
+                                                                <option value="HK">Chinese/Hong Kong</option>
+                                                                <option value="HU">Hungarian</option>
+                                                                <option value="IS">Icelandic</option>
+                                                                <option value="IN">Indian</option>
+                                                                <option value="ID">Indonesian</option>
+                                                                <option value="IQ">Iraqi</option>
+                                                                <option value="IE">Irish</option>
+                                                                <option value="IM">Manx</option>
+                                                                <option value="IL">Israeli</option>
+                                                                <option value="IT">Italian</option>
+                                                                <option value="JM">Jamaican</option>
+                                                                <option value="JP">Japanese</option>
+                                                                <option value="JE">Channel Islander</option>
+                                                                <option value="JO">Jordanian</option>
+                                                                <option value="KZ">Kazakhstani</option>
+                                                                <option value="KE">Kenyan</option>
+                                                                <option value="KI">I-Kiribati</option>
+                                                                <option value="KP">Korean</option>
+                                                                <option value="KR">Korean</option>
+                                                                <option value="XK">Kosovar (Albanian), Kosovski (Serbian)</option>
+                                                                <option value="KW">Kuwaiti</option>
+                                                                <option value="KG">Kyrgyzstani</option>
+                                                                <option value="LV">Latvian</option>
+                                                                <option value="LB">Lebanese</option>
+                                                                <option value="LS">Basotho</option>
+                                                                <option value="LR">Liberian</option>
+                                                                <option value="LY">Libyan</option>
+                                                                <option value="LI">Liechtenstein</option>
+                                                                <option value="LT">Lithuanian</option>
+                                                                <option value="LU">Luxembourg</option>
+                                                                <option value="MO">Chinese</option>
+                                                                <option value="MK">Macedonian</option>
+                                                                <option value="MG">Malagasy</option>
+                                                                <option value="MW">Malawian</option>
+                                                                <option value="MY">Malaysian</option>
+                                                                <option value="MV">Maldivian</option>
+                                                                <option value="ML">Malian</option>
+                                                                <option value="MT">Maltese</option>
+                                                                <option value="MH">Marshallese</option>
+                                                                <option value="MR">Mauritanian</option>
+                                                                <option value="MU">Mauritian</option>
+                                                                <option value="MX">Mexican</option>
+                                                                <option value="FM">Micronesian; Chuukese, Kosraen(s), Pohnpeian(s), Yapese</option>
+                                                                <option value="MD">Moldovan</option>
+                                                                <option value="MC">Monegasque or Monacan</option>
+                                                                <option value="MN">Mongolian</option>
+                                                                <option value="ME">Montenegrin</option>
+                                                                <option value="MS">Montserratian</option>
+                                                                <option value="MA">Moroccan</option>
+                                                                <option value="MZ">Mozambican</option>
+                                                                <option value="NA">Namibian</option>
+                                                                <option value="NR">Nauruan</option>
+                                                                <option value="NP">Nepali</option>
+                                                                <option value="NL">Dutch</option>
+                                                                <option value="NC">New Caledonian</option>
+                                                                <option value="NZ">New Zealand</option>
+                                                                <option value="NI">Nicaraguan</option>
+                                                                <option value="NG">Nigerian</option>
+                                                                <option value="NE">Nigerien</option>
+                                                                <option value="NU">Niuean</option>
+                                                                <option value="NF">Norfolk Islander(s)</option>
+                                                                <option value="MP">NA</option>
+                                                                <option value="NO">Norwegian</option>
+                                                                <option value="OM">Omani</option>
+                                                                <option value="PK">Pakistani</option>
+                                                                <option value="PW">Palauan</option>
+                                                                <option value="PA">Panamanian</option>
+                                                                <option value="PG">Papua New Guinean</option>
+                                                                <option value="PY">Paraguayan</option>
+                                                                <option value="PE">Peruvian</option>
+                                                                <option value="PH">Philippine</option>
+                                                                <option value="PL">Polish</option>
+                                                                <option value="PT">Portuguese</option>
+                                                                <option value="PR">Puerto Rican</option>
+                                                                <option value="QA">Qatari</option>
+                                                                <option value="RO">Romanian</option>
+                                                                <option value="RW">Rwandan</option>
+                                                                <option value="SH">Saint Helenian</option>
+                                                                <option value="KN">Kittitian, Nevisian</option>
+                                                                <option value="LC">Saint Lucian</option>
+                                                                <option value="PM">French</option>
+                                                                <option value="VC">Saint Vincentian or Vincentian</option>
+                                                                <option value="WS">Samoan</option>
+                                                                <option value="SM">Sammarinese</option>
+                                                                <option value="ST">Sao Tomean</option>
+                                                                <option value="SA">Saudi or Saudi Arabian</option>
+                                                                <option value="SN">Senegalese</option>
+                                                                <option value="RS">Serbian</option>
+                                                                <option value="SC">Seychellois</option>
+                                                                <option value="SL">Sierra Leonean</option>
+                                                                <option value="SG">Singapore</option>
+                                                                <option value="SK">Slovak</option>
+                                                                <option value="SI">Slovenian</option>
+                                                                <option value="SB">Solomon Islander</option>
+                                                                <option value="SO">Somali</option>
+                                                                <option value="ZA">South African</option>
+                                                                <option value="SS">South Sudanese</option>
+                                                                <option value="ES">Spanish</option>
+                                                                <option value="LK">Sri Lankan</option>
+                                                                <option value="SD">Sudanese</option>
+                                                                <option value="SR">Surinamese</option>
+                                                                <option value="SZ">Swazi</option>
+                                                                <option value="SE">Swedish</option>
+                                                                <option value="CH">Swiss</option>
+                                                                <option value="SY">Syrian</option>
+                                                                <option value="TJ">Tajikistani</option>
+                                                                <option value="TH">Thai</option>
+                                                                <option value="TL">Timorese</option>
+                                                                <option value="TG">Togolese</option>
+                                                                <option value="TK">Tokelauan</option>
+                                                                <option value="TO">Tongan</option>
+                                                                <option value="TT">Trinidadian, Tobagonian</option>
+                                                                <option value="TN">Tunisian</option>
+                                                                <option value="TR">Turkish</option>
+                                                                <option value="TM">Turkmen</option>
+                                                                <option value="TV">Tuvaluan</option>
+                                                                <option value="UG">Ugandan</option>
+                                                                <option value="UA">Ukrainian</option>
+                                                                <option value="AE">Emirati</option>
+                                                                <option value="UK">British</option>
+                                                                <option value="US">American</option>
+                                                                <option value="UY">Uruguayan</option>
+                                                                <option value="UZ">Uzbekistani</option>
+                                                                <option value="VU">Ni-Vanuatu</option>
+                                                                <option value="VE">Venezuelan</option>
+                                                                <option value="VN">Vietnamese</option>
+                                                                <option value="VI">Virgin Islander</option>
+                                                                <option value="WF">Wallisian, Futunan, or Wallis and Futuna Islander</option>
+                                                                <option value="EH">Sahrawi, Sahrawian, Sahraouian</option>
+                                                                <option value="YE">Yemeni</option>
+                                                                <option value="ZM">Zambian</option>
+                                                                <option value="ZW">Zimbabwean</option>
+                                                            </select> 
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -189,43 +387,36 @@
                                                     <div class="col-md-12">
                                                         <h3 class="heading-note">Notes</h3>
                                                         <div class="notes">
-                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            @*<p ondblclick="popNote(this)" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>*@
-                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                            @{await Html.RenderPartialAsync("_NotesPartial", Model);}
                                                             <a href="#" class="note-btn" data-toggle="modal" data-target="#addNoteModal">+ Add New Note</a>
-                                                            @*<button type="button" class="note-btn" data-toggle="modal" data-target="#addNoteModal">+ Add New Note</button>*@
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="addNoteModal" role="dialog">
-                                                                <div class="modal-dialog">
+                                                        </div>
+                                                        <!-- Add Notes Modal -->
+                                                        <div class="modal fade" id="addNoteModal" role="dialog">
+                                                            <div class="modal-dialog">
 
-                                                                    <!-- Modal content-->
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                            <h4 class="modal-title">Add a new Note</h4>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="single-form-opt">
-                                                                                <label class="address">Notes</label>
-                                                                                <textarea type="text" class="form-control" id="txtNewNote"></textarea>
-                                                                            </div>
-
-
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <div>
-                                                                                <button type="button" id="btnAddNote" class="btn btn-success col-lg-6 col-lg-offset-4">OK</button>
-                                                                            </div>
-                                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                                                        </div>
+                                                                <!-- Modal content-->
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        <h4 class="modal-title">Add a new Note</h4>
                                                                     </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="single-form-opt">
+                                                                            <label class="address">Notes</label>
+                                                                            <textarea type="text" class="form-control" id="txtNewNote"></textarea>
+                                                                        </div>
 
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <div>
+                                                                            <button type="button" id="btnAddNote" class="btn btn-success col-lg-6 col-lg-offset-4">OK</button>
+                                                                        </div>
+                                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
+                                                            </div>
                                                         </div>
                                                         <div class="finally-btn">
                                                             <a href="#" class="reset-btn btn" id="btnResetClientPassword">Reset Pwd</a>
@@ -286,7 +477,7 @@
                                     </form>
                                 </div>
                                 <div class="data-table-section">
-                                    <table  id="tbTradeSearchResult" style="width:100%">
+                                    <table id="tbTradeSearchResult" style="width:100%">
                                         <tr>
                                             <th class="round-1">Date time</th>
                                             <th>Exchange</th>
@@ -296,13 +487,13 @@
                                             <th class="round-2">Social</th>
                                         </tr>
                                         @*<tr>
-                                            <td class="round-3">10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Bye/Sell/Transfer</td>
-                                            <td>$100</td>
-                                            <td>Yes/No</td>
-                                            <td class="round-4">Yes/No</td>
-                                        </tr>*@
+                                                <td class="round-3">10/12/2018</td>
+                                                <td>Lorem ipsum dolor sit amet.</td>
+                                                <td>Bye/Sell/Transfer</td>
+                                                <td>$100</td>
+                                                <td>Yes/No</td>
+                                                <td class="round-4">Yes/No</td>
+                                            </tr>*@
                                     </table>
                                 </div>
                                 <div class="trade-seceond-form">
@@ -324,13 +515,16 @@
                             </div>
                             <div id="custom-tab-4" class="tab-pane fade">
                                 <div class="search-option">
-                                    <input type="text" placeholder="Search for client">
-                                    <input type="submit" value="Search">
+                                    <input type="text" id="txtUserIdForExchangeSearch" placeholder="Search for client">
+                                    <input type="submit" id="btnSearchExchanges" value="Search">
                                     <a href="" class="btn">Cancel</a><span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
                                 </div>
 
-                                <div class="data-table-section">
+
+                                <div id="divClientExchanges" class="data-table-section">
+
                                     @{await Html.RenderPartialAsync("_ExchangeListPartial", Model);}
+                                    
                                 </div>
 
                                 <div style="height: 20px;"></div>

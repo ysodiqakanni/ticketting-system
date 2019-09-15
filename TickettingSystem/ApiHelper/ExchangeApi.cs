@@ -1,36 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+
+using System.Linq;
+
 using System.Threading.Tasks;
 using TickettingSystem.Models;
 
 namespace TickettingSystem.ApiHelper
 {
-    public class ExchangeApi
+
+    public static class ExchangeApi
     {
-        public ExchangeApi()
+        public static Task<List<ExchangeListViewModel>> GetAllKnownExchanges()
         {
-        }
-       public static Task<List<ExchangeViewModel>> getAllExchange()
-        {
-            var exchanges = new List<ExchangeViewModel>
+            // This should return only the name column
+            var exchanges = new List<ExchangeListViewModel>
             {
-                new ExchangeViewModel{Name="Exchange 1",Enabled=DateTime.Now,EnteredApi="EnteredApi 1",VerifiedConnection="Verified connection 1"},
-                new ExchangeViewModel{Name="Exchange 2",Enabled=DateTime.Now,EnteredApi="EnteredApi 2",VerifiedConnection="Verified connection 2"},
-                new ExchangeViewModel{Name="Exchange 3",Enabled=DateTime.Now,EnteredApi="EnteredApi 3",VerifiedConnection="Verified connection 3"},
-                new ExchangeViewModel{Name="Exchange 4",Enabled=DateTime.Now,EnteredApi="EnteredApi 4",VerifiedConnection="Verified connection 4"},
+                new ExchangeListViewModel{ExchangeName = "Lorem"},
+                new ExchangeListViewModel{ExchangeName = "Lorem"},
+                new ExchangeListViewModel{ExchangeName = "Lorem"}
             };
-            return Task.Run(() => exchanges);
+            return Task.Run(() => { return exchanges; });
+ 
         }
-        public static Task<List<ExchangeViewModel>> getExchangeByUserId(int id)
+        public static Task<List<ExchangeListViewModel>> SearchExchangesByUserId(string id)
         {
-            var exchanges = new List<ExchangeViewModel>
+            var exchanges = new List<ExchangeListViewModel>
             {
-                new ExchangeViewModel{Name="Exchange 1",Enabled=DateTime.Now,EnteredApi="EnteredApi 1",VerifiedConnection="Verified connection 1"},
-                new ExchangeViewModel{Name="Exchange 2",Enabled=DateTime.Now,EnteredApi="EnteredApi 2",VerifiedConnection="Verified connection 2"},
-                new ExchangeViewModel{Name="Exchange 3",Enabled=DateTime.Now,EnteredApi="EnteredApi 3",VerifiedConnection="Verified connection 3"},
-                new ExchangeViewModel{Name="Exchange 4",Enabled=DateTime.Now,EnteredApi="EnteredApi 4",VerifiedConnection="Verified connection 4"},
+                new ExchangeListViewModel{ExchangeName = "Lorem", DateEnabled = DateTime.Now, APIsEntered = "APi-SomeApis"},
+                new ExchangeListViewModel{ExchangeName = "Lorem", DateEnabled = DateTime.Now, APIsEntered = null},
+                new ExchangeListViewModel{ExchangeName = "Lorem", DateEnabled = DateTime.Now, APIsEntered = "APi-SomeApis"}
             };
-            return Task.Run(() => exchanges);
+            return Task.Run(() => { return exchanges; });
         }
     }
 }

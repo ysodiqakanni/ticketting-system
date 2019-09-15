@@ -1,14 +1,15 @@
 ﻿using System;
+
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace TickettingSystem.Models
 {
-    public class ExchangeViewModel
+    public class ExchangeListViewModel
     {
-        public ExchangeViewModel()
-        {
-        }
-        public String Name { get; set; }
-        public DateTime Enabled { get; set; }
-        public String EnteredApi { get; set; }
-        public String VerifiedConnection { get; set; }
+        public string ExchangeName { get; set; }
+        public DateTime DateEnabled { get; set; }
+        public string APIsEntered { get; set; }
     }
 }

@@ -60,7 +60,7 @@ namespace TickettingSystem.ApiHelper
                     JoinedDate = DateTime.Now.AddYears(-2),
                     KycLevel = "Secondary",
                     Language = "English",
-                    Nationality = "Brazilian",
+                    Nationality = "AD",
                     ReferredBy = "Refererrrr JJ",
                     RefUrl = "www.urlforref.com"
                 };
@@ -74,9 +74,22 @@ namespace TickettingSystem.ApiHelper
         {
             return;
         }
-        public static async Task CreateNewNote(string note)
+        public static async Task<string> CreateNewNote(string note)
         {
-            return;
+            // return the note after successful insertion to db
+            return note;
+        }
+        public static async Task<List<NoteListViewModel>> GetAllNotes()
+        {
+            // Return the MOST RECENT 5 notes
+            return new List<NoteListViewModel>()
+            {
+                new NoteListViewModel{Content = "So Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
+                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
+                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
+                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
+                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"}
+            };
         }
     }
     
