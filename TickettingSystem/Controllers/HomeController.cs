@@ -24,6 +24,11 @@ namespace TickettingSystem.Controllers
             model.Trades = await TradesApi.SearchTrades("");
 
             model.Notes = await ClientsApi.GetAllNotes();
+            model.MembershipData = new Membership
+            {
+                PackagesAvailable = new List<MembershipAvailablePackagesViewModel>(),
+                PackagesPurchased = new List<MembershipPackagesPurchasedViewModel>()
+            };
             // initially, no client is selected!
             // so search results (D) should contain each of the known exchanges 
             model.Exchanges = await ExchangeApi.GetAllKnownExchanges();
@@ -131,12 +136,40 @@ namespace TickettingSystem.Controllers
             //return Json(new { success = true, msg = theTrade });
         }
 
-        [Route("exchanges/{userId}")]
+        [Route("exchanges/{userId?}")]
         public async Task<PartialViewResult> Exchanges(string userId)
         {
             var model = new DashboardViewModel();
-            model.Exchanges = await ExchangeApi.SearchExchangesByUserId(userId);
+            if (String.IsNullOrEmpty(userId))
+            {
+                model.Exchanges = new List<ExchangeListViewModel>();
+            }
+            else
+            {
+                model.Exchanges = await ExchangeApi.SearchExchangesByUserId(userId);
+            }
+           
             return PartialView("_ExchangeListPartial", model);
+        }
+
+        [Route("memberships/{userId?}")]
+        public async Task<PartialViewResult> Memberships(string userId)
+        {
+            var model = new DashboardViewModel();
+            if (String.IsNullOrEmpty(userId))
+            {
+                model.MembershipData = new Membership() { PackagesAvailable = new List<MembershipAvailablePackagesViewModel>(), PackagesPurchased = new List<MembershipPackagesPurchasedViewModel>() };
+            }
+            else
+            {
+                model.MembershipData = new Membership
+                {
+                    PackagesPurchased = await MembershipsApi.GetMembershipPackagesPurchased(),
+                    PackagesAvailable = await MembershipsApi.GetAvailableMembershipPackages()
+                };
+            }
+
+            return PartialView("_Memberships", model);
         }
 
 

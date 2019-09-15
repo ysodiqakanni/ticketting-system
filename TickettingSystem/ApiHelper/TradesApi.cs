@@ -51,15 +51,7 @@ namespace TickettingSystem.ApiHelper
                    new TradeViewModel{ID=5,Exchange="Lorem ipsum dolor sit amet",Operation="TRANSFER",UserId=1,CreatedOn=DateTime.Now,Price=600},
                     new TradeViewModel{ID=6,Exchange="Lorem ipsum dolor sit amet",Operation="BUY",UserId=1,CreatedOn=DateTime.Now,Price=600},
             };
-            return Task.Run(() => { return clients; });
-
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    HttpResponseMessage msg = await client.GetAsync("");
-            //    msg.EnsureSuccessStatusCode();
-            //    var responseBody = await msg.Content.ReadAsAsync<List<ClientDTO>>();
-            //    return responseBody;
-            //}
+            return Task.Run(() => { return clients; }); 
         }
     }
 }

@@ -1,0 +1,61 @@
+﻿@model TickettingSystem.Models.DashboardViewModel
+<div class="membership-heading">
+    <h2>Available Membership packages</h2>
+</div>
+
+<div class="data-table-section">
+    <table style="width:100%">
+        <tr>
+            <th class="round-1">Membership name</th>
+            <th>Enabled</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th class="round-2">Price</th>
+        </tr>
+
+        @foreach (var membership in Model.MembershipData.PackagesAvailable)
+        {
+            <tr>
+                <td>@membership.MembershipName</td>
+                <td>@membership.DateEnabled.ToString("dd/mm/yyyy")</td>
+                <td>@membership.Description</td>
+                <td>@membership.StartDate.ToString("dd/mm/yyyy")</td>
+                <td>@membership.EndDate.ToString("dd/mm/yyyy")</td>
+                <td>$100</td>
+            </tr>
+        }
+         
+    </table>
+
+</div>
+<div class="membership-heading">
+    <h2>Membership packages Purchased</h2>
+</div>
+
+<div id="divClientPurchasedMemberships" class="data-table-section">
+    <table style="width:100%">
+        <tr>
+            <th class="round-1">Membership name</th>
+            <th>Enabled</th>
+            <th>Description</th>
+            <th>Purchased on</th>
+            <th>Played</th>
+            <th class="round-2">Currency</th>
+        </tr>
+
+        @foreach (var membership in Model.MembershipData.PackagesPurchased)
+        {
+            <tr>
+                <td>@membership.MembershipName</td>
+                <td>@membership.DateEnabled.ToString("dd/mm/yyyy")</td>
+                <td>@membership.Description</td>
+                <td>@membership.PurchasedDate.ToString("dd/mm/yyyy")</td>
+                <td>@membership.PlayedDate.ToString("dd/mm/yyyy")</td>
+                <td>@membership.Currency</td>
+            </tr>
+        }
+
+
+    </table>
+</div>

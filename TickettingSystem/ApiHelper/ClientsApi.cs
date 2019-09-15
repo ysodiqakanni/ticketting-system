@@ -18,15 +18,7 @@ namespace TickettingSystem.ApiHelper
                 new ClientDTO{ID = 2, Name = "John kay", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primary", ReferredBy = "Tunde"},
                 new ClientDTO{ID = 3, Name = "Bad ROugue", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Joy"}
             };
-            return Task.Run(() => { return clients; });
-
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    HttpResponseMessage msg = await client.GetAsync("");
-            //    msg.EnsureSuccessStatusCode();
-            //    var responseBody = await msg.Content.ReadAsAsync<List<ClientDTO>>();
-            //    return responseBody;
-            //}
+            return Task.Run(() => { return clients; }); 
         }
         public static Task<List<ClientListViewModel>> SearchClients(string searchStr)
         {
@@ -36,14 +28,7 @@ namespace TickettingSystem.ApiHelper
                 new ClientListViewModel{ID = 3, Name = "Bad ROugue", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Joy"}
             };
             return Task.Run(() => { return clients; });
-
-            //using (HttpClient client = new HttpClient())
-            //{
-            //    HttpResponseMessage msg = await client.GetAsync("");
-            //    msg.EnsureSuccessStatusCode();
-            //    var responseBody = await msg.Content.ReadAsAsync<List<ClientDTO>>();
-            //    return responseBody;
-            //}
+             
         }
         public static Task<ClientDTO> GetClientById(int id)
         {

@@ -517,7 +517,7 @@
                                 <div class="search-option">
                                     <input type="text" id="txtUserIdForExchangeSearch" placeholder="Search for client">
                                     <input type="submit" id="btnSearchExchanges" value="Search">
-                                    <a href="" class="btn">Cancel</a><span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
+                                    <a href="#" class="btn" id="btnCancelExchangeSearch">Cancel</a><span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
                                 </div>
 
 
@@ -530,128 +530,8 @@
                                 <div style="height: 20px;"></div>
                             </div>
                             <div id="custom-tab-5" class="tab-pane fade">
-                                <div class="membership-heading">
-                                    <h2>Available Membership packages</h2>
-                                </div>
-
-                                <div class="data-table-section">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th class="round-1">Membership name</th>
-                                            <th>Enabled</th>
-                                            <th>Description</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th class="round-2">Price</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="round-3">Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td class="round-4">$100</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="membership-heading">
-                                    <h2>Membership packages Purchased</h2>
-                                </div>
-
-                                <div class="data-table-section">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th class="round-1">Membership name</th>
-                                            <th>Enabled</th>
-                                            <th>Description</th>
-                                            <th>Purchased on</th>
-                                            <th>Played</th>
-                                            <th class="round-2">Currency</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="round-3">Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td class="round-4">Dollar</td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-
+                                @{await Html.RenderPartialAsync("_Memberships", Model);}
+                                
                             </div>
                             <div id="custom-tab-6" class="tab-pane fade">
                                 <div class="search-option">
@@ -661,7 +541,9 @@
                                     <span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
                                 </div>
 
-                                <div class="data-table-section">
+                                <div id="divClienttickets" class="data-table-section">
+
+
                                     <table style="width:100%">
                                         <tr>
                                             <th class="round-1">Client Name</th>
@@ -689,76 +571,7 @@
                                         </tr>
                                     </table>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="ticket">
-                                            <h3>Tickets</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="height: 20px;"></div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+ 
                                 <div style="height: 40px;"></div>
 
                                 <div class="data-form-section">

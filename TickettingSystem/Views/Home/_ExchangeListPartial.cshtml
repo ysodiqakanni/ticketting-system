@@ -10,7 +10,7 @@
     @foreach (var exchange in Model.Exchanges)
     {
         var date = exchange.DateEnabled.ToString("dd/mm/yyyy");
-        var api = exchange.APIsEntered ?? "NONE ENTERED"; // String.IsNullOrEmpty(exchange.APIsEntered) ? "NONE ENTERED" : exchange.APIsEntered;
+        var api = exchange.APIsEntered ?? "NONE ENTERED";
         if (exchange.DateEnabled == default(DateTime))
         {
             date = "";
@@ -19,8 +19,12 @@
             <td>@exchange.ExchangeName</td>
             <td>@date</td>
             <td>@api</td>
-            <td><input type="button" value="Connect" /></td>
+            <td><input type="button" value="Connect" id="btnConnectExchange" data-connected=false onclick="connectExchange(this)" /></td>
         </tr>
     }
 
 </table>
+
+@*<script src="~/assets/js/jquery.min.js"></script>*@
+@*<script src="~/assets/js/Client.js"></script>*@
+
