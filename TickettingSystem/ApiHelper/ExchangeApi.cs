@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Linq;
+
 using System.Threading.Tasks;
 using TickettingSystem.Models;
 
 namespace TickettingSystem.ApiHelper
 {
+
     public static class ExchangeApi
     {
         public static Task<List<ExchangeListViewModel>> GetAllKnownExchanges()
@@ -29,7 +32,6 @@ namespace TickettingSystem.ApiHelper
                 new ExchangeListViewModel{ExchangeName = "Lorem", DateEnabled = DateTime.Now, APIsEntered = "APi-SomeApis"}
             };
             return Task.Run(() => { return exchanges; });
-
         }
     }
 }

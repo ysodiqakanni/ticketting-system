@@ -10,14 +10,32 @@ $("#btnSearchClients").on("click", function () {
 
 
 $("#btnSearchTrades").on("click", function () {
-    /*var getTodate;
-    var getFromDate;
-    var getUserId;
-    var getExchange;
-    if (getTodate.getTime() < getFromdate.getTime()) {
-        alert("to date must come after from date");
-    }*/
-    var url = "/home/trades/search";
+
+    var getUserId = $("#srchUserId").val();
+
+    var getToDate=!!$("#tradeToDate").val()? new Date($("#tradeToDate").val()):null;
+    var getFromDate=!!$("#tradeFromDate").val()? new Date($("#tradeFromDate").val()):null;
+    var getExchange=$("#tradeSrExch").val();
+    if (getToDate != null && getFromDate != null) {
+        if (getToDate < getFromDate) {
+            alert("to date must come after from date");
+            return;
+        }
+    }
+    var searchObject = {};
+    if (getUserId) {
+        searchObject["userId"] = getUserId;
+    }
+    if (getExchange) {
+        searchObject["exchange"] = getExchange;
+    }
+    if (getToDate ) {
+         searchObject["toDate"] =getToDate.toLocaleDateString();
+    }
+     if (getFromDate) {
+         searchObject["fromDate"] =getFromDate.toLocaleDateString();
+    }
+    var url = "/home/trades/search?"+$.param(searchObject,true);
     $.ajax({
         url: url,
         type: "GET",
@@ -50,8 +68,7 @@ $("#btnSearchTrades").on("click", function () {
                     var tabCell6 = tr.insertCell(-1);
                     tabCell6.innerHTML = "No";
                 }
-
-
+               
             }
             else {
                 alert("searching error");

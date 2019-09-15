@@ -9,8 +9,10 @@ namespace TickettingSystem.Models
     {
         public List<ClientListViewModel> Clients { get; set; }
         public List<TradeViewModel> Trades { get; set; }
+
         public List<NoteListViewModel> Notes { get; set; }
         public List<ExchangeListViewModel> Exchanges { get; set; }
+
         public Membership MembershipData { get; set; }
         public List<StaffListViewModel> StaffList { get; set; }
     }

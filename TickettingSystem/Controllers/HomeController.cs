@@ -22,6 +22,7 @@ namespace TickettingSystem.Controllers
             var model = new DashboardViewModel();
             model.Clients = await ClientsApi.SearchClients("");
             model.Trades = await TradesApi.SearchTrades("");
+
             model.Notes = await ClientsApi.GetAllNotes();
             model.MembershipData = new Membership
             {
@@ -32,6 +33,7 @@ namespace TickettingSystem.Controllers
             // initially, no client is selected!
             // so search results (D) should contain each of the known exchanges 
             model.Exchanges = await ExchangeApi.GetAllKnownExchanges();
+
             return View(model);
         }
 
@@ -126,7 +128,6 @@ namespace TickettingSystem.Controllers
             return Json(new { success = true, msg = theTrade });
         }
         [Route("trades/search")]
-        
         public IActionResult SearchTrade([FromQuery] TradeSearchModel tradeSearch)
         {
             var trades = TradesApi.GetAllTrades();
