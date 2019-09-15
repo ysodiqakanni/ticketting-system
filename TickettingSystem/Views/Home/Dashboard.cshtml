@@ -486,14 +486,7 @@
                                             <th>Arbitrage</th>
                                             <th class="round-2">Social</th>
                                         </tr>
-                                        @*<tr>
-                                                <td class="round-3">10/12/2018</td>
-                                                <td>Lorem ipsum dolor sit amet.</td>
-                                                <td>Bye/Sell/Transfer</td>
-                                                <td>$100</td>
-                                                <td>Yes/No</td>
-                                                <td class="round-4">Yes/No</td>
-                                            </tr>*@
+                                      
                                     </table>
                                 </div>
                                 <div class="trade-seceond-form">
@@ -653,47 +646,15 @@
                             </div>
                             <div id="custom-tab-7" class="tab-pane fade">
                                 <div class="search-option">
-                                    <input type="text" placeholder="Search for client">
-                                    <input type="submit" value="Search">
-                                    <a href="" class="btn">Cancel</a>
+                                    <input type="text" id="txtStaffSearchKeyword" placeholder="Search for staff">
+                                    <input id="btnSearchStaff" type="submit" value="Search">
+                                    <a href="#" id="btnCancelStaffSearch" class="btn" style="width:130px; height:inherit; font-size: inherit;">Cancel</a>
                                     <span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
                                 </div>
 
-                                <div class="data-table-section">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th class="round-1">User Id</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Referred by</th>
-                                            <th>Joined On</th>
-                                            <th class="round-2">KYC Level</th>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>Jhon Doe Wills</td>
-                                            <td>exampleemail@gmail.com</td>
-                                            <td>Mr Will Smith jr</td>
-                                            <td>10/12/2018</td>
-                                            <td>Primary</td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>Jhon Doe Wills</td>
-                                            <td>exampleemail@gmail.com</td>
-                                            <td>Mr Will Smith jr</td>
-                                            <td>10/12/2018</td>
-                                            <td>Primary</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="round-3">10</td>
-                                            <td>Jhon Doe Wills</td>
-                                            <td>exampleemail@gmail.com</td>
-                                            <td>Mr Will Smith jr</td>
-                                            <td>10/12/2018</td>
-                                            <td class="round-4">Primary</td>
-                                        </tr>
-                                    </table>
+                                <div id="divStaffList" class="data-table-section">
+                                    @{await Html.RenderPartialAsync("_StaffList", Model);}
+                                     
                                 </div>
 
                                 <div style="height: 40px;"></div>

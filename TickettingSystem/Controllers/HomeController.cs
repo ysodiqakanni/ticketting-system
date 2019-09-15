@@ -28,6 +28,7 @@ namespace TickettingSystem.Controllers
                 PackagesAvailable = new List<MembershipAvailablePackagesViewModel>(),
                 PackagesPurchased = new List<MembershipPackagesPurchasedViewModel>()
             };
+            model.StaffList = await StaffApi.GetAllStaff();
             // initially, no client is selected!
             // so search results (D) should contain each of the known exchanges 
             model.Exchanges = await ExchangeApi.GetAllKnownExchanges();
@@ -170,6 +171,62 @@ namespace TickettingSystem.Controllers
 
             return PartialView("_Memberships", model);
         }
+        [Route("staff/search/{s?}")]
+        public async Task<PartialViewResult> SearchStaff(string s)
+        {
+            s = s.Trim();
+            // Process the search string s.
+            // if s contains = as in ID=x then search by Id
+            // wildcard search involves *
+            // mart*  yield all staff with surnames martxxxx
+            // * returns all staff
+             
+            var model = new DashboardViewModel();
+            model.StaffList = new List<StaffListViewModel>();
+
+            if (s == "*") model.StaffList = await StaffApi.GetAllStaff();
+            // searching by surname
+            else if (s.Contains("*"))
+            {
+                // a starting or ending *
+                if (s.StartsWith("*"))
+                {
+                    string surnameSuffix = s.Substring(1);
+                    if (!String.IsNullOrEmpty(surnameSuffix))
+                    {
+                        // search by suffix
+                        model.StaffList = await StaffApi.SearchByLastNameSuffix(surnameSuffix);
+                    }
+                }
+                else if (s.EndsWith("*"))
+                {
+                    string surnamePrefix = s.Substring(0, s.Length - 1);
+                    if (!String.IsNullOrEmpty(surnamePrefix))
+                    {
+                        // search by prefix
+                        model.StaffList = await StaffApi.SearchByLastNamePrefix(surnamePrefix);
+                    }
+                }
+            }
+            // search by ID
+            else if (s.ToLower().Contains("id="))
+            {
+                string idStr = s.Substring(3);
+                int id = 0;
+                if(int.TryParse(idStr, out id))
+                {
+                    // search by Id
+                    model.StaffList = await StaffApi.GetStaffById(id);
+                }
+            }
+            // else search by last name
+            else
+            {
+                model.StaffList = await StaffApi.SearchByLastName(s);
+            }
+            return PartialView("_StaffList", model);
+        }
+        
 
 
 

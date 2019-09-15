@@ -278,13 +278,24 @@ $("#btnSearchExchanges").on("click", function () {
     }
     searchExchanges(userId);
 })
-
 $("#btnCancelExchangeSearch").on("click", function () {
     // clear search textbox
     // refresh table
     $("#txtUserIdForExchangeSearch").val("");
     searchExchanges("");
 })
+$("#btnSearchStaff").on("click", function () {
+    var keyword = $("#txtStaffSearchKeyword").val();
+    if (!keyword) { 
+        return;
+    }
+    searchStaff(keyword); 
+})
+$("#btnCancelStaffSearch").on("click", function () { 
+    $("#txtStaffSearchKeyword").val("*");
+    searchStaff("*");
+})
+
 
 function removeSelectedClientRecords() {
     $("#hiddenClientID").val("");
@@ -407,4 +418,25 @@ var connectExchange = function (el) {
         el.style.backgroundColor = "green";
         $(el).val("Disconnect");
     } 
+}
+var searchStaff = function (keyword) {
+    var url = "/home/staff/search/" + keyword;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) {
+                $("#divStaffList").html(response);
+            }
+            else {
+                alert("loading error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
 }
