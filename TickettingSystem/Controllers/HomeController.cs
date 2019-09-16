@@ -36,6 +36,7 @@ namespace TickettingSystem.Controllers
             // initially, no client is selected!
             // so search results (D) should contain each of the known exchanges 
             model.Exchanges = await ExchangeApi.GetAllKnownExchanges();
+            model.Tickets = await TicketsApi.GetLastTenTickets();
 
             return View(model);
         }
@@ -175,6 +176,103 @@ namespace TickettingSystem.Controllers
 
             return PartialView("_Memberships", model);
         }
+        [Route("tickets/{userId?}")]
+        public async Task<PartialViewResult> Tickets(int? userId)
+        {
+            var model = new DashboardViewModel();
+            if (userId == null)
+            {
+                model.Tickets = new List<TicketsListViewModel>();
+            }
+            else
+            {
+                model.Tickets = await TicketsApi.GetTicketsForClient(userId.Value);
+            }
+
+            return PartialView("_ClientTicketsPartial", model);
+        }
+        [Route("tickets/search/{s?}")]
+        public async Task<PartialViewResult> SearchTickets(string s)
+        {
+            // process the search keywords
+            // by date, client name or client id
+
+            var result = new List<TicketsListViewModel>();
+            // search by 
+            string tv = GetTicketSearchTypeAndValue(s);
+            string type = tv.Split('~')[0];
+            string value = tv.Split('~')[1];
+
+            if(string.Compare(type, "id", true) == 0)
+            {
+                if (value.StartsWith("*"))
+                {
+                    result = await TicketsApi.SearchByClientId(value, WilcardType.Prefix);
+                }
+                else if (value.EndsWith("*"))
+                {
+                    result = await TicketsApi.SearchByClientId(value, WilcardType.Suffix);
+                }
+                else
+                {
+                    result = await TicketsApi.SearchByClientId(value, WilcardType.None);
+                }
+            }
+            else if (string.Compare(type, "name", true) == 0)
+            {
+                if (value.StartsWith("*"))
+                {
+                    result = await TicketsApi.SearchByClientName(value, WilcardType.Prefix);
+                }
+                else if (value.EndsWith("*"))
+                {
+                    result = await TicketsApi.SearchByClientName(value, WilcardType.Suffix);
+                }
+                else
+                {
+                    result = await TicketsApi.SearchByClientName(value, WilcardType.None);
+                }
+            }
+            // date
+            else
+            {
+                result = await TicketsApi.SearchByDate(value.Split('/')[0], value.Split('/')[1], value.Split('/')[2]);
+            }
+
+            var model = new DashboardViewModel();
+            model.Tickets = result;
+            
+
+            return PartialView("_ClientTicketsPartial", model);
+        }
+       
+        private string GetTicketSearchTypeAndValue(string s)
+        {
+            s = s.ToLower().Trim();
+            string type = "", value = "";
+            // userid=xxxx
+            if (s.StartsWith("userid="))
+            {
+                type = "id";
+                value = s.Substring(7);
+                // is wildcard?
+                
+            }
+            // date=xx/xx/xxxx eg */3/2019 or 26/*/1990
+            else if (s.StartsWith("date="))
+            {
+                type = "date";
+                  value = s.Substring(5);
+            }
+            // client name search
+            else
+            {
+                  type = "name";
+                  value = s;
+            }
+            return $"{type}~{value}";
+        }
+
         [Route("staff/search/{s?}")]
         public async Task<PartialViewResult> SearchStaff(string s)
         {

@@ -16,5 +16,6 @@ namespace TickettingSystem.Models
         public Membership MembershipData { get; set; }
         public List<StaffListViewModel> StaffList { get; set; }
         public List<StaffNoteViewModel> NotesForTheSelectedStaff { get; set; }
+        public List<TicketsListViewModel> Tickets { get; set; }
     }
 }

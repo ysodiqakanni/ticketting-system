@@ -254,6 +254,9 @@ $(".clientDataRow").on("click", function () {  // https://stackoverflow.com/a/26
 
     // populate Membership tab
     searchMemberships(id);
+
+    // populate clien't tickets
+    searchTickets("userid=" + id);
 })
 $("#btnAddNote").on("click", function (e) {
     const note = $("#txtNewNote").val();
@@ -311,6 +314,15 @@ $("#btnSearchStaff").on("click", function () {
 $("#btnCancelStaffSearch").on("click", function () { 
     $("#txtStaffSearchKeyword").val("*");
     searchStaff("*");
+})
+$("#btnCancelStaffSearch").on("click", function () {
+    $("#txtStaffSearchKeyword").val("*");
+    searchStaff("*");
+})
+
+$("#btnCancelTicketSearch").on("click", function () {
+    $("#txtTicketSearchKeyword").val("*");
+    searchTickets("*");
 })
 
 //$(".staffDataRow").live("click", function () {  
@@ -503,6 +515,27 @@ var searchMemberships = function (userId) {
         success: function (response) {
             if (response) {
                 $("#custom-tab-5").html(response);
+            }
+            else {
+                alert("loading error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+}
+var searchTickets = function (s) {
+    var url = "/home/tickets/search?s=" + s;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) {
+                $("#divClientTickets").html(response);
             }
             else {
                 alert("loading error");

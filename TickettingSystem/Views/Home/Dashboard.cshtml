@@ -529,43 +529,19 @@
                                 @{await Html.RenderPartialAsync("_Memberships", Model);}
                                 
                             </div>
+
                             <div id="custom-tab-6" class="tab-pane fade">
                                 <div class="search-option">
-                                    <input type="text" placeholder="Search for client">
-                                    <input type="submit" value="Search">
-                                    <a href="" class="btn">Cancel</a>
+                                    <input id="txtTicketSearchKeyword" type="text" placeholder="Search for client">
+                                    <input id="btnSearchTickets" type="submit" value="Search">
+                                    <a href="#" id="btnCancelTicketSearch" class="btn">Cancel</a>
                                     <span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
                                 </div>
 
-                                <div id="divClienttickets" class="data-table-section">
+                                <div id="divClientTickets" class="data-table-section">
 
-
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th class="round-1">Client Name</th>
-                                            <th>Enabled</th>
-                                            <th>Description</th>
-                                            <th class="round-2">Price</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Jhon Willson</td>
-                                            <td>10/12/18</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Jhon Willson</td>
-                                            <td>10/12/18</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="round-3">Mr Jhon Willson</td>
-                                            <td>10/12/18</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td class="round-4">$100</td>
-                                        </tr>
-                                    </table>
+                                    @{await Html.RenderPartialAsync("_ClientTicketsPartial", Model);}
+                                    
                                 </div>
  
                                 <div style="height: 40px;"></div>

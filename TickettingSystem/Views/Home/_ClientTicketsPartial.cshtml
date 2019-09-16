@@ -1,0 +1,18 @@
+﻿@model TickettingSystem.Models.DashboardViewModel
+<table style="width:100%">
+    <tr>
+        <th class="round-1">Client Name</th>
+        <th>Enabled</th>
+        <th>Description</th>
+        <th class="round-2">Price</th>
+    </tr>
+    @foreach (var ticket in Model.Tickets)
+    {
+        <tr>
+            <td>@ticket.ClientName</td>
+            <td>@ticket.DateEnabled.ToString("dd/mm/yyyy")</td>
+            <td>@ticket.Description</td>
+            <td>$@ticket.Price</td>
+        </tr>
+    } 
+</table>
