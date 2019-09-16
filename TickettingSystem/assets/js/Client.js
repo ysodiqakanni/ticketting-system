@@ -313,6 +313,100 @@ $("#btnCancelStaffSearch").on("click", function () {
     searchStaff("*");
 })
 
+$(".staffDataRow").on("click", function () {  
+    var id = $(this).find('td:first').html(); 
+    $("#hiddenSelectedStaffID").val(id);
+    var url = "/Home/staff/" + id;
+    // populate staff's details
+    $.ajax({
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                var staff = response.msg.result;
+                $("#txtStaffName").val(staff.name); 
+                $("#txtStaffSurname").val(staff.surname);
+                $("#txtStaffStreetNumber").val(staff.streetNumber);
+                $("#txtStaffStreetName1").val(staff.streetName1);
+                $("#txtStaffStreetName2").val(staff.streetName2);
+                $("#txtStaffStreetName3").val(staff.streetName3);
+                $("#txtStaffNationality").val(staff.nationality); 
+                $("#txtStaffManager").val(staff.manager);
+                $("#txtStaffDepartment").val(staff.department);
+                $("#txtStaffHiredBy").val(staff.hiredBy);
+                document.getElementById("txtStaffHiredOnDate").valueAsDate = new Date(staff.hiredOn);
+                document.getElementById("txtStaffFiredOnDate").valueAsDate = new Date(staff.firedOn);
+                document.getElementById("txtStaffResignedOnDate").valueAsDate = new Date(staff.firedOn);
+                document.getElementById("txtStaffDOB").valueAsDate = new Date(staff.dateOfBirth);
+
+                loadStaffNotes(id);
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An error occured");
+        },
+    })
+
+})
+
+$("#formUpdateStaff :input").change(function () {
+    if ($("#hiddenSelectedStaffID").val()) {
+        $("#btnUpdateStaff").attr("disabled", false);
+    }
+    
+});
+$("#btnAddStaffNote").on("click", function (e) {
+    var staffId = $("#hiddenSelectedStaffID").val();
+    if (!staffId) {
+        alert("No staff selected!");
+        return;
+    }
+    const note = $("#txtNewStaffNote").val();
+    if (!note) {
+        alert("Note can not be empty!");
+        return;
+    }
+    e.preventDefault();
+    
+    var url = "/home/staff/" + staffId + "/createNote/" + note;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                alert(response.msg);
+                $("#txtNewStaffNote").val("");
+                // Todo: re-render notes partial
+                loadStaffNotes(staffId);
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+})
+$("#btnCreateNewStaff").on("click", function (e) {
+    resetStaffForm();
+})
+$("#btnUpdateStaff").on("click", function (e) {
+    // save or update opn
+    // check input fields
+    validateStaffInputFields();
+    // if selected id is null, Save
+    // else update
+    saveOrUpdateStaff($("#hiddenSelectedStaffID").val());
+})
 
 function removeSelectedClientRecords() {
     $("#hiddenClientID").val("");
@@ -409,7 +503,7 @@ var loadNotes = function () {
         processData: false,
         success: function (response) {
             if (response) {
-                $("#notes").html(response); 
+                $("#clientNotes").html(response); 
             }
             else {
                 alert("loading error");
@@ -456,4 +550,43 @@ var searchStaff = function (keyword) {
             alert("An unknown error has occured");
         },
     })
+}
+var loadStaffNotes = function (staffId) {
+    var url = "/home/staff/" + staffId+"/Notes";
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) {
+                $("#staffNotes").html(response);
+                $('[data-toggle="popover"]').popover();
+            }
+            else {
+                alert("loading error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+} 
+function resetStaffForm() {
+    $("#formUpdateStaff")[0].reset();
+    $("#hiddenSelectedStaffID").val("");
+    $("#staffNotes").html("");
+    document.getElementById("txtStaffHiredOnDate").valueAsDate = new Date();
+}
+
+function validateStaffInputFields() {
+    if ($("#txtStaffHiredBy").val() && $("#txtStaffNationality").val()) {
+        return true;
+    }
+    return false;
+}
+function saveOrUpdateStaff(id) {
+    // after successful addition, reload staff list
+
 }

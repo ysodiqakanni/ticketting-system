@@ -14,4 +14,21 @@ namespace TickettingSystem.Models
         public DateTime JoinedOn { get; set; }
         public string KycLevel { get; set; }
     }
+    public class StaffNoteViewModel
+    {
+        public int Id { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Content { get; set; }
+        public string ShortNote
+        {
+            get
+            {
+                if (Content.Length > 50)
+                {
+                    return Content.Substring(0, 50) + "...";
+                }
+                return Content;
+            }
+        }
+    }
 }

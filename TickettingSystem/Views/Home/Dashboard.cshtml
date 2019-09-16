@@ -387,8 +387,10 @@
                                                     <div class="col-md-12">
                                                         <h3 class="heading-note">Notes</h3>
                                                         <div class="notes">
-                                                            @{await Html.RenderPartialAsync("_NotesPartial", Model);}
-                                                            <a href="#" class="note-btn" data-toggle="modal" data-target="#addNoteModal">+ Add New Note</a>
+                                                            <div id="clientNotes">
+                                                                @{await Html.RenderPartialAsync("_NotesPartial", Model);}
+                                                            </div> 
+                                                          <a href="#" class="note-btn" data-toggle="modal" data-target="#addNoteModal">+ Add New Note</a>
                                                         </div>
                                                         <!-- Add Notes Modal -->
                                                         <div class="modal fade" id="addNoteModal" role="dialog">
@@ -418,6 +420,7 @@
 
                                                             </div>
                                                         </div>
+
                                                         <div class="finally-btn">
                                                             <a href="#" class="reset-btn btn" id="btnResetClientPassword">Reset Pwd</a>
                                                             <a href="#" class="update-btn btn" id="btnUpdateClient">Update</a>
@@ -661,77 +664,109 @@
                                 <div style="height: 40px;"></div>
 
                                 <div class="data-form-section">
-                                    <form action="#">
+                                    <form id="formUpdateStaff" action="#">
+                                        @Html.Hidden("hiddenSelectedStaffID")
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Name</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtStaffName">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Surname</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtStaffSurname">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="single-form-opt">
                                                             <label class="address" for="address">Address</label>
-                                                            <input type="address">
+                                                            <input type="address" id="txtStaffStreetNumber">
                                                         </div>
                                                         <div class="single-form-opt">
                                                             <label class="address" for="address"></label>
-                                                            <input type="address">
+                                                            <input type="address" id="txtStaffStreetName1">
                                                         </div>
                                                         <div class="single-form-opt">
                                                             <label class="address" for="address"></label>
-                                                            <input type="address">
+                                                            <input type="address" id="txtStaffStreetName2">
                                                         </div>
                                                         <div class="single-form-opt">
                                                             <label class="address" for="address"></label>
-                                                            <input type="address">
+                                                            <input type="address" id="txtStaffStreetName3">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-12 col-sm-6">
                                                         <div class="single-form-opt single-form-opt-staff">
                                                             <label for="name">Nationality</label>
-                                                            <input type="text">
+                                                            
+                                                            <select id="txtStaffNationality" name="txtStaffNationality">
+                                                                <option selected>None</option>
+                                                                <option>Austria</option>
+                                                                <option>Belgium</option>
+                                                                <option>Bulgaria</option>
+                                                                <option>Croatia</option>
+                                                                <option>Cyprus</option>
+                                                                <option>Czechia</option>
+                                                                <option>Denmark</option>
+                                                                <option>Estonia</option>
+                                                                <option>Finland</option>
+                                                                <option>France</option>
+                                                                <option>Germany</option>
+                                                                <option>Greece</option>
+                                                                <option>Hungary</option>
+                                                                <option>Ireland</option>
+                                                                <option>Italy</option>
+                                                                <option>Latvia</option>
+                                                                <option>Lithuania</option>
+                                                                <option>Luxembourg</option>
+                                                                <option>Malta</option>
+                                                                <option>Netherlands</option>
+                                                                <option>Poland</option>
+                                                                <option>Portugal</option>
+                                                                <option>Romania</option>
+                                                                <option>Slovakia</option>
+                                                                <option>Slovenia</option>
+                                                                <option>Spain</option>
+                                                                <option>Sweden</option>
+                                                                <option>United Kingdom</option>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12 col-sm-6">
-                                                        <div class="single-form-opt single-form-opt-staff">
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
                                                             <label for="name">DOB</label>
-                                                            <input type="text">
+                                                            <input type="date" id="txtStaffDOB">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Hired On</label>
-                                                            <input type="text">
+                                                            <input type="date" id="txtStaffHiredOnDate">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Fired On</label>
-                                                            <input type="text">
+                                                            <input type="date" id="txtStaffFiredOnDate">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Hired By</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtStaffHiredBy">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Resigned On</label>
-                                                            <input type="text">
+                                                            <input type="date" id="txtStaffResignedOnDate">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -741,35 +776,91 @@
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="user">Department</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtStaffDepartment">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="text">Manager</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtStaffManager">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-12 staff-note">
-                                                        <h3 class="heading-note">Notes</h3>
+                                                        <h3 class="heading-note">Notes</h3> 
                                                         <div class="notes">
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <a href="" class="note-btn">+ Add New Note</a>
+                                                            <div id="staffNotes">
+                                                                @{await Html.RenderPartialAsync("_StaffNotesPartial", Model);}
+                                                            </div>
+                                                            @*<a href="#" id="btnAddStaffNote" class="note-btn">+ Add New Note</a>*@
+                                                            <a href="#" class="note-btn" data-toggle="modal" data-target="#addStaffNoteModal">+ Add New Note</a>
                                                         </div>
+                                                        <!-- Add Notes Modal -->
+                                                        <div class="modal fade" id="addStaffNoteModal" role="dialog">
+                                                            <div class="modal-dialog">
+
+                                                                <!-- Modal content-->
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        <h4 class="modal-title">Add a new Note</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="single-form-opt">
+                                                                            <label class="address">Notes</label>
+                                                                            <textarea type="text" class="form-control" id="txtNewStaffNote"></textarea>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <div>
+                                                                            <button type="button" id="btnAddStaffNote" class="btn btn-success col-lg-6 col-lg-offset-4">OK</button>
+                                                                        </div>
+                                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <!--End staff notes modal-->
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="sa-left">
                                                                     <h3>Territory</h3>
                                                                     <div class="sa-left-content">
-                                                                        <span>Territory 1</span>
-                                                                        <span>Territory 1</span>
-                                                                        <span>Territory 1</span>
+                                                                        <select name="teritories" multiple="multiple" style="height: 130px;width: 100%;">
+                                                                            <option>None</option>
+                                                                            <option>Austria</option>
+                                                                            <option>Belgium</option>
+                                                                            <option>Bulgaria</option>
+                                                                            <option>Croatia</option>
+                                                                            <option>Cyprus</option>
+                                                                            <option>Czechia</option>
+                                                                            <option>Denmark</option>
+                                                                            <option>Estonia</option>
+                                                                            <option>Finland</option>
+                                                                            <option>France</option>
+                                                                            <option>Germany</option>
+                                                                            <option>Greece</option>
+                                                                            <option>Hungary</option>
+                                                                            <option>Ireland</option>
+                                                                            <option>Italy</option>
+                                                                            <option>Latvia</option>
+                                                                            <option>Lithuania</option>
+                                                                            <option>Luxembourg</option>
+                                                                            <option>Malta</option>
+                                                                            <option>Netherlands</option>
+                                                                            <option>Poland</option>
+                                                                            <option>Portugal</option>
+                                                                            <option>Romania</option>
+                                                                            <option>Slovakia</option>
+                                                                            <option>Slovenia</option>
+                                                                            <option>Spain</option>
+                                                                            <option>Sweden</option>
+                                                                            <option>United Kingdom</option>
+                                                                        </select>
+                                                                
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -777,16 +868,21 @@
                                                                 <div class="sa-right">
                                                                     <h3>Languages</h3>
                                                                     <div class="sa-right-content">
-                                                                        <span>Languages 1</span>
-                                                                        <span>Languages 1</span>
-                                                                        <span>Languages 1</span>
+                                                                        <select name="languages" multiple="multiple" style="height: 130px;width: 100%;">
+                                                                            <option>English</option>
+                                                                            <option>French</option>
+                                                                            <option>Chinese</option>
+                                                                            <option>German</option>
+                                                                            <option>Portuguese</option>
+                                                                            <option>Spanish</option>
+                                                                        </select> 
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="finally-btn">
-                                                            <a href="" style="background: #55C1FF;" class="reset-btn btn">New</a>
-                                                            <a href="" style="background: #6FCF97;" class="update-btn btn">Update</a>
+                                                            <a href="#" id="btnCreateNewStaff" style="background: #55C1FF;" class="reset-btn btn">New</a>
+                                                            <a href="#" id="btnUpdateStaff" style="background: #6FCF97;" class="update-btn btn" disabled>Update</a>
                                                         </div>
                                                     </div>
                                                 </div>

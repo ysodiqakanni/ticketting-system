@@ -119,7 +119,7 @@ input:focus {
 .single-form-opt.tck label {
     width: 15%;
 }
-.single-form-opt input[type="text"], .single-form-opt input[type="email"] {
+.single-form-opt input[type="text"], .single-form-opt input[type="email"], .single-form-opt input[type="date"] {
     width: 70%;
     padding: 6px 10px;
     display: inline-block;

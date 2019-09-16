@@ -30,6 +30,7 @@ namespace TickettingSystem.Controllers
                 PackagesPurchased = new List<MembershipPackagesPurchasedViewModel>()
             };
             model.StaffList = await StaffApi.GetAllStaff();
+            model.NotesForTheSelectedStaff = new List<StaffNoteViewModel>() { new StaffNoteViewModel { Content = "My contentsssss sha leleyiiiiiiiiiiiiiiii oooooooooooooooo" } }; // since no staff has been selected yet
             // initially, no client is selected!
             // so search results (D) should contain each of the known exchanges 
             model.Exchanges = await ExchangeApi.GetAllKnownExchanges();
@@ -217,7 +218,7 @@ namespace TickettingSystem.Controllers
                 if(int.TryParse(idStr, out id))
                 {
                     // search by Id
-                    model.StaffList = await StaffApi.GetStaffById(id);
+                    model.StaffList = await StaffApi.SearchStaffById(id);
                 }
             }
             // else search by last name
@@ -227,9 +228,38 @@ namespace TickettingSystem.Controllers
             }
             return PartialView("_StaffList", model);
         }
-        
 
+        [Route("staff/{id}")]
+        public IActionResult GetStaffById(int? id)
+        {
+            if (id == null) throw new ArgumentNullException("Invalid request sent!");
+            var theStaff = StaffApi.GetStaffById(id.Value);
+            if (theStaff == null) return Json(new { success = false, msg = "record not found!" });
+            return Json(new { success = true, msg = theStaff });
+        }
 
+        [Route("staff/{id}/notes")]
+        public async Task<IActionResult> GetNotesByStaffId(int? id)
+        {
+            var model = new DashboardViewModel();
+            model.NotesForTheSelectedStaff = await StaffApi.GetNotesByStaffId(id.Value);
+            return PartialView("_StaffNotesPartial", model);
+        }
+
+        [Route("staff/{id}/createNote/{note}")]
+        public async Task<IActionResult> CreateStaffNote(int id, string note)
+        {
+            if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
+            try
+            {
+                await StaffApi.CreateNewNote(id, note);
+                return Json(new { success = true, msg = "Note saved!" });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false, msg = "Error creating note!" });
+            }
+        }
 
         [Route("")]
         [Route("index")]
