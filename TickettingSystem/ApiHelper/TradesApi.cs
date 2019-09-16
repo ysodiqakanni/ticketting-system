@@ -11,8 +11,9 @@ namespace TickettingSystem.ApiHelper
         public TradesApi()
         {
         }
-        public static Task<List<TradeDTO>> GetAllTrades()
+        public static Task<List<TradeDTO>> SearchTrades(TradeSearchModel tradeSearch)
         {
+            // search for trade using the tradesearch properties
             var trades = new List<TradeDTO>
             {
                 new TradeDTO{ID=1,Exchange="Lorem ipsum dolor sit amet",Operation="BUY",UserId=1,CreatedOn=DateTime.Now,Price=600},
@@ -40,7 +41,7 @@ namespace TickettingSystem.ApiHelper
                 };
             });
         }
-        public static Task<List<TradeViewModel>> SearchTrades(string searchStr)
+        public static Task<List<TradeViewModel>> GetAllTrades(string searchStr)
         {
             var clients = new List<TradeViewModel>
             {
