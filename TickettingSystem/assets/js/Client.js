@@ -313,7 +313,8 @@ $("#btnCancelStaffSearch").on("click", function () {
     searchStaff("*");
 })
 
-$(".staffDataRow").on("click", function () {  
+//$(".staffDataRow").live("click", function () {  
+$(document).on("click", ".staffDataRow", function () {  // https://stackoverflow.com/a/1207393/7162741
     var id = $(this).find('td:first').html(); 
     $("#hiddenSelectedStaffID").val(id);
     var url = "/Home/staff/" + id;
@@ -402,10 +403,30 @@ $("#btnCreateNewStaff").on("click", function (e) {
 $("#btnUpdateStaff").on("click", function (e) {
     // save or update opn
     // check input fields
-    validateStaffInputFields();
+    var id = $("#hiddenSelectedStaffID").val();
+    if (!id) id = "0";
+
+    let staff = {
+        Id: id,
+        Name: $("#txtStaffName").val(),
+        Surname: $("#txtStaffSurname").val(),
+        Department: $("#txtStaffDepartment").val(),
+        Manager: $("#txtStaffManager").val(),
+        StreetNumber: $("#txtStaffStreetNumber").val(),
+        HiredBy: $("#txtStaffHiredBy").val(),
+        Nationality: $("#txtStaffNationality").val()
+    };
+
+    if (!validateStaffInputFields(staff)) {
+        alert("Fill in all required fields!");
+        return; 
+    }
     // if selected id is null, Save
     // else update
-    saveOrUpdateStaff($("#hiddenSelectedStaffID").val());
+    saveOrUpdateStaff(staff);
+
+    // reset form
+    // disable update button
 })
 
 function removeSelectedClientRecords() {
@@ -580,13 +601,40 @@ function resetStaffForm() {
     document.getElementById("txtStaffHiredOnDate").valueAsDate = new Date();
 }
 
-function validateStaffInputFields() {
-    if ($("#txtStaffHiredBy").val() && $("#txtStaffNationality").val()) {
+function validateStaffInputFields(staff) {
+    if (staff.Nationality && staff.HiredBy) {  // check for other things
         return true;
     }
     return false;
 }
-function saveOrUpdateStaff(id) {
+function saveOrUpdateStaff(staff) {
     // after successful addition, reload staff list
-
+   
+    // call the save or update api
+    let url = "/home/staff/saveorupdate/" + staff.Id;
+    $.ajax({
+        url: url,
+        type: "POST",
+        url: url,
+        data: JSON.stringify(staff),
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                alert(response.msg);  
+                resetStaffForm();
+                // disable update button
+                $("#btnUpdateStaff").attr("disabled", true);
+                // reload staff list
+                $("#txtStaffSearchKeyword").val("*");
+                searchStaff("*");
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
 }

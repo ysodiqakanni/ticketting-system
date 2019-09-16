@@ -68,7 +68,7 @@ namespace TickettingSystem.ApiHelper
                 Department = "Test Department",
                 Email = "test@gmail.com",
                 FiredOn = DateTime.Now,
-                HiredBy = "Test Hiring Manager",
+                HiredBy = "Jhon Doe Wills 2",
                 HiredOn = DateTime.Now,
                 Id = 3,
                 Manager = "Mr Manager",
@@ -100,6 +100,16 @@ namespace TickettingSystem.ApiHelper
         {
             // return the note after successful insertion to db
             return note;
+        }
+
+        public static Task CreateNewStaff(StaffDTO staff)
+        {
+            return Task.Run(() => { });
+        }
+
+        public static Task UpdateStaff(int value, StaffDTO staff)
+        {
+            return Task.Run(() => { });
         }
     }
 

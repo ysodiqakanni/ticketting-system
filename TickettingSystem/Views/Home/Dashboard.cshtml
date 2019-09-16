@@ -760,7 +760,13 @@
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Hired By</label>
-                                                            <input type="text" id="txtStaffHiredBy">
+                                                            @*<input type="text" id="txtStaffHiredBy">*@
+                                                            <select id="txtStaffHiredBy" name="txtStaffHiredBy">
+                                                                @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
+                                                                {
+                                                                    <option>@staff.Name</option>
+                                                                } 
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">

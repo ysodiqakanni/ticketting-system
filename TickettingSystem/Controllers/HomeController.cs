@@ -4,7 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TickettingSystem.ApiHelper; 
+using TickettingSystem.ApiHelper;
+using TickettingSystem.DTOs;
 using TickettingSystem.Models;
 using TickettingSystem.Utilities;
 
@@ -30,7 +31,8 @@ namespace TickettingSystem.Controllers
                 PackagesPurchased = new List<MembershipPackagesPurchasedViewModel>()
             };
             model.StaffList = await StaffApi.GetAllStaff();
-            model.NotesForTheSelectedStaff = new List<StaffNoteViewModel>() { new StaffNoteViewModel { Content = "My contentsssss sha leleyiiiiiiiiiiiiiiii oooooooooooooooo" } }; // since no staff has been selected yet
+            ViewBag.AllStaff = model.StaffList;
+            model.NotesForTheSelectedStaff = new List<StaffNoteViewModel>() { }; // since no staff has been selected yet
             // initially, no client is selected!
             // so search results (D) should contain each of the known exchanges 
             model.Exchanges = await ExchangeApi.GetAllKnownExchanges();
@@ -260,6 +262,33 @@ namespace TickettingSystem.Controllers
                 return Json(new { success = false, msg = "Error creating note!" });
             }
         }
+
+
+        [Route("staff/saveorupdate/{id?}")]
+        [HttpPost]
+        public async Task<IActionResult> SaveOrUpdateStaff(int? id, [FromBody] StaffDTO staff)
+        {
+            try
+            {
+                string msg = "";
+                if(id == null || id.Value == 0)
+                {
+                    await StaffApi.CreateNewStaff(staff);
+                    msg = "Staff record Added";
+                }
+                else
+                {
+                    await StaffApi.UpdateStaff(id.Value, staff);
+                    msg = "Staff record Updated";
+                }
+                return Json(new { success = true, msg = msg });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Error updating staff records!" });
+            }
+        }
+
 
         [Route("")]
         [Route("index")]
