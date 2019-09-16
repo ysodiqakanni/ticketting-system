@@ -9,5 +9,6 @@ namespace TickettingSystem.Core
         public string ExchangeName { get; set; }
         public DateTime DateEnabled { get; set; }
         public string APIsEntered { get; set; }
+        public int ExchangeUserId { get; set; }
     }
 }

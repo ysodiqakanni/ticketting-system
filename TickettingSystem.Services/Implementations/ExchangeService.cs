@@ -25,7 +25,10 @@ namespace TickettingSystem.Services.Implementations
 
         public async Task<IList<Exchange>> SearchExchangesByUserId(string id)
         {
-            var allSearch = await uow.ExchangeRepository.FindAllAsync(x => x.ID.ToString() == id);
+            //var sm = uow.ClientRepository.GetAll().Join(uow.ExchangeRepository.GetAll(), cl => cl.ID, ex => ex.ID,
+            //    (cli, exc) => new { Client = cli, Exchange = exc }).ToList().FindAll(x => x.Client.ID.ToString() == id);
+            
+            var allSearch = await uow.ExchangeRepository.FindAllAsync(x => x.ExchangeUserId.ToString() == id);
             return allSearch.ToList();
         }
     }

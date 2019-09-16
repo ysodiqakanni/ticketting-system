@@ -66,7 +66,7 @@ namespace TickettingSystem.ApiHelper
             {
                 client.BaseAddress = new Uri("http://localhost:5000/api/v1/");
 
-                HttpResponseMessage msg = await client.GetAsync("clients/{id}");
+                HttpResponseMessage msg = await client.GetAsync($"clients/{id}");
                 msg.EnsureSuccessStatusCode();
                 var responseBody = await msg.Content.ReadAsAsync<ClientDTO>();
                 return responseBody;

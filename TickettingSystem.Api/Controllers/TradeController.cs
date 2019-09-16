@@ -29,29 +29,34 @@ namespace TickettingSystem.Api.Controllers
             return Ok(trade);
         }
 
-        
-        //[HttpPost]
-        //[Consumes("application/json")]
-        //public async Task<IActionResult> Search([FromBody]int? id,  DateTime? startDate, 
-        //    [FromBody]DateTime? endDate,
-        //    [FromBody]ExchangeEnum? exchange, [FromBody]string currencyCode = "")
-        //{
-        //    if (startDate > endDate)
-        //    {
-        //        throw new Exception("start date cannot be greater than end date");
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> GetAllTrades()
+        {
+            var trades = await _tradeService.GetAllTrades();
+            return Ok(trades);
+        }
 
-        //    if ((startDate != null && endDate != null) || id.ToString() != null
-        //        || exchange != null || currencyCode.Length > 0)
-        //    {
-        //        var search = await _tradeService
-        //            .GetSearchedTradeLines(id, startDate, endDate, exchange, currencyCode);
-        //        return Ok(search);
-        //    }
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchTrades([FromQuery(Name = "searchStr")] string searchStr)
+        {
+            var searchResult = await _tradeService.SearchTrades(searchStr);
+            return Ok(searchResult);
+        }
 
-        //    return Ok();
-        //}
+        [HttpPost]
+        [Consumes("application/json")]
+        public async Task<IActionResult> ComprehensiveSearch([FromBody] int? id, DateTime? startDate, DateTime? endDate,
+            string exchange = "", string currencyCode = "")
+        {
+            if (startDate > endDate)
+            {
+                throw new Exception("start date cannot be greater than end date");
+            }
 
-
+            
+            var search = await _tradeService
+                .GetSearchedTradeLines(id, startDate, endDate, exchange, currencyCode);
+            return Ok(search);
+        }
     }
 }

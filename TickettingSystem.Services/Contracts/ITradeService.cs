@@ -10,7 +10,9 @@ namespace TickettingSystem.Services.Contracts
     public interface ITradeService
     {
         Task<Trade> GetById(int id);
-        //Task<ISet<Trade>> GetSearchedTradeLines(int? id, DateTime? startDate, DateTime? endDate,
-        //    ExchangeEnum? exchangeCode, string currencyCode = "");
+        Task<IList<Trade>> GetAllTrades();
+        Task<IList<Trade>> SearchTrades(string searchStr);
+        Task<IList<Trade>> GetSearchedTradeLines(int? id, DateTime? startDate, DateTime? endDate,
+            string exchangeCode="", string currencyCode = "");
     }
 }

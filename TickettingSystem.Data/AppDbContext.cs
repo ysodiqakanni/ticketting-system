@@ -11,6 +11,7 @@ namespace TickettingSystem.Data
         public DbSet<Client> Clients { get; set; }
         public DbSet<ClientNote> ClientNotes { get; set; }
         public DbSet<Exchange> Exchanges { get; set; }
+        public DbSet<Trade> Trades { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }

@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using static TickettingSystem.Core.Exchange;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace TickettingSystem.Core
+namespace TickettingSystem.DTOs
 {
-    public class Trade: Entity
+    public class TradeDTO
     {
+        public TradeDTO()
+        {
+        }
+        public int ID { get; set; }
         public Double Price { get; set; }
         public String Operation { get; set; }
         public String Exchange { get; set; }
         public DateTime CreatedOn { get; set; }
         public long UserId { get; set; }
-        public string CurrencyCode { get; set; }
     }
 }

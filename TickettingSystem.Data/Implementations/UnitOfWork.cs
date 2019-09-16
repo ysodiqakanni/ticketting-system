@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using TickettingSystem.Core;
 using TickettingSystem.Data.Contracts;
+using System.Linq;
 
 namespace TickettingSystem.Data.Implementations
 {
