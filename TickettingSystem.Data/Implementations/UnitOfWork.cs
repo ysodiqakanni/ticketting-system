@@ -11,9 +11,9 @@ namespace TickettingSystem.Data.Implementations
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private AppDbContext context;
+        private db_a3d3ad_pricingContext context;
         //private db_a3d3ad_pricingContext context;
-        public UnitOfWork(AppDbContext _context)
+        public UnitOfWork(db_a3d3ad_pricingContext _context)
         {
             context = _context;
             ClientRepository = new ClientRepository(_context);
@@ -21,7 +21,7 @@ namespace TickettingSystem.Data.Implementations
             ClientNoteRepository = new ClientNoteRepository(_context);
             ExchangeRepository = new ExchangeRepository(_context);
         }
-        public IBaseRepository<Client> ClientRepository { get; set; }
+        public IBaseRepository<Clientinterest> ClientRepository { get; set; }
         public IBaseRepository<Trade> TradeRepository { get; set; }
         public IBaseRepository<ClientNote> ClientNoteRepository { get; set; }
         public IBaseRepository<Exchange> ExchangeRepository { get; set; }

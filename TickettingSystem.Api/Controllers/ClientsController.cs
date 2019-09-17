@@ -54,13 +54,13 @@ namespace TickettingSystem.Api.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateClient(Client client)
         {
-            var clientToUpdate = await _clientService.GetClientById(client.ID);
-            clientToUpdate.Language = client.Language;
-            clientToUpdate.Nationality = client.Nationality;
-            clientToUpdate.DateOfBirth = client.DateOfBirth;
-            clientToUpdate.Address = client.Address;
-            var clientUpdate = await _clientService.UpdateClient(clientToUpdate);
-            return Ok(clientUpdate);
+            //var clientToUpdate = await _clientService.GetClientById(client.ID);
+            //clientToUpdate.Language = client.Language;
+            //clientToUpdate.Nationality = client.Nationality;
+            //clientToUpdate.DateOfBirth = client.DateOfBirth;
+            //clientToUpdate.Address = client.Address;
+            //var clientUpdate = await _clientService.UpdateClient(clientToUpdate);
+            return Ok();
         }
 
         [HttpPost("notes")]

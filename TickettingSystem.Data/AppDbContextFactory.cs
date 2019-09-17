@@ -1,19 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
+using TickettingSystem.Data.DbModel;
 
 namespace TickettingSystem.Data
 {
-    public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
+    public class AppDbContextFactory : IDesignTimeDbContextFactory<db_a3d3ad_pricingContext>
     {
-        public AppDbContext CreateDbContext(string[] args)
+        public db_a3d3ad_pricingContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            var connection = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=TicketingDb;Data Source=.";
-            optionsBuilder.UseSqlServer(connection);
-            return new AppDbContext(optionsBuilder.Options);
+            var optionsBuilder = new DbContextOptionsBuilder<db_a3d3ad_pricingContext>();
+            //var connection = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=TicketingDb;Data Source=.";
+            var connection = @"server=localhost;port=3306;user=root;password=root;database=db_a3d3ad_pricing";
+            optionsBuilder.UseMySql(connection);
+            return new db_a3d3ad_pricingContext(optionsBuilder.Options);
         }
     }
 }

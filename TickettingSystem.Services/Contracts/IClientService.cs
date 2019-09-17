@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.Core;
+using TickettingSystem.Data.DbModel;
 
 namespace TickettingSystem.Services.Contracts
 {
     public interface IClientService
     {
-        Task<IList<Client>> GetAllAsync();
-        Task<Client> GetClientById(int id);
-        Task<Client> UpdateClient(Client model);
-        Task<IList<Client>> SearchClient(string searchStr);
+        Task<IList<Clientinterest>> GetAllAsync();
+        Task<Clientinterest> GetClientById(int id);
+        Task<Clientinterest> UpdateClient(Clientinterest model);
+        Task<IList<Clientinterest>> SearchClient(string searchStr);
     }
 }
