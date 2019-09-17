@@ -161,12 +161,7 @@ $("#btnUpdateClient").on("click", function () {
     }
 })
 $(".clientDataRow").on("click", function () {  // https://stackoverflow.com/a/26602984/7162741 this function got fired many times cuz the js file was loaded in some partial views
-
-    //alert("clicked!");
-
-    //$(this).off('click'); 
-    //return;
-
+    
     var id = $(this).find('td:first').html();
     $("#hiddenClientID").val(id);
     var url = "/Home/clients/" + id;

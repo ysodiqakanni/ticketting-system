@@ -12,6 +12,7 @@ namespace TickettingSystem.Models
         public string Description { get; set; }
         public DateTime DateEnabled { get; set; }
         public decimal Price { get; set; }
+        public int AssignedToStaffId { get; set; }
     }
     public class TicketConversationViewModel
     {

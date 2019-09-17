@@ -605,7 +605,7 @@
                                                         <select id="txtTicketAssignedTo" name="txtTicketAssignedTo">
                                                             @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
                                                             {
-                                                                <option>@staff.Name</option>
+                                                                <option value="@staff.Id">@staff.Name</option>
                                                             }
                                                         </select>
                                                     </div>
@@ -615,7 +615,7 @@
                                                         <select id="txtTicketReAssign" name="txtTicketReAssign">
                                                             @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
                                                             {
-                                                                <option>@staff.Name</option>
+                                                                <option value="@staff.Id">@staff.Name</option>
                                                             }
                                                         </select>
                                                     </div>
