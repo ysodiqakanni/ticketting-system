@@ -22,7 +22,7 @@ namespace TickettingSystem.Data.Implementations
             ExchangeRepository = new ExchangeRepository(_context);
             StaffRepository = new StaffRepository(_context);
         }
-        public IBaseRepository<Clientinterest> ClientRepository { get; set; }
+        public IBaseRepository<UserDetails> ClientRepository { get; set; }
         public IBaseRepository<Trade> TradeRepository { get; set; }
         public IBaseRepository<ClientNote> ClientNoteRepository { get; set; }
         public IBaseRepository<Exchange> ExchangeRepository { get; set; }

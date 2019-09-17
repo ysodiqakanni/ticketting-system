@@ -18,17 +18,17 @@ namespace TickettingSystem.Services.Implementations
             uow = _uow;
         }
 
-        public async Task<IList<Clientinterest>> GetAllAsync()
+        public async Task<IList<UserDetails>> GetAllAsync()
         {
             return await uow.ClientRepository.GetAllAsync();
         }
 
-        public async Task<Clientinterest> GetClientById(int id)
+        public async Task<UserDetails> GetClientById(int id)
         {  
             return await uow.ClientRepository.FindAsync(x => x.Id == id);
         }
 
-        public async Task<IList<Clientinterest>> SearchClient(string searchStr)
+        public async Task<IList<UserDetails>> SearchClient(string searchStr)
         {
             throw new NotImplementedException();
 
@@ -40,7 +40,7 @@ namespace TickettingSystem.Services.Implementations
             //return clients.ToList();
         }
 
-        public async Task<Clientinterest> UpdateClient(Clientinterest model)
+        public async Task<UserDetails> UpdateClient(UserDetails model)
         {
             return await uow.ClientRepository.UpdateAsync(model, model.Id);
         }

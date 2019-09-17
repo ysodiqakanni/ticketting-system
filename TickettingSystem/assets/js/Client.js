@@ -174,11 +174,14 @@ $(".clientDataRow").on("click", function () {  // https://stackoverflow.com/a/26
         processData: false,
         success: function (response) {
             if (response.success) {
-                var client = response.msg.result;
+                var client = response.msg;
                 $("#txtClientName").val(client.name);
 
                 $("#txtClientSurname").val(client.name);
-                $("#txtClientAddressLine1").val(client.address);
+                $("#txtClientAddressLine1").val(client.HouseNumber);
+                $("#txtClientAddressLine2").val(client.StreetName1);
+                $("#txtClientAddressLine3").val(client.StreetName2);
+                $("#txtClientAddressLine4").val(client.StreetName3);
                 $("#txtClientNationailty").val(client.nationality);
                 $("#txtClientLanguage").val(client.language);
                 $("#txtClientSurname").val(client.surname);

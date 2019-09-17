@@ -17,11 +17,11 @@ namespace TickettingSystem.Controllers
         [Route("dashboard")]
         public async Task<IActionResult> Dashboard()
         {
-            var allClients = ClientsApi.GetAllClients();
-            ViewBag.AllClients = allClients.Result;
+            var allClients = await ClientsApi.GetAllClients();
+            ViewBag.AllClients = allClients;
 
             var model = new DashboardViewModel();
-            model.Clients = await ClientsApi.SearchClients("");
+            model.Clients = allClients; // await ClientsApi.GetAllClients();///.SearchClients("");
             model.Trades = await TradesApi.GetAllTrades("");
 
             model.Notes = await ClientsApi.GetAllNotes();
@@ -44,10 +44,10 @@ namespace TickettingSystem.Controllers
         }
 
         [Route("clients/{id}")]
-        public IActionResult GetClientById(int? id)
+        public async Task<IActionResult> GetClientById(int? id)
         {
             if (id == null) throw new ArgumentNullException("Invalid request sent!");
-            var theClient = ClientsApi.GetClientById(id.Value);
+            var theClient = await ClientsApi.GetClientById(id.Value);
             if (theClient == null) return Json(new { success = false, msg = "record not found!" });
             return Json(new { success = true, msg = theClient });
         }

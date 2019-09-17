@@ -8,7 +8,7 @@ using TickettingSystem.Data.DbModel;
 
 namespace TickettingSystem.Data.Implementations
 {
-    public class ClientRepository : BaseRepository<Clientinterest>, IClientRepository
+    public class ClientRepository : BaseRepository<UserDetails>, IClientRepository
     {
         public ClientRepository(DbContext ctx) : base(ctx)
         {

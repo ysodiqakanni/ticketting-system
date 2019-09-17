@@ -6,7 +6,7 @@ using TickettingSystem.Data.DbModel;
 
 namespace TickettingSystem.Data.Contracts
 {
-    public interface IClientRepository : IBaseRepository<Clientinterest>
+    public interface IClientRepository : IBaseRepository<UserDetails>
     {
     }
 }

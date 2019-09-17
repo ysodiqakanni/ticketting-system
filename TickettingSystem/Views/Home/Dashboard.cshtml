@@ -51,28 +51,7 @@
                                 </div>
 
                                 <div class="data-table-section" id="clientTableDiv">
-                                    @*<table id="tblClients" style="width:100%">
-                                            <tr>
-                                                <th class="round-1">User Id</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Referred by</th>
-                                                <th>Joined On</th>
-                                                <th class="round-2">KYC Level</th>
-                                            </tr>
 
-                                            @foreach (var client in ViewBag.AllClients as List<ClientDTO>)
-                                            {
-                                                <tr class="clientDataRow">
-                                                    <td>@client.ID</td>
-                                                    <td>@client.Name</td>
-                                                    <td>@client.Email</td>
-                                                    <td>@client.ReferredBy</td>
-                                                    <td>@client.JoinedDate.ToString("MM/dd/yyyy")</td>
-                                                    <td>@client.KycLevel</td>
-                                                </tr>
-                                            }
-                                        </table>*@
                                     @{await Html.RenderPartialAsync("_ClientListPartial", Model);}
                                 </div>
 
@@ -118,11 +97,230 @@
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Nationality</label>
-                                                            @*<select id="txtClientNationailty">
-                                                                    <option value="German">German</option>
-                                                                    <option value="French">French</option>
-                                                                </select>*@
-                                                            <input type="text" id="txtClientNationailty">
+                                                            <select id="txtClientNationailty" style="width:200px">
+                                                                <option value="">Select</option>
+                                                                <option value="AF">Afghan</option>
+                                                                <option value="AL">Albanian</option>
+                                                                <option value="DZ">Algerian</option>
+                                                                <option value="AS">American Samoan</option>
+                                                                <option value="AD">Andorran</option>
+                                                                <option value="AO">Angolan</option>
+                                                                <option value="AI">Anguillan</option>
+                                                                <option value="AG">Antiguan, Barbudan</option>
+                                                                <option value="AR">Argentine</option>
+                                                                <option value="AM">Armenian</option>
+                                                                <option value="AW">Aruban; Dutch</option>
+                                                                <option value="AU">Australian</option>
+                                                                <option value="AT">Austrian</option>
+                                                                <option value="AZ">Azerbaijani</option>
+                                                                <option value="BS">Bahamian</option>
+                                                                <option value="BH">Bahraini</option>
+                                                                <option value="BD">Bangladeshi</option>
+                                                                <option value="BB">Barbadian or Bajan (colloquial)</option>
+                                                                <option value="BY">Belarusian</option>
+                                                                <option value="BE">Belgian</option>
+                                                                <option value="BZ">Belizean</option>
+                                                                <option value="BJ">Beninese</option>
+                                                                <option value="BM">Bermudian</option>
+                                                                <option value="BT">Bhutanese</option>
+                                                                <option value="BO">Bolivian</option>
+                                                                <option value="BA">Bosnian, Herzegovinian</option>
+                                                                <option value="BW">Motswana (singular), Batswana (plural)</option>
+                                                                <option value="BR">Brazilian</option>
+                                                                <option value="VG">British Virgin Islander</option>
+                                                                <option value="BN">Bruneian</option>
+                                                                <option value="BG">Bulgarian</option>
+                                                                <option value="BF">Burkinabe</option>
+                                                                <option value="MM">Burmese</option>
+                                                                <option value="BI">Burundian</option>
+                                                                <option value="CV">Cabo Verdean</option>
+                                                                <option value="KH">Cambodian</option>
+                                                                <option value="CM">Cameroonian</option>
+                                                                <option value="CA">Canadian</option>
+                                                                <option value="KY">Caymanian</option>
+                                                                <option value="CF">Central African</option>
+                                                                <option value="TD">Chadian</option>
+                                                                <option value="CL">Chilean</option>
+                                                                <option value="CN">Chinese</option>
+                                                                <option value="CX">Christmas Island</option>
+                                                                <option value="CC">Cocos Islander</option>
+                                                                <option value="CO">Colombian</option>
+                                                                <option value="KM">Comoran</option>
+                                                                <option value="CD">Congolese or Congo</option>
+                                                                <option value="CG">Congolese or Congo</option>
+                                                                <option value="CK">Cook Islander</option>
+                                                                <option value="CR">Costa Rican</option>
+                                                                <option value="HR">Croatian</option>
+                                                                <option value="CU">Cuban</option>
+                                                                <option value="CY">Cypriot</option>
+                                                                <option value="DK">Danish</option>
+                                                                <option value="DJ">Djiboutian</option>
+                                                                <option value="DM">Dominican</option>
+                                                                <option value="DO">Dominican</option>
+                                                                <option value="EC">Ecuadorian</option>
+                                                                <option value="EG">Egyptian</option>
+                                                                <option value="SV">Salvadoran</option>
+                                                                <option value="GQ">Equatorial Guinean or Equatoguinean</option>
+                                                                <option value="ER">Eritrean</option>
+                                                                <option value="EE">Estonian</option>
+                                                                <option value="ET">Ethiopian</option>
+                                                                <option value="FK">Falkland Island</option>
+                                                                <option value="FO">Faroese</option>
+                                                                <option value="FJ">Fijian</option>
+                                                                <option value="FI">Finnish</option>
+                                                                <option value="FR">French</option>
+                                                                <option value="PF">French Polynesian</option>
+                                                                <option value="GA">Gabonese</option>
+                                                                <option value="GM">Gambian</option>
+                                                                <option value="GE">Georgian</option>
+                                                                <option value="DE">German</option>
+                                                                <option value="GH">Ghanaian</option>
+                                                                <option value="GI">Gibraltar</option>
+                                                                <option value="GR">Greek</option>
+                                                                <option value="GL">Greenlandic</option>
+                                                                <option value="GD">Grenadian</option>
+                                                                <option value="GU">Guamanian</option>
+                                                                <option value="GT">Guatemalan</option>
+                                                                <option value="GG">Channel Islander</option>
+                                                                <option value="GW">Bissau-Guinean</option>
+                                                                <option value="GN">Guinean</option>
+                                                                <option value="GY">Guyanese</option>
+                                                                <option value="HT">Haitian</option>
+                                                                <option value="VA">none</option>
+                                                                <option value="HN">Honduran</option>
+                                                                <option value="HK">Chinese/Hong Kong</option>
+                                                                <option value="HU">Hungarian</option>
+                                                                <option value="IS">Icelandic</option>
+                                                                <option value="IN">Indian</option>
+                                                                <option value="ID">Indonesian</option>
+                                                                <option value="IQ">Iraqi</option>
+                                                                <option value="IE">Irish</option>
+                                                                <option value="IM">Manx</option>
+                                                                <option value="IL">Israeli</option>
+                                                                <option value="IT">Italian</option>
+                                                                <option value="JM">Jamaican</option>
+                                                                <option value="JP">Japanese</option>
+                                                                <option value="JE">Channel Islander</option>
+                                                                <option value="JO">Jordanian</option>
+                                                                <option value="KZ">Kazakhstani</option>
+                                                                <option value="KE">Kenyan</option>
+                                                                <option value="KI">I-Kiribati</option>
+                                                                <option value="KP">Korean</option>
+                                                                <option value="KR">Korean</option>
+                                                                <option value="XK">Kosovar (Albanian), Kosovski (Serbian)</option>
+                                                                <option value="KW">Kuwaiti</option>
+                                                                <option value="KG">Kyrgyzstani</option>
+                                                                <option value="LV">Latvian</option>
+                                                                <option value="LB">Lebanese</option>
+                                                                <option value="LS">Basotho</option>
+                                                                <option value="LR">Liberian</option>
+                                                                <option value="LY">Libyan</option>
+                                                                <option value="LI">Liechtenstein</option>
+                                                                <option value="LT">Lithuanian</option>
+                                                                <option value="LU">Luxembourg</option>
+                                                                <option value="MO">Chinese</option>
+                                                                <option value="MK">Macedonian</option>
+                                                                <option value="MG">Malagasy</option>
+                                                                <option value="MW">Malawian</option>
+                                                                <option value="MY">Malaysian</option>
+                                                                <option value="MV">Maldivian</option>
+                                                                <option value="ML">Malian</option>
+                                                                <option value="MT">Maltese</option>
+                                                                <option value="MH">Marshallese</option>
+                                                                <option value="MR">Mauritanian</option>
+                                                                <option value="MU">Mauritian</option>
+                                                                <option value="MX">Mexican</option>
+                                                                <option value="FM">Micronesian; Chuukese, Kosraen(s), Pohnpeian(s), Yapese</option>
+                                                                <option value="MD">Moldovan</option>
+                                                                <option value="MC">Monegasque or Monacan</option>
+                                                                <option value="MN">Mongolian</option>
+                                                                <option value="ME">Montenegrin</option>
+                                                                <option value="MS">Montserratian</option>
+                                                                <option value="MA">Moroccan</option>
+                                                                <option value="MZ">Mozambican</option>
+                                                                <option value="NA">Namibian</option>
+                                                                <option value="NR">Nauruan</option>
+                                                                <option value="NP">Nepali</option>
+                                                                <option value="NL">Dutch</option>
+                                                                <option value="NC">New Caledonian</option>
+                                                                <option value="NZ">New Zealand</option>
+                                                                <option value="NI">Nicaraguan</option>
+                                                                <option value="NG">Nigerian</option>
+                                                                <option value="NE">Nigerien</option>
+                                                                <option value="NU">Niuean</option>
+                                                                <option value="NF">Norfolk Islander(s)</option>
+                                                                <option value="MP">NA</option>
+                                                                <option value="NO">Norwegian</option>
+                                                                <option value="OM">Omani</option>
+                                                                <option value="PK">Pakistani</option>
+                                                                <option value="PW">Palauan</option>
+                                                                <option value="PA">Panamanian</option>
+                                                                <option value="PG">Papua New Guinean</option>
+                                                                <option value="PY">Paraguayan</option>
+                                                                <option value="PE">Peruvian</option>
+                                                                <option value="PH">Philippine</option>
+                                                                <option value="PL">Polish</option>
+                                                                <option value="PT">Portuguese</option>
+                                                                <option value="PR">Puerto Rican</option>
+                                                                <option value="QA">Qatari</option>
+                                                                <option value="RO">Romanian</option>
+                                                                <option value="RW">Rwandan</option>
+                                                                <option value="SH">Saint Helenian</option>
+                                                                <option value="KN">Kittitian, Nevisian</option>
+                                                                <option value="LC">Saint Lucian</option>
+                                                                <option value="PM">French</option>
+                                                                <option value="VC">Saint Vincentian or Vincentian</option>
+                                                                <option value="WS">Samoan</option>
+                                                                <option value="SM">Sammarinese</option>
+                                                                <option value="ST">Sao Tomean</option>
+                                                                <option value="SA">Saudi or Saudi Arabian</option>
+                                                                <option value="SN">Senegalese</option>
+                                                                <option value="RS">Serbian</option>
+                                                                <option value="SC">Seychellois</option>
+                                                                <option value="SL">Sierra Leonean</option>
+                                                                <option value="SG">Singapore</option>
+                                                                <option value="SK">Slovak</option>
+                                                                <option value="SI">Slovenian</option>
+                                                                <option value="SB">Solomon Islander</option>
+                                                                <option value="SO">Somali</option>
+                                                                <option value="ZA">South African</option>
+                                                                <option value="SS">South Sudanese</option>
+                                                                <option value="ES">Spanish</option>
+                                                                <option value="LK">Sri Lankan</option>
+                                                                <option value="SD">Sudanese</option>
+                                                                <option value="SR">Surinamese</option>
+                                                                <option value="SZ">Swazi</option>
+                                                                <option value="SE">Swedish</option>
+                                                                <option value="CH">Swiss</option>
+                                                                <option value="SY">Syrian</option>
+                                                                <option value="TJ">Tajikistani</option>
+                                                                <option value="TH">Thai</option>
+                                                                <option value="TL">Timorese</option>
+                                                                <option value="TG">Togolese</option>
+                                                                <option value="TK">Tokelauan</option>
+                                                                <option value="TO">Tongan</option>
+                                                                <option value="TT">Trinidadian, Tobagonian</option>
+                                                                <option value="TN">Tunisian</option>
+                                                                <option value="TR">Turkish</option>
+                                                                <option value="TM">Turkmen</option>
+                                                                <option value="TV">Tuvaluan</option>
+                                                                <option value="UG">Ugandan</option>
+                                                                <option value="UA">Ukrainian</option>
+                                                                <option value="AE">Emirati</option>
+                                                                <option value="UK">British</option>
+                                                                <option value="US">American</option>
+                                                                <option value="UY">Uruguayan</option>
+                                                                <option value="UZ">Uzbekistani</option>
+                                                                <option value="VU">Ni-Vanuatu</option>
+                                                                <option value="VE">Venezuelan</option>
+                                                                <option value="VN">Vietnamese</option>
+                                                                <option value="VI">Virgin Islander</option>
+                                                                <option value="WF">Wallisian, Futunan, or Wallis and Futuna Islander</option>
+                                                                <option value="EH">Sahrawi, Sahrawian, Sahraouian</option>
+                                                                <option value="YE">Yemeni</option>
+                                                                <option value="ZM">Zambian</option>
+                                                                <option value="ZW">Zimbabwean</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
@@ -189,44 +387,40 @@
                                                     <div class="col-md-12">
                                                         <h3 class="heading-note">Notes</h3>
                                                         <div class="notes">
-                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            @*<p ondblclick="popNote(this)" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>*@
-                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p data-toggle="popover" data-placement="top" data-content="Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <a href="#" class="note-btn" data-toggle="modal" data-target="#addNoteModal">+ Add New Note</a>
-                                                            @*<button type="button" class="note-btn" data-toggle="modal" data-target="#addNoteModal">+ Add New Note</button>*@
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="addNoteModal" role="dialog">
-                                                                <div class="modal-dialog">
-
-                                                                    <!-- Modal content-->
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                            <h4 class="modal-title">Add a new Note</h4>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="single-form-opt">
-                                                                                <label class="address">Notes</label>
-                                                                                <textarea type="text" class="form-control" id="txtNewNote"></textarea>
-                                                                            </div>
-
-
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <div>
-                                                                                <button type="button" id="btnAddNote" class="btn btn-success col-lg-6 col-lg-offset-4">OK</button>
-                                                                            </div>
-                                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
+                                                            <div id="clientNotes">
+                                                                @{await Html.RenderPartialAsync("_NotesPartial", Model);}
                                                             </div>
-
+                                                            <a href="#" class="note-btn" data-toggle="modal" data-target="#addNoteModal">+ Add New Note</a>
                                                         </div>
+                                                        <!-- Add Notes Modal -->
+                                                        <div class="modal fade" id="addNoteModal" role="dialog">
+                                                            <div class="modal-dialog">
+
+                                                                <!-- Modal content-->
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        <h4 class="modal-title">Add a new Note</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="single-form-opt">
+                                                                            <label class="address">Notes</label>
+                                                                            <textarea type="text" class="form-control" id="txtNewNote"></textarea>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <div>
+                                                                            <button type="button" id="btnAddNote" class="btn btn-success col-lg-6 col-lg-offset-4">OK</button>
+                                                                        </div>
+                                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+
                                                         <div class="finally-btn">
                                                             <a href="#" class="reset-btn btn" id="btnResetClientPassword">Reset Pwd</a>
                                                             <a href="#" class="update-btn btn" id="btnUpdateClient">Update</a>
@@ -241,57 +435,7 @@
                             <div id="custom-tab-3" class="tab-pane fade">
 
                                 <div class="data-table-section">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th class="round-1">User Id</th>
-                                            <th>Date time</th>
-                                            <th>Exchange</th>
-                                            <th>Operation</th>
-                                            <th class="round-2">Price</th>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Excepteur sint occaecat cupidatat non proident</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Excepteur sint occaecat cupidatat non proident</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Excepteur sint occaecat cupidatat non proident</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Excepteur sint occaecat cupidatat non proident</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Excepteur sint occaecat cupidatat non proident</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="round-3">10</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Excepteur sint occaecat cupidatat non proident</td>
-                                            <td class="round-4">$100</td>
-                                        </tr>
-                                    </table>
+                                    @{await Html.RenderPartialAsync("_TradeListPartial", Model);}
                                 </div>
 
                                 <div class="data-form-section trade-form">
@@ -301,32 +445,32 @@
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">User Id</label>
-                                                        <input type="text">
+                                                        <input id="srchUserId" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">Date From</label>
-                                                        <input type="text">
+                                                        <input id="tradeFromDate" type="date">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">Date To</label>
-                                                        <input type="text">
+                                                        <input id="tradeToDate" type="date">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">Exchange</label>
-                                                        <input type="text">
+                                                        <input id="tradeSrExch" type="text">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">Curr Pair</label>
                                                         <input type="text">
-                                                        <input type="submit" value="Search">
+                                                        <input id="btnSearchTrades" type="submit" value="Search">
 
                                                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                     </div>
@@ -336,7 +480,7 @@
                                     </form>
                                 </div>
                                 <div class="data-table-section">
-                                    <table style="width:100%">
+                                    <table id="tbTradeSearchResult" style="width:100%">
                                         <tr>
                                             <th class="round-1">Date time</th>
                                             <th>Exchange</th>
@@ -345,14 +489,7 @@
                                             <th>Arbitrage</th>
                                             <th class="round-2">Social</th>
                                         </tr>
-                                        <tr>
-                                            <td class="round-3">10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Bye/Sell/Transfer</td>
-                                            <td>$100</td>
-                                            <td>Yes/No</td>
-                                            <td class="round-4">Yes/No</td>
-                                        </tr>
+
                                     </table>
                                 </div>
                                 <div class="trade-seceond-form">
@@ -374,288 +511,37 @@
                             </div>
                             <div id="custom-tab-4" class="tab-pane fade">
                                 <div class="search-option">
-                                    <input type="text" placeholder="Search for client">
-                                    <input type="submit" value="Search">
-                                    <a href="" class="btn">Cancel</a><span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
+                                    <input type="text" id="txtUserIdForExchangeSearch" placeholder="Search for client">
+                                    <input type="submit" id="btnSearchExchanges" value="Search">
+                                    <a href="#" class="btn" id="btnCancelExchangeSearch">Cancel</a><span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
                                 </div>
 
-                                <div class="data-table-section">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th class="round-1">Exchange name</th>
-                                            <th>Enabled</th>
-                                            <th>APIs entered</th>
-                                            <th class="round-2">Verifyed connection</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="round-3">Lorem</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>Add necessary text</td>
-                                        </tr>
-                                    </table>
+
+                                <div id="divClientExchanges" class="data-table-section">
+
+                                    @{await Html.RenderPartialAsync("_ExchangeListPartial", Model);}
+
                                 </div>
 
                                 <div style="height: 20px;"></div>
                             </div>
                             <div id="custom-tab-5" class="tab-pane fade">
-                                <div class="membership-heading">
-                                    <h2>Available Membership packages</h2>
-                                </div>
-
-                                <div class="data-table-section">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th class="round-1">Membership name</th>
-                                            <th>Enabled</th>
-                                            <th>Description</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th class="round-2">Price</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="round-3">Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td class="round-4">$100</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <div class="membership-heading">
-                                    <h2>Membership packages Purchased</h2>
-                                </div>
-
-                                <div class="data-table-section">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th class="round-1">Membership name</th>
-                                            <th>Enabled</th>
-                                            <th>Description</th>
-                                            <th>Purchased on</th>
-                                            <th>Played</th>
-                                            <th class="round-2">Currency</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td>Dollar</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="round-3">Mr Adam Smith</td>
-                                            <td>10/12/2018</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>10/02/2019</td>
-                                            <td>10/02/2019</td>
-                                            <td class="round-4">Dollar</td>
-                                        </tr>
-                                    </table>
-                                </div>
-
+                                @{await Html.RenderPartialAsync("_Memberships", Model);}
 
                             </div>
+
                             <div id="custom-tab-6" class="tab-pane fade">
                                 <div class="search-option">
-                                    <input type="text" placeholder="Search for client">
-                                    <input type="submit" value="Search">
-                                    <a href="" class="btn">Cancel</a>
+                                    <input id="txtTicketSearchKeyword" type="text" placeholder="Search for client">
+                                    <input id="btnSearchTickets" type="submit" value="Search">
+                                    <a href="#" id="btnCancelTicketSearch" class="btn">Cancel</a>
                                     <span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
                                 </div>
 
-                                <div class="data-table-section">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th class="round-1">Client Name</th>
-                                            <th>Enabled</th>
-                                            <th>Description</th>
-                                            <th class="round-2">Price</th>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Jhon Willson</td>
-                                            <td>10/12/18</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mr Jhon Willson</td>
-                                            <td>10/12/18</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="round-3">Mr Jhon Willson</td>
-                                            <td>10/12/18</td>
-                                            <td>Lorem ipsum dolor sit amet.</td>
-                                            <td class="round-4">$100</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                <div id="divClientTickets" class="data-table-section">
 
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="ticket">
-                                            <h3>Tickets</h3>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div style="height: 20px;"></div>
-                                <div class="row">
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="single-ticket-box-item">
-                                            <div class="single-ticket-box-tablecell">
-                                                <h3>Ticket</h3>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @{await Html.RenderPartialAsync("_ClientTicketsPartial", Model);}
+
                                 </div>
 
                                 <div style="height: 40px;"></div>
@@ -663,46 +549,75 @@
                                 <div class="data-form-section">
                                     <form action="#">
                                         <div class="row">
+                                            @Html.Hidden("SelectedTicketId")
                                             <div class="col-md-6">
-                                                <h3 class="heading-note">Client</h3>
-                                                <div class="client-comment">
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                    </div>
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
-                                                    <div style="margin-bottom: 0;" class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
+                                                <h3 class="heading-note">Chats</h3>
+                                                <div id="divTicketConversation" class="client-comment">
+
+                                                    @{await Html.RenderPartialAsync("_TicketConversation", Model);}
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <h3 class="heading-note">Notes</h3>
                                                 <div class="notes">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <a href="" class="note-btn">+ Add New Note</a>
+                                                    <div id="clientTicketNotes">
+
+                                                    </div>
+
+                                                    @*<a href="" class="note-btn">+ Add New Note</a>*@
+                                                    <a href="#" class="note-btn" data-toggle="modal" data-target="#addTicketNoteModal">+ Add New Note</a>
+                                                </div>
+
+                                                <!-- Add Notes Modal -->
+                                                <div class="modal fade" id="addTicketNoteModal" role="dialog">
+                                                    <div class="modal-dialog">
+
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h4 class="modal-title">Add a new Note</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="single-form-opt">
+                                                                    <label class="address">Notes</label>
+                                                                    <textarea type="text" class="form-control" id="txtNewTicketNote"></textarea>
+                                                                </div>
+
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div>
+                                                                    <button type="button" id="btnAddTicketNote" class="btn btn-success col-lg-6 col-lg-offset-4">OK</button>
+                                                                </div>
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
 
                                                 <div class="ticket-assign">
                                                     <div class="single-form-opt tck">
                                                         <label for="level">Assigned to</label>
-                                                        <input type="text">
+
+                                                        <select id="txtTicketAssignedTo" name="txtTicketAssignedTo">
+                                                            @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
+                                                            {
+                                                                <option value="@staff.Id">@staff.Name</option>
+                                                            }
+                                                        </select>
                                                     </div>
                                                     <div class="single-form-opt tck">
                                                         <label for="date">Re-Assign</label>
-                                                        <input type="text">
+                                                        <input type="text" />
+                                                        <select id="txtTicketReAssign" name="txtTicketReAssign">
+                                                            @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
+                                                            {
+                                                                <option value="@staff.Id">@staff.Name</option>
+                                                            }
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -710,24 +625,7 @@
                                         <div style="height: 40px;"></div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h3 class="heading-note">Staff</h3>
-                                                <div class="client-comment">
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                    </div>
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
-                                                    <div style="margin-bottom: 0;" class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
-                                                </div>
+
                                                 <div class="custom-ticket-btn">
                                                     <a href="" class="btn response-btn">Send Response</a>
                                                     <a href="" class="btn close-btn">Close Ticket</a>
@@ -740,123 +638,129 @@
                             </div>
                             <div id="custom-tab-7" class="tab-pane fade">
                                 <div class="search-option">
-                                    <input type="text" placeholder="Search for client">
-                                    <input type="submit" value="Search">
-                                    <a href="" class="btn">Cancel</a>
+                                    <input type="text" id="txtStaffSearchKeyword" placeholder="Search for staff">
+                                    <input id="btnSearchStaff" type="submit" value="Search">
+                                    <a href="#" id="btnCancelStaffSearch" class="btn" style="width:130px; height:inherit; font-size: inherit;">Cancel</a>
                                     <span class="glyphicon glyphicon-search hp-search" aria-hidden="true"></span>
                                 </div>
 
-                                <div class="data-table-section">
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th class="round-1">User Id</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Referred by</th>
-                                            <th>Joined On</th>
-                                            <th class="round-2">KYC Level</th>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>Jhon Doe Wills</td>
-                                            <td>exampleemail@gmail.com</td>
-                                            <td>Mr Will Smith jr</td>
-                                            <td>10/12/2018</td>
-                                            <td>Primary</td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>Jhon Doe Wills</td>
-                                            <td>exampleemail@gmail.com</td>
-                                            <td>Mr Will Smith jr</td>
-                                            <td>10/12/2018</td>
-                                            <td>Primary</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="round-3">10</td>
-                                            <td>Jhon Doe Wills</td>
-                                            <td>exampleemail@gmail.com</td>
-                                            <td>Mr Will Smith jr</td>
-                                            <td>10/12/2018</td>
-                                            <td class="round-4">Primary</td>
-                                        </tr>
-                                    </table>
+                                <div id="divStaffList" class="data-table-section">
+                                    @{await Html.RenderPartialAsync("_StaffList", Model);}
+
                                 </div>
 
                                 <div style="height: 40px;"></div>
 
                                 <div class="data-form-section">
-                                    <form action="#">
+                                    <form id="formUpdateStaff" action="#">
+                                        @Html.Hidden("hiddenSelectedStaffID")
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Name</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtStaffName">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Surname</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtStaffSurname">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="single-form-opt">
                                                             <label class="address" for="address">Address</label>
-                                                            <input type="address">
+                                                            <input type="address" id="txtStaffStreetNumber">
                                                         </div>
                                                         <div class="single-form-opt">
                                                             <label class="address" for="address"></label>
-                                                            <input type="address">
+                                                            <input type="address" id="txtStaffStreetName1">
                                                         </div>
                                                         <div class="single-form-opt">
                                                             <label class="address" for="address"></label>
-                                                            <input type="address">
+                                                            <input type="address" id="txtStaffStreetName2">
                                                         </div>
                                                         <div class="single-form-opt">
                                                             <label class="address" for="address"></label>
-                                                            <input type="address">
+                                                            <input type="address" id="txtStaffStreetName3">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-12 col-sm-6">
                                                         <div class="single-form-opt single-form-opt-staff">
                                                             <label for="name">Nationality</label>
-                                                            <input type="text">
+
+                                                            <select id="txtStaffNationality" name="txtStaffNationality">
+                                                                <option selected>None</option>
+                                                                <option>Austria</option>
+                                                                <option>Belgium</option>
+                                                                <option>Bulgaria</option>
+                                                                <option>Croatia</option>
+                                                                <option>Cyprus</option>
+                                                                <option>Czechia</option>
+                                                                <option>Denmark</option>
+                                                                <option>Estonia</option>
+                                                                <option>Finland</option>
+                                                                <option>France</option>
+                                                                <option>Germany</option>
+                                                                <option>Greece</option>
+                                                                <option>Hungary</option>
+                                                                <option>Ireland</option>
+                                                                <option>Italy</option>
+                                                                <option>Latvia</option>
+                                                                <option>Lithuania</option>
+                                                                <option>Luxembourg</option>
+                                                                <option>Malta</option>
+                                                                <option>Netherlands</option>
+                                                                <option>Poland</option>
+                                                                <option>Portugal</option>
+                                                                <option>Romania</option>
+                                                                <option>Slovakia</option>
+                                                                <option>Slovenia</option>
+                                                                <option>Spain</option>
+                                                                <option>Sweden</option>
+                                                                <option>United Kingdom</option>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12 col-sm-6">
-                                                        <div class="single-form-opt single-form-opt-staff">
+                                                    <div class="col-sm-6">
+                                                        <div class="single-form-opt">
                                                             <label for="name">DOB</label>
-                                                            <input type="text">
+                                                            <input type="date" id="txtStaffDOB">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Hired On</label>
-                                                            <input type="text">
+                                                            <input type="date" id="txtStaffHiredOnDate">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Fired On</label>
-                                                            <input type="text">
+                                                            <input type="date" id="txtStaffFiredOnDate">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Hired By</label>
-                                                            <input type="text">
+                                                            @*<input type="text" id="txtStaffHiredBy">*@
+                                                            <select id="txtStaffHiredBy" name="txtStaffHiredBy">
+                                                                @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
+                                                                {
+                                                                    <option>@staff.Name</option>
+                                                                }
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Resigned On</label>
-                                                            <input type="text">
+                                                            <input type="date" id="txtStaffResignedOnDate">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -866,35 +770,91 @@
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="user">Department</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtStaffDepartment">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="text">Manager</label>
-                                                            <input type="text">
+                                                            <input type="text" id="txtStaffManager">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-12 staff-note">
                                                         <h3 class="heading-note">Notes</h3>
                                                         <div class="notes">
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                            <a href="" class="note-btn">+ Add New Note</a>
+                                                            <div id="staffNotes">
+                                                                @{await Html.RenderPartialAsync("_StaffNotesPartial", Model);}
+                                                            </div>
+                                                            @*<a href="#" id="btnAddStaffNote" class="note-btn">+ Add New Note</a>*@
+                                                            <a href="#" class="note-btn" data-toggle="modal" data-target="#addStaffNoteModal">+ Add New Note</a>
                                                         </div>
+                                                        <!-- Add Notes Modal -->
+                                                        <div class="modal fade" id="addStaffNoteModal" role="dialog">
+                                                            <div class="modal-dialog">
+
+                                                                <!-- Modal content-->
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        <h4 class="modal-title">Add a new Note</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="single-form-opt">
+                                                                            <label class="address">Notes</label>
+                                                                            <textarea type="text" class="form-control" id="txtNewStaffNote"></textarea>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <div>
+                                                                            <button type="button" id="btnAddStaffNote" class="btn btn-success col-lg-6 col-lg-offset-4">OK</button>
+                                                                        </div>
+                                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <!--End staff notes modal-->
                                                         <div class="row">
                                                             <div class="col-sm-6">
                                                                 <div class="sa-left">
                                                                     <h3>Territory</h3>
                                                                     <div class="sa-left-content">
-                                                                        <span>Territory 1</span>
-                                                                        <span>Territory 1</span>
-                                                                        <span>Territory 1</span>
+                                                                        <select name="teritories" multiple="multiple" style="height: 130px;width: 100%;">
+                                                                            <option>None</option>
+                                                                            <option>Austria</option>
+                                                                            <option>Belgium</option>
+                                                                            <option>Bulgaria</option>
+                                                                            <option>Croatia</option>
+                                                                            <option>Cyprus</option>
+                                                                            <option>Czechia</option>
+                                                                            <option>Denmark</option>
+                                                                            <option>Estonia</option>
+                                                                            <option>Finland</option>
+                                                                            <option>France</option>
+                                                                            <option>Germany</option>
+                                                                            <option>Greece</option>
+                                                                            <option>Hungary</option>
+                                                                            <option>Ireland</option>
+                                                                            <option>Italy</option>
+                                                                            <option>Latvia</option>
+                                                                            <option>Lithuania</option>
+                                                                            <option>Luxembourg</option>
+                                                                            <option>Malta</option>
+                                                                            <option>Netherlands</option>
+                                                                            <option>Poland</option>
+                                                                            <option>Portugal</option>
+                                                                            <option>Romania</option>
+                                                                            <option>Slovakia</option>
+                                                                            <option>Slovenia</option>
+                                                                            <option>Spain</option>
+                                                                            <option>Sweden</option>
+                                                                            <option>United Kingdom</option>
+                                                                        </select>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -902,16 +862,21 @@
                                                                 <div class="sa-right">
                                                                     <h3>Languages</h3>
                                                                     <div class="sa-right-content">
-                                                                        <span>Languages 1</span>
-                                                                        <span>Languages 1</span>
-                                                                        <span>Languages 1</span>
+                                                                        <select name="languages" multiple="multiple" style="height: 130px;width: 100%;">
+                                                                            <option>English</option>
+                                                                            <option>French</option>
+                                                                            <option>Chinese</option>
+                                                                            <option>German</option>
+                                                                            <option>Portuguese</option>
+                                                                            <option>Spanish</option>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="finally-btn">
-                                                            <a href="" style="background: #55C1FF;" class="reset-btn btn">New</a>
-                                                            <a href="" style="background: #6FCF97;" class="update-btn btn">Update</a>
+                                                            <a href="#" id="btnCreateNewStaff" style="background: #55C1FF;" class="reset-btn btn">New</a>
+                                                            <a href="#" id="btnUpdateStaff" style="background: #6FCF97;" class="update-btn btn" disabled>Update</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -936,5 +901,3 @@
 </html>
 
 <script src="~/assets/js/Client.js"></script>
-
-

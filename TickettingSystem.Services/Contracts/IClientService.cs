@@ -9,9 +9,9 @@ namespace TickettingSystem.Services.Contracts
 {
     public interface IClientService
     {
-        Task<IList<Clientinterest>> GetAllAsync();
-        Task<Clientinterest> GetClientById(int id);
-        Task<Clientinterest> UpdateClient(Clientinterest model);
-        Task<IList<Clientinterest>> SearchClient(string searchStr);
+        Task<IList<UserDetails>> GetAllAsync();
+        Task<UserDetails> GetClientById(int id);
+        Task<UserDetails> UpdateClient(UserDetails model);
+        Task<IList<UserDetails>> SearchClient(string searchStr);
     }
 }

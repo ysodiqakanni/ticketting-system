@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TickettingSystem.Api.DTO;
 using TickettingSystem.Core;
 using TickettingSystem.Data.Contracts; 
 using TickettingSystem.Services.Contracts; 
@@ -34,6 +35,15 @@ namespace TickettingSystem.Api.Controllers
         public async Task<IActionResult> GetAllClients()
         {
             var clients = await _clientService.GetAllAsync();
+            if(clients != null && clients.Any())
+            {
+                var resp = new List<ClientResponseDTO>();
+                foreach (var client in clients)
+                {
+                    resp.Add(ClientMapper.MapUserDetailsToDto(client));
+                }
+                return Ok(resp);
+            }
             return Ok(clients);
         }
 
@@ -41,6 +51,11 @@ namespace TickettingSystem.Api.Controllers
         public async Task<IActionResult> GetClientById(int id)
         {
             var client = await _clientService.GetClientById(id);
+            if(client != null)
+            {
+                var resp = ClientMapper.MapUserDetailsToDto(client);
+                return Ok(resp);
+            } 
             return Ok(client);
         }
 
