@@ -1,0 +1,37 @@
+﻿@model TickettingSystem.Models.DashboardViewModel
+<table style="width:100%">
+    <thead>
+        <tr>
+            <th class="round-1">User Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Referred by</th>
+            <th>Joined On</th>
+            <th class="round-2">KYC Level</th>
+        </tr>
+    </thead>
+
+    <tbody style="display:block; height:150px; width:inherit; overflow:auto;">
+        @if (Model.StaffList.Count < 1)
+        {
+            <p>No Users Found for that Search Criteria</p>
+        }
+        else
+        {
+            foreach (var staff in Model.StaffList)
+            {
+                <tr class="staffDataRow">
+                    <td>@staff.Id</td>
+                    <td>@staff.Name</td>
+                    <td>@staff.Email</td>
+                    <td>@staff.ReferredBy</td>
+                    <td>@staff.JoinedOn.ToString("dd/mm/yyyy")</td>
+                    <td>@staff.KycLevel</td>
+                </tr>
+            }
+        }
+
+
+    </tbody>
+
+</table>

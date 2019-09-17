@@ -1,0 +1,22 @@
+﻿@model TickettingSystem.Models.DashboardViewModel
+@foreach (var convo in Model.TicketConversations)
+{
+    <div class="single-comment">
+        <p>@convo.Content</p>
+        <p class="somoy">@convo.DateCreated.ToString("D")<span>@convo.DateCreated.ToString("hh:mm tt")</span></p>
+    </div>
+}
+
+
+@*<div class="single-comment">
+        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
+    </div>
+
+    <div class="single-comment">
+        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
+        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
+    </div>
+    <div style="margin-bottom: 0;" class="single-comment">
+        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
+        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
+    </div>*@
