@@ -15,5 +15,7 @@ namespace TickettingSystem.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
+        //public int MyProperty { get; set; }
     }
 }

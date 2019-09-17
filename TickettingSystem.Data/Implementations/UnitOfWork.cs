@@ -5,12 +5,14 @@ using System.Text;
 using TickettingSystem.Core;
 using TickettingSystem.Data.Contracts;
 using System.Linq;
+using TickettingSystem.Data.DbModel;
 
 namespace TickettingSystem.Data.Implementations
 {
     public class UnitOfWork : IUnitOfWork
     {
         private AppDbContext context;
+        //private db_a3d3ad_pricingContext context;
         public UnitOfWork(AppDbContext _context)
         {
             context = _context;
