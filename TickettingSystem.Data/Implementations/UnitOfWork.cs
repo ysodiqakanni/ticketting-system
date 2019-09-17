@@ -20,11 +20,13 @@ namespace TickettingSystem.Data.Implementations
             TradeRepository = new TradeRepository(_context);
             ClientNoteRepository = new ClientNoteRepository(_context);
             ExchangeRepository = new ExchangeRepository(_context);
+            StaffRepository = new StaffRepository(_context);
         }
         public IBaseRepository<Clientinterest> ClientRepository { get; set; }
         public IBaseRepository<Trade> TradeRepository { get; set; }
         public IBaseRepository<ClientNote> ClientNoteRepository { get; set; }
         public IBaseRepository<Exchange> ExchangeRepository { get; set; }
+        public IBaseRepository<Staff> StaffRepository { get; set; }
 
         public void Dispose()
         {
