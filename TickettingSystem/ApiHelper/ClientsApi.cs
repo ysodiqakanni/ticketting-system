@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.DTOs;
 using TickettingSystem.Models;
@@ -25,14 +27,17 @@ namespace TickettingSystem.ApiHelper
             } 
         }
 
-        public static Task<List<ClientDTO>> SearchClients(string searchStr)
-        { 
-            var clients = new List<ClientDTO>
+        public async static Task<List<ClientDTO>> SearchClients(string searchStr)
+        {
+            using (HttpClient client = new HttpClient())
             {
-                new ClientDTO{ID = 1, Name = "John Doe", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Wolex"},
-                new ClientDTO{ID = 3, Name = "Bad ROugue", Email = "jd@gmail.com", JoinedDate = DateTime.Now, KycLevel = "primry", ReferredBy = "Joy"}
-            };
-            return Task.Run(() => { return clients; });
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("clients/search?searchStr="+searchStr);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<ClientDTO>>();
+                return responseBody;
+            } 
 
         }
         public async static Task<ClientDTO> GetClientById(int id)
@@ -54,7 +59,13 @@ namespace TickettingSystem.ApiHelper
         }
         public static async Task Update(ClientUpdateViewModel model)
         {
-            return;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+                HttpResponseMessage msg = await client.PutAsync("clients", httpContent);
+                msg.EnsureSuccessStatusCode(); 
+            } 
         }
         public static async Task<string> CreateNewNote(string note)
         {

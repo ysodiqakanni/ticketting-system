@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TickettingSystem.Api.DTO;
 using TickettingSystem.Core;
-using TickettingSystem.Data.Contracts; 
+using TickettingSystem.Data.Contracts;
+using TickettingSystem.Data.DbModel;
 using TickettingSystem.Services.Contracts; 
 
 namespace TickettingSystem.Api.Controllers
@@ -60,22 +61,26 @@ namespace TickettingSystem.Api.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> SearchClient([FromQuery(Name ="searchStr")] string searchStr)
+        public async Task<IActionResult> SearchClient([FromQuery(Name ="searchStr")] string searchStr = "")
         {
             var searchResult = await _clientService.SearchClient(searchStr);
+            if (searchResult != null && searchResult.Any())
+            {
+                var resp = new List<ClientResponseDTO>();
+                foreach (var client in searchResult)
+                {
+                    resp.Add(ClientMapper.MapUserDetailsToDto(client));
+                }
+                return Ok(resp);
+            }
             return Ok(searchResult);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateClient(Client client)
+        public async Task<IActionResult> UpdateClient(UserDetails client)
         {
-            //var clientToUpdate = await _clientService.GetClientById(client.ID);
-            //clientToUpdate.Language = client.Language;
-            //clientToUpdate.Nationality = client.Nationality;
-            //clientToUpdate.DateOfBirth = client.DateOfBirth;
-            //clientToUpdate.Address = client.Address;
-            //var clientUpdate = await _clientService.UpdateClient(clientToUpdate);
-            return Ok();
+            var result = await _clientService.UpdateClient(client);
+            return Ok(result);
         }
 
         [HttpPost("notes")]

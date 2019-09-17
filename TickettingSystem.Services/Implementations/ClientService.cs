@@ -30,19 +30,31 @@ namespace TickettingSystem.Services.Implementations
 
         public async Task<IList<UserDetails>> SearchClient(string searchStr)
         {
-            throw new NotImplementedException();
+            if (searchStr == null) searchStr = string.Empty;
+            if(!String.IsNullOrEmpty(searchStr))
+                searchStr = searchStr.ToLower();
 
-            //var clients = await uow.ClientRepository.FindAllAsync(
-            //   x => x.ID.ToString() == searchStr || x.Name.ToLower().Contains(searchStr.ToLower())
-            //    || x.Surname.ToLower().Contains(searchStr.ToLower())
-            //    || x.Email.ToLower().Contains(searchStr.ToLower())
-            //    || x.DateOfBirth.ToString("d").Contains(searchStr));
-            //return clients.ToList();
+            var clients = await uow.ClientRepository.FindAllAsync(
+               x => x.Id.ToString() == searchStr || x.Firstname.ToLower().Contains(searchStr)
+                || x.Surname.ToLower().Contains(searchStr.ToLower())
+                || x.Emailaddress.ToLower().Contains(searchStr.ToLower()));
+            return clients.ToList();
         }
-
+         
         public async Task<UserDetails> UpdateClient(UserDetails model)
         {
-            return await uow.ClientRepository.UpdateAsync(model, model.Id);
+            var toUpdate = await uow.ClientRepository.FindAsync(x => x.Id == model.Id);
+            if (toUpdate == null)
+                throw new Exception("Record not found!");
+            toUpdate.Housenumber = model.Housenumber;
+            toUpdate.Streetname1 = model.Streetname1;
+            toUpdate.Streetname2 = model.Streetname2;
+            toUpdate.Streetname3 = model.Streetname3;
+            toUpdate.Country = model.Country;
+            toUpdate.Dob = model.Dob;
+
+            uow.Save();
+            return toUpdate;
         }
 
     }

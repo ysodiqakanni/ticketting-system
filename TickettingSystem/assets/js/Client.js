@@ -124,13 +124,16 @@ $("#btnUpdateClient").on("click", function () {
     if (confirm("Are You Sure You Want to Update This Record?")) {
         let clientData = {
             ID: selectedClientId,
-            Address: $("#txtClientAddressLine1").val(),
+            HouseNumber: $("#txtClientAddressLine1").val(),
+            StreetName1: $("#txtClientAddressLine2").val(),
+            StreetName2: $("#txtClientAddressLine3").val(),
+            StreetName3: $("#txtClientAddressLine4").val(),
             Nationality: $("#txtClientNationailty").val(),
             Language: $("#txtClientLanguage").val(),
             DateOfBirth: $("#txtClientDOB").val()
         };
         // validate inputs
-        if (!clientData.Address || !clientData.Nationality || !clientData.Language || !clientData.DateOfBirth) {
+        if (!clientData.HouseNumber || !clientData.Nationality || !clientData.Language || !clientData.DateOfBirth) {
             alert("Fill in all required fields");
             return;
         }
@@ -160,8 +163,8 @@ $("#btnUpdateClient").on("click", function () {
         })
     }
 })
-$(".clientDataRow").on("click", function () {  // https://stackoverflow.com/a/26602984/7162741 this function got fired many times cuz the js file was loaded in some partial views
-
+//$(".clientDataRow").on("click", function () {  // https://stackoverflow.com/a/26602984/7162741 this function got fired many times cuz the js file was loaded in some partial views
+$(document).on("click", ".clientDataRow", function () {
     var id = $(this).find('td:first').html();
     $("#hiddenClientID").val(id);
     var url = "/Home/clients/" + id;
@@ -178,16 +181,16 @@ $(".clientDataRow").on("click", function () {  // https://stackoverflow.com/a/26
                 $("#txtClientName").val(client.name);
 
                 $("#txtClientSurname").val(client.name);
-                $("#txtClientAddressLine1").val(client.HouseNumber);
-                $("#txtClientAddressLine2").val(client.StreetName1);
-                $("#txtClientAddressLine3").val(client.StreetName2);
-                $("#txtClientAddressLine4").val(client.StreetName3);
+                $("#txtClientAddressLine1").val(client.houseNumber);
+                $("#txtClientAddressLine2").val(client.streetName1);
+                $("#txtClientAddressLine3").val(client.streetName2);
+                $("#txtClientAddressLine4").val(client.streetName3);
                 $("#txtClientNationailty").val(client.nationality);
                 $("#txtClientLanguage").val(client.language);
                 $("#txtClientSurname").val(client.surname);
                 $("#txtClientReferedBy").val(client.referredBy);
                 $("#txtClientRefUrl").val(client.refUrl);
-                $("#txtClientUserId").val("temp user Id");
+                $("#txtClientUserId").val(client.id);
                 $("#txtClientEmail").val(client.email);
                 $("#txtClientKycLevel").val(client.kycLevel);
                 document.getElementById("txtClientDOB").valueAsDate = new Date(client.dateOfBirth);

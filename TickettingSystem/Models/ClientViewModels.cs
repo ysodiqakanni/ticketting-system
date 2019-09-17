@@ -9,8 +9,11 @@ namespace TickettingSystem.Models
     public class ClientUpdateViewModel
     {
         public int ID { get; set; }
-        [Required]
-        public string Address { get; set; }
+       // [Required]
+        public string HouseNumber { get; set; }
+        public string StreetName1 { get; set; }
+        public string StreetName2 { get; set; }
+        public string StreetName3 { get; set; }
         [Required]
         public string Nationality { get; set; }
         [Required]
