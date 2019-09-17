@@ -33,4 +33,19 @@ namespace TickettingSystem.Models
         public string RefUrl { get; set; }
         public DateTime DateOfBirth { get; set; }
     }
+    public class NoteListViewModel
+    {
+        public string Content { get; set; }
+        public string ShortNote
+        {
+            get
+            {
+                if (Content.Length > 50)
+                {
+                    return Content.Substring(0, 50) + "...";
+                }
+                return Content;
+            }
+        }
+    }
 }
