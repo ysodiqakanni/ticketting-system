@@ -5,14 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc; 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection; 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using TickettingSystem.Data;
 using TickettingSystem.Data.Contracts;
+using TickettingSystem.Data.DbModel;
 using TickettingSystem.Data.Implementations;
 using TickettingSystem.Services.Contracts;
 using TickettingSystem.Services.Implementations;
@@ -31,9 +32,10 @@ namespace TickettingSystem.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // changed the Mysql provider https://stackoverflow.com/a/50868381/7162741
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<AppDbContext>(options =>
-                    options.UseSqlServer(connectionString)
+            services.AddDbContext<db_a3d3ad_pricingContext>(options =>
+                    options.UseMySql(connectionString)
             );
 
 

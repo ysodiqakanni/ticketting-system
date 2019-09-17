@@ -13,7 +13,7 @@ namespace TickettingSystem.Data.DbModel
         public decimal Amount { get; set; }
         public DateTime TradePlaceDate { get; set; }
         public string TradeStatus { get; set; }
-        public short WasArbitrageSuggestion { get; set; }
+        public bool WasArbitrageSuggestion { get; set; }  // changed int to short
         public string TradeBcid { get; set; }
     }
 }
