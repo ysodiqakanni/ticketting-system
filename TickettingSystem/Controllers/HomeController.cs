@@ -37,6 +37,8 @@ namespace TickettingSystem.Controllers
             // so search results (D) should contain each of the known exchanges 
             model.Exchanges = await ExchangeApi.GetAllKnownExchanges();
             model.Tickets = await TicketsApi.GetLastTenTickets();
+            model.TicketConversations = new List<TicketConversationViewModel>();
+            model.NotesForSelectedTicketClient = new List<NoteListViewModel>();
 
             return View(model);
         }
@@ -385,6 +387,16 @@ namespace TickettingSystem.Controllers
             {
                 return Json(new { success = false, msg = "Error updating staff records!" });
             }
+        }
+
+        [Route("tickets/{id}")]
+        public async Task<IActionResult> GetTicketDataById(int? id)
+        {
+            if (id == null) throw new ArgumentNullException("Invalid request sent!");
+            
+            var convos = await TicketsApi.GetTicketConversations(id.Value);
+            var notes = await TicketsApi.GetAllNotesForTicketClient(id.Value);
+            return Json(new { success = true, notes = notes, convos = convos});
         }
 
 

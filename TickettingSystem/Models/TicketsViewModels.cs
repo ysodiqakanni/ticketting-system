@@ -13,4 +13,10 @@ namespace TickettingSystem.Models
         public DateTime DateEnabled { get; set; }
         public decimal Price { get; set; }
     }
+    public class TicketConversationViewModel
+    {
+        public string Content { get; set; }
+        public DateTime DateCreated { get; set; }
+        public bool CreatedByClient { get; set; }   // A Conversation message is either sent by a client or a staff
+    }
 }

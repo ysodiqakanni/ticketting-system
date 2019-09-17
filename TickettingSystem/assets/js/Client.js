@@ -441,6 +441,49 @@ $("#btnUpdateStaff").on("click", function (e) {
     // disable update button
 })
 
+$(document).on("click", ".ticketDataRow", function () {
+    var id = $(this).find('td:first').html();
+    $("#SelectedTicketId").val(id);
+    loadTicketDetails(id);
+})
+
+$("#btnAddTicketNote").on("click", function (e) {
+    var ticketId = $("#SelectedTicketId").val();
+    if (!ticketId) {
+        alert("No ticket selected!");
+        return;
+    }
+    const note = $("#txtNewTicketNote").val();
+    if (!note) {
+        alert("Note can not be empty!");
+        return;
+    }
+    e.preventDefault();
+
+    var url = "/home/ticket/" + ticketId + "/createNote/" + note;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                alert(response.msg);
+                $("#txtNewTicketNote").val("");
+                // Todo: re-render notes partial
+                loadTicketDetails(ticketId);
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+})
+
 function removeSelectedClientRecords() {
     $("#hiddenClientID").val("");
     $("#txtClientName").val("");
@@ -668,6 +711,55 @@ function saveOrUpdateStaff(staff) {
         },
         error: function () {
             alert("An unknown error has occured");
+        },
+    })
+}
+
+function loadTicketDetails(id) {
+    var url = "/Home/tickets/" + id;
+    // populate ticket's details
+    $.ajax({
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                var notes = response.notes;
+                $("#clientTicketNotes").html("");
+                for (ind in notes) {
+                    $('#clientTicketNotes').append('<p data-toggle="popover" data-placement="top" data-content="' + notes[ind].content + '" >' + notes[ind].shortNote + '</p >')
+                }
+                $('[data-toggle="popover"]').popover();
+
+                var convos = response.convos;
+                $("#divTicketConversation").html("");
+                for (i in convos) {
+                    var d = new Date(convos[i].dateCreated)
+                    var t = d.getHours() + ":" + d.getMinutes();
+                    if (convos[i].createdByClient) {
+                        $("#divTicketConversation").append('<div class="single-comment">' +
+                            '<p class="text-danger">' + convos[i].content + '</p>' +
+                            '<p class="somoy">' + d.toDateString() + '   <span>' + t + '</span></p>' +
+                            ' </div>'
+                        )
+                    }
+                    else {
+                        $("#divTicketConversation").append('<div class="single-comment">' +
+                            '<p class="text-primary">' + convos[i].content + '</p>' +
+                            '<p class="somoy">' + d.toDateString() + '   <span>' + t + '</span></p>' +
+                            ' </div>'
+                        )
+                    }
+
+                }
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An error occured");
         },
     })
 }

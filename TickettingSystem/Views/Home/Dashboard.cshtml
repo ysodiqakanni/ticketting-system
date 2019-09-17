@@ -549,46 +549,75 @@
                                 <div class="data-form-section">
                                     <form action="#">
                                         <div class="row">
+                                            @Html.Hidden("SelectedTicketId")
                                             <div class="col-md-6">
-                                                <h3 class="heading-note">Client</h3>
-                                                <div class="client-comment">
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                    </div>
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
-                                                    <div style="margin-bottom: 0;" class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
+                                                <h3 class="heading-note">Chats</h3>
+                                                <div id="divTicketConversation" class="client-comment">
+
+                                                    @{await Html.RenderPartialAsync("_TicketConversation", Model);}
+                                                     
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <h3 class="heading-note">Notes</h3>
                                                 <div class="notes">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <a href="" class="note-btn">+ Add New Note</a>
+                                                    <div id="clientTicketNotes">
+
+                                                    </div>
+
+                                                    @*<a href="" class="note-btn">+ Add New Note</a>*@
+                                                    <a href="#" class="note-btn" data-toggle="modal" data-target="#addTicketNoteModal">+ Add New Note</a>
+                                                </div>
+
+                                                <!-- Add Notes Modal -->
+                                                <div class="modal fade" id="addTicketNoteModal" role="dialog">
+                                                    <div class="modal-dialog">
+
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h4 class="modal-title">Add a new Note</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="single-form-opt">
+                                                                    <label class="address">Notes</label>
+                                                                    <textarea type="text" class="form-control" id="txtNewTicketNote"></textarea>
+                                                                </div>
+
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <div>
+                                                                    <button type="button" id="btnAddTicketNote" class="btn btn-success col-lg-6 col-lg-offset-4">OK</button>
+                                                                </div>
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
 
                                                 <div class="ticket-assign">
                                                     <div class="single-form-opt tck">
                                                         <label for="level">Assigned to</label>
-                                                        <input type="text">
+                                                    
+                                                        <select id="txtTicketAssignedTo" name="txtTicketAssignedTo">
+                                                            @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
+                                                            {
+                                                                <option>@staff.Name</option>
+                                                            }
+                                                        </select>
                                                     </div>
                                                     <div class="single-form-opt tck">
                                                         <label for="date">Re-Assign</label>
-                                                        <input type="text">
+                                                   <input type="text" />
+                                                        <select id="txtTicketReAssign" name="txtTicketReAssign">
+                                                            @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
+                                                            {
+                                                                <option>@staff.Name</option>
+                                                            }
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -596,24 +625,7 @@
                                         <div style="height: 40px;"></div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <h3 class="heading-note">Staff</h3>
-                                                <div class="client-comment">
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                    </div>
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
-                                                    <div class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
-                                                    <div style="margin-bottom: 0;" class="single-comment">
-                                                        <p>Lorem ipsum dolor sit amet onsectetur adipisicing elit, sed do eiusmod.</p>
-                                                        <p class="somoy">Aug 27, 2018 <span>11:08 AM</span></p>
-                                                    </div>
-                                                </div>
+                                               
                                                 <div class="custom-ticket-btn">
                                                     <a href="" class="btn response-btn">Send Response</a>
                                                     <a href="" class="btn close-btn">Close Ticket</a>

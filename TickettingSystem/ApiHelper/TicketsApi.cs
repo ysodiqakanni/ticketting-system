@@ -76,5 +76,31 @@ namespace TickettingSystem.ApiHelper
             };
             return Task.Run(() => { return tickets; });
         }
+        public static Task<List<TicketConversationViewModel>> GetTicketConversations(int ticketId)
+        {
+            // The convos are by them tickets
+            // so retrieve all tickets with parentid = ticketId
+            var convos = new List<TicketConversationViewModel>
+            {
+                new TicketConversationViewModel{Content="hello support", DateCreated= DateTime.Now, CreatedByClient = true},
+                new TicketConversationViewModel{Content="I need an assistance", DateCreated= DateTime.Now, CreatedByClient = true},
+                new TicketConversationViewModel{Content="hi client", DateCreated= DateTime.Now, CreatedByClient = false},
+                new TicketConversationViewModel{Content="how do you do", DateCreated= DateTime.Now, CreatedByClient = false},
+                new TicketConversationViewModel{Content="My name is Maurie, how may I help you today?", DateCreated= DateTime.Now, CreatedByClient = false},
+                new TicketConversationViewModel{Content="I can't log in, please help!", DateCreated= DateTime.Now, CreatedByClient = true},
+            };
+            return Task.Run(() => { return convos; });
+        }
+        public static async Task<List<NoteListViewModel>> GetAllNotesForTicketClient(int ticketId)
+        { 
+            return new List<NoteListViewModel>()
+            {
+                new NoteListViewModel{Content = "So Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
+                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
+                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
+                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
+                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"}
+            };
+        }
     }
 }
