@@ -14,9 +14,9 @@ namespace TickettingSystem.Data.DbModel
         public decimal Amount { get; set; }
         public DateTime TradePlaceDate { get; set; }
         public string TradeStatus { get; set; }
-        public bool WasArbitrageSuggestion { get; set; }
+        public bool WasArbitrageSuggestion { get; set; }  // was short
         public string TradeBcid { get; set; }
-        public bool Socialtrade { get; set; }
+        public bool Socialtrade { get; set; }  // was short
         public int? Socialtradetraderid { get; set; }
         public decimal? Price { get; set; }
     }

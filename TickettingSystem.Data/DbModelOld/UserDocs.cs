@@ -12,6 +12,6 @@ namespace TickettingSystem.Data.DbModel
         public DateTime DtCreated { get; set; }
         public DateTime? DtModified { get; set; }
 
-        public virtual UserDetails User { get; set; }
+        public UserDetails User { get; set; }
     }
 }

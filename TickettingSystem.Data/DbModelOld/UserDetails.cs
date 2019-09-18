@@ -25,11 +25,9 @@ namespace TickettingSystem.Data.DbModel
         public DateTime DtCreated { get; set; }
         public DateTime? DtModified { get; set; }
         public int? AccType { get; set; }
-        public int? Languageid { get; set; }
-        public int? Territoryid { get; set; }
 
-        public virtual NotificationsUserDetails NotificationsUserDetails { get; set; }
-        public virtual UserDocs UserDocs { get; set; }
-        public virtual UserPwd UserPwd { get; set; }
+        public NotificationsUserDetails NotificationsUserDetails { get; set; }
+        public UserDocs UserDocs { get; set; }
+        public UserPwd UserPwd { get; set; }
     }
 }

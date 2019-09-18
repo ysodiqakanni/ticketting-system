@@ -13,6 +13,10 @@ namespace TickettingSystem.Data.Contracts
         IBaseRepository<ClientNote> ClientNoteRepository { get; set; }
         IBaseRepository<Exchange> ExchangeRepository { get; set; }
         IBaseRepository<Staff> StaffRepository { get; set; }
+        IBaseRepository<Languages> LanguageRepository { get; set; }
+        IBaseRepository<UserVerification> UserVerificationRepository { get; set; }
+
+
         int Save();
     }
 }

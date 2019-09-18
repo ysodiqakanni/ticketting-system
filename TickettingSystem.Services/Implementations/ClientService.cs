@@ -57,5 +57,36 @@ namespace TickettingSystem.Services.Implementations
             return toUpdate;
         }
 
+        public string GetLanguageById(int id)
+        {
+            return uow.LanguageRepository.Get(id).Language;
+        }
+        public string GetKycLevel(int userId)
+        {
+
+            // KycLevel = "ss", // the user_verification table tells us if a user has been verified - verification count 
+            // is the kyc level (which will be missing, 1 or 2) so no kyc, basic, Advanced)
+            var userVerification = uow.UserVerificationRepository.Find(u => u.Userid == userId).FirstOrDefault();
+            int verCount = 0;
+            if (userVerification != null)
+                verCount = userVerification.VerificationCount;
+            
+            switch (verCount)
+            {
+                case 0:
+                    return "Missing";
+                case 1: return "Basic";
+                case 2: return "Advanced";
+                default:
+                    return "Invalid data!";
+            }
+            
+        }
+        private string GetRefUrl(int userId)
+        {
+            return "Not impl";
+        }
+       
+
     }
 }

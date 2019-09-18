@@ -13,5 +13,10 @@ namespace TickettingSystem.Services.Contracts
         Task<UserDetails> GetClientById(int id);
         Task<UserDetails> UpdateClient(UserDetails model);
         Task<IList<UserDetails>> SearchClient(string searchStr);
+
+
+        // should go to the Language Service
+        string GetLanguageById(int id);
+        string GetKycLevel(int userId);
     }
 }

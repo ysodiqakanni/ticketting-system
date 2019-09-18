@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TickettingSystem.Data.DbModel;
+using TickettingSystem.Services.Contracts;
 
 namespace TickettingSystem.Api.DTO
 {
@@ -26,8 +27,11 @@ namespace TickettingSystem.Api.DTO
     }
     public class ClientMapper
     {
-        public static ClientResponseDTO MapUserDetailsToDto(UserDetails userDetails)
+        private static IClientService _clientService; 
+        public static ClientResponseDTO MapUserDetailsToDto(UserDetails userDetails, IClientService clientService)
         {
+            _clientService = clientService;
+
             var result = new ClientResponseDTO
             {
                 ID = userDetails.Id,
@@ -38,13 +42,15 @@ namespace TickettingSystem.Api.DTO
                 DateOfBirth = userDetails.Dob,
                 Email = userDetails.Emailaddress,
                 JoinedDate = userDetails.DtCreated,
-                Language = "l",  // get language Id from updated db
+                
                 Name = userDetails.Firstname,
                 Nationality = userDetails.Country,
                 ReferredBy = userDetails.Referralcode,
                 Surname = userDetails.Surname, 
             };
-            result.KycLevel = GetKycLevel(userDetails.Id);
+
+            result.Language = _clientService.GetLanguageById(userDetails.Languageid.Value);  // get language Id from updated db
+            result.KycLevel = _clientService.GetKycLevel(userDetails.Id);
             result.RefUrl = GetRefUrl(userDetails.Id);
             return result;
         }

@@ -13,6 +13,6 @@ namespace TickettingSystem.Data.DbModel
         public string NudDtCreated { get; set; }
         public string NudDtModified { get; set; }
 
-        public virtual UserDetails NudUser { get; set; }
+        public UserDetails NudUser { get; set; }
     }
 }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace TickettingSystem.Data.DbModel
 {
-    public partial class UserDetails
+    public partial class StaffDetails
     {
         public int Id { get; set; }
         public DateTime Dob { get; set; }
         public int Sex { get; set; }
-        public string Userid { get; set; }
+        public string Staffuserid { get; set; }
         public string Surname { get; set; }
         public string Firstname { get; set; }
         public string Emailaddress { get; set; }
@@ -21,15 +21,12 @@ namespace TickettingSystem.Data.DbModel
         public string Country { get; set; }
         public int? Countrycode { get; set; }
         public string Phonenumber { get; set; }
-        public string Referralcode { get; set; }
+        public DateTime? HiredOn { get; set; }
+        public DateTime? Firedon { get; set; }
+        public DateTime? Resignedon { get; set; }
+        public string Hiredbyid { get; set; }
+        public int? Departmentid { get; set; }
         public DateTime DtCreated { get; set; }
         public DateTime? DtModified { get; set; }
-        public int? AccType { get; set; }
-        public int? Languageid { get; set; }
-        public int? Territoryid { get; set; }
-
-        public virtual NotificationsUserDetails NotificationsUserDetails { get; set; }
-        public virtual UserDocs UserDocs { get; set; }
-        public virtual UserPwd UserPwd { get; set; }
     }
 }

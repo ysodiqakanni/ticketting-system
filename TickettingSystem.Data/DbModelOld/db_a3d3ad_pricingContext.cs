@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TickettingSystem.Data.DbModel
 {
+    /// <summary>
+    /// This command was run to scaffold the db   Scaffold-DbContext "server=localhost;port=3306;user=root;password=mypass;database=sakila" MySql.Data.EntityFrameworkCore -OutputDir sakila -f
+    /// </summary>
     public partial class db_a3d3ad_pricingContext : DbContext
     {
         public db_a3d3ad_pricingContext()
@@ -17,22 +20,14 @@ namespace TickettingSystem.Data.DbModel
 
         public virtual DbSet<Clientinterest> Clientinterest { get; set; }
         public virtual DbSet<CurrentPrice> CurrentPrice { get; set; }
-        public virtual DbSet<Departments> Departments { get; set; }
-        public virtual DbSet<ExchangeType> ExchangeType { get; set; }
-        public virtual DbSet<Exchangesmaster> Exchangesmaster { get; set; }
         public virtual DbSet<Exchangesusers> Exchangesusers { get; set; }
-        public virtual DbSet<Languages> Languages { get; set; }
+        public virtual DbSet<ExchangeType> ExchangeType { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
         public virtual DbSet<NotificationsUserDetails> NotificationsUserDetails { get; set; }
         public virtual DbSet<OldPrice> OldPrice { get; set; }
         public virtual DbSet<Socialtradingproviders> Socialtradingproviders { get; set; }
-        public virtual DbSet<StaffDetails> StaffDetails { get; set; }
-        public virtual DbSet<StaffLanguages> StaffLanguages { get; set; }
-        public virtual DbSet<StaffNotes> StaffNotes { get; set; }
-        public virtual DbSet<StaffTerritory> StaffTerritory { get; set; }
         public virtual DbSet<SupportDepartementType> SupportDepartementType { get; set; }
         public virtual DbSet<SupportTicket> SupportTicket { get; set; }
-        public virtual DbSet<Territories> Territories { get; set; }
         public virtual DbSet<TradeFollow> TradeFollow { get; set; }
         public virtual DbSet<TradeLog> TradeLog { get; set; }
         public virtual DbSet<TradeType> TradeType { get; set; }
@@ -40,26 +35,25 @@ namespace TickettingSystem.Data.DbModel
         public virtual DbSet<UserActivityLog> UserActivityLog { get; set; }
         public virtual DbSet<UserDetails> UserDetails { get; set; }
         public virtual DbSet<UserDocs> UserDocs { get; set; }
-        public virtual DbSet<UserNotes> UserNotes { get; set; }
         public virtual DbSet<UserPwd> UserPwd { get; set; }
-        public virtual DbSet<UserVerification> UserVerification { get; set; }
+
+        // Unable to generate entity type for table 'db_a3d3ad_pricing.exchangesmaster'. Please see the warning messages.
+        // Unable to generate entity type for table 'db_a3d3ad_pricing.user_verification'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=root;database=ticketing_db");
+                optionsBuilder.UseMySql(@"server=localhost;port=3306;user=root;password=root;database=db_a3d3ad_pricing");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
-
             modelBuilder.Entity<Clientinterest>(entity =>
             {
-                entity.ToTable("clientinterest", "ticketing_db");
+                entity.ToTable("clientinterest", "db_a3d3ad_pricing");
 
                 entity.HasIndex(e => e.Emailaddress)
                     .HasName("emailaddress_UNIQUE")
@@ -132,7 +126,7 @@ namespace TickettingSystem.Data.DbModel
             {
                 entity.HasKey(e => e.CpId);
 
-                entity.ToTable("current_price", "ticketing_db");
+                entity.ToTable("current_price", "db_a3d3ad_pricing");
 
                 entity.HasIndex(e => e.CSymbol)
                     .HasName("IDX_Symbol");
@@ -168,96 +162,11 @@ namespace TickettingSystem.Data.DbModel
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Departments>(entity =>
-            {
-                entity.HasKey(e => e.DeptName);
-
-                entity.ToTable("departments", "ticketing_db");
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("id_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.DeptName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.DeptMgr)
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DtCreated)
-                    .HasColumnName("dt_created")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.DtModified).HasColumnName("dt_modified");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)");
-            });
-
-            modelBuilder.Entity<ExchangeType>(entity =>
-            {
-                entity.ToTable("exchange_type", "ticketing_db");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<Exchangesmaster>(entity =>
-            {
-                entity.HasKey(e => e.ExchangeId);
-
-                entity.ToTable("exchangesmaster", "ticketing_db");
-
-                entity.HasIndex(e => e.ExchangeId)
-                    .HasName("exchangeID_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.ExchangeId)
-                    .HasColumnName("exchangeID")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.ExchangeCanDt).HasColumnName("exchange_can_dt");
-
-                entity.Property(e => e.ExchangeCrDt)
-                    .HasColumnName("exchange_cr_dt")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.ExchangeModDt).HasColumnName("exchange_mod_dt");
-
-                entity.Property(e => e.ExchangeName)
-                    .IsRequired()
-                    .HasColumnName("exchangeName")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExchangeSignupUrl)
-                    .IsRequired()
-                    .HasColumnName("exchangeSignupURL")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExchangeValid)
-                    .HasColumnName("exchangeValid")
-                    .HasColumnType("tinyint(4)");
-            });
-
             modelBuilder.Entity<Exchangesusers>(entity =>
             {
                 entity.HasKey(e => e.EuId);
 
-                entity.ToTable("exchangesusers", "ticketing_db");
+                entity.ToTable("exchangesusers", "db_a3d3ad_pricing");
 
                 entity.Property(e => e.EuId)
                     .HasColumnName("euID")
@@ -305,37 +214,26 @@ namespace TickettingSystem.Data.DbModel
                     .HasColumnType("int(11)");
             });
 
-            modelBuilder.Entity<Languages>(entity =>
+            modelBuilder.Entity<ExchangeType>(entity =>
             {
-                entity.HasKey(e => e.Id);
-
-                entity.ToTable("languages", "ticketing_db");
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("id_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.Language)
-                    .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.DtCreated)
-                    .HasColumnName("dt_created")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.DtModified).HasColumnName("dt_modified");
+                entity.ToTable("exchange_type", "db_a3d3ad_pricing");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasColumnType("int(11)");
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Notifications>(entity =>
             {
                 entity.HasKey(e => e.Notificationid);
 
-                entity.ToTable("notifications", "ticketing_db");
+                entity.ToTable("notifications", "db_a3d3ad_pricing");
 
                 entity.HasIndex(e => e.Notificationid)
                     .HasName("notificationID_UNIQUE")
@@ -378,7 +276,7 @@ namespace TickettingSystem.Data.DbModel
             {
                 entity.HasKey(e => e.NudUserid);
 
-                entity.ToTable("notifications_user_details", "ticketing_db");
+                entity.ToTable("notifications_user_details", "db_a3d3ad_pricing");
 
                 entity.HasIndex(e => e.NudUserid)
                     .HasName("nud_userid_UNIQUE")
@@ -432,7 +330,7 @@ namespace TickettingSystem.Data.DbModel
             {
                 entity.HasKey(e => e.PId);
 
-                entity.ToTable("old_price", "ticketing_db");
+                entity.ToTable("old_price", "db_a3d3ad_pricing");
 
                 entity.HasIndex(e => e.PId)
                     .HasName("ID_UNIQUE")
@@ -468,7 +366,7 @@ namespace TickettingSystem.Data.DbModel
             {
                 entity.HasKey(e => e.TraderUid);
 
-                entity.ToTable("socialtradingproviders", "ticketing_db");
+                entity.ToTable("socialtradingproviders", "db_a3d3ad_pricing");
 
                 entity.Property(e => e.TraderUid)
                     .HasColumnName("TraderUID")
@@ -500,232 +398,9 @@ namespace TickettingSystem.Data.DbModel
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<StaffDetails>(entity =>
-            {
-                entity.HasKey(e => e.Staffuserid);
-
-                entity.ToTable("staff_details", "ticketing_db");
-
-                entity.HasIndex(e => e.Emailaddress)
-                    .HasName("emailaddress_UNIQUE")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("id_UNIQUE")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.Phonenumber)
-                    .HasName("phonenumber_UNIQUE")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.Staffuserid)
-                    .HasName("userid_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.Staffuserid)
-                    .HasColumnName("staffuserid")
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.City)
-                    .HasColumnName("city")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Country)
-                    .HasColumnName("country")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Countrycode)
-                    .HasColumnName("countrycode")
-                    .HasColumnType("int(5)");
-
-                entity.Property(e => e.Departmentid).HasColumnType("int(11)");
-
-                entity.Property(e => e.Dob)
-                    .HasColumnName("DOB")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.DtCreated)
-                    .HasColumnName("dt_created")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.DtModified).HasColumnName("dt_modified");
-
-                entity.Property(e => e.Emailaddress)
-                    .HasColumnName("emailaddress")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Firedon).HasColumnName("firedon");
-
-                entity.Property(e => e.Firstname)
-                    .HasColumnName("firstname")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.HiredOn).HasColumnName("hiredOn");
-
-                entity.Property(e => e.Hiredbyid)
-                    .IsRequired()
-                    .HasColumnName("hiredbyid")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Housenumber)
-                    .HasColumnName("housenumber")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Phonenumber)
-                    .HasColumnName("phonenumber")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Resignedon).HasColumnName("resignedon");
-
-                entity.Property(e => e.Sex)
-                    .HasColumnName("sex")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.State)
-                    .HasColumnName("state")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Streetname1)
-                    .HasColumnName("streetname1")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Streetname2)
-                    .HasColumnName("streetname2")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Streetname3)
-                    .HasColumnName("streetname3")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Surname)
-                    .HasColumnName("surname")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<StaffLanguages>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-
-                entity.ToTable("staff_languages", "ticketing_db");
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("id_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.Staffuserid)
-                    .HasColumnName("staffuserid")
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.DtCreated)
-                    .HasColumnName("dt_created")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.DtModified).HasColumnName("dt_modified");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Languageid)
-                    .HasColumnName("languageid")
-                    .HasColumnType("int(11)");
-            });
-
-            modelBuilder.Entity<StaffNotes>(entity =>
-            {
-                entity.HasKey(e => e.Userid);
-
-                entity.ToTable("staff_notes", "ticketing_db");
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("id_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.Userid)
-                    .HasColumnName("userid")
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Createdby)
-                    .HasColumnName("createdby")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DtCreated)
-                    .HasColumnName("dt_created")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.DtModified).HasColumnName("dt_modified");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Modifiedby)
-                    .HasColumnName("modifiedby")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Note)
-                    .HasColumnName("note")
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<StaffTerritory>(entity =>
-            {
-                entity.HasKey(e => e.Staffuserid);
-
-                entity.ToTable("staff_territory", "ticketing_db");
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("id_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.Staffuserid)
-                    .HasColumnName("staffuserid")
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.DtCreated)
-                    .HasColumnName("dt_created")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.DtModified).HasColumnName("dt_modified");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Territory)
-                    .HasColumnName("territory")
-                    .HasColumnType("int(11)");
-            });
-
             modelBuilder.Entity<SupportDepartementType>(entity =>
             {
-                entity.ToTable("support_departement_type", "ticketing_db");
+                entity.ToTable("support_departement_type", "db_a3d3ad_pricing");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -740,21 +415,15 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<SupportTicket>(entity =>
             {
-                entity.ToTable("support_ticket", "ticketing_db");
+                entity.ToTable("support_ticket", "db_a3d3ad_pricing");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.AssignedTo)
-                    .HasColumnName("assigned_to")
-                    .HasColumnType("int(11)");
-
                 entity.Property(e => e.DepartmentTypeId)
                     .HasColumnName("departmentTypeId")
                     .HasColumnType("int(11)");
-
-                entity.Property(e => e.DtClosed).HasColumnName("dt_closed");
 
                 entity.Property(e => e.DtCreated).HasColumnName("dt_created");
 
@@ -764,10 +433,6 @@ namespace TickettingSystem.Data.DbModel
                     .HasColumnName("message")
                     .HasMaxLength(2048)
                     .IsUnicode(false);
-
-                entity.Property(e => e.ParentTicketId)
-                    .HasColumnName("parent_ticket_id")
-                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Subject)
                     .HasColumnName("subject")
@@ -779,42 +444,11 @@ namespace TickettingSystem.Data.DbModel
                     .HasColumnType("int(11)");
             });
 
-            modelBuilder.Entity<Territories>(entity =>
-            {
-                entity.HasKey(e => e.TerritoryName);
-
-                entity.ToTable("territories", "ticketing_db");
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("id_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.TerritoryName)
-                    .HasMaxLength(30)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.DtCreated)
-                    .HasColumnName("dt_created")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.DtModified).HasColumnName("dt_modified");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.TerritoryContinent)
-                    .HasColumnName("territoryContinent")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-            });
-
             modelBuilder.Entity<TradeFollow>(entity =>
             {
                 entity.HasKey(e => e.TraderUid);
 
-                entity.ToTable("trade_follow", "ticketing_db");
+                entity.ToTable("trade_follow", "db_a3d3ad_pricing");
 
                 entity.Property(e => e.TraderUid)
                     .HasColumnName("traderUID")
@@ -865,7 +499,7 @@ namespace TickettingSystem.Data.DbModel
             {
                 entity.HasKey(e => e.TradeId);
 
-                entity.ToTable("trade_log", "ticketing_db");
+                entity.ToTable("trade_log", "db_a3d3ad_pricing");
 
                 entity.Property(e => e.TradeId)
                     .HasColumnName("tradeID")
@@ -929,7 +563,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<TradeType>(entity =>
             {
-                entity.ToTable("trade_type", "ticketing_db");
+                entity.ToTable("trade_type", "db_a3d3ad_pricing");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -944,7 +578,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<UserActionType>(entity =>
             {
-                entity.ToTable("user_action_type", "ticketing_db");
+                entity.ToTable("user_action_type", "db_a3d3ad_pricing");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -959,7 +593,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<UserActivityLog>(entity =>
             {
-                entity.ToTable("user_activity_log", "ticketing_db");
+                entity.ToTable("user_activity_log", "db_a3d3ad_pricing");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
@@ -987,7 +621,7 @@ namespace TickettingSystem.Data.DbModel
             {
                 entity.HasKey(e => e.Userid);
 
-                entity.ToTable("user_details", "ticketing_db");
+                entity.ToTable("user_details", "db_a3d3ad_pricing");
 
                 entity.HasIndex(e => e.Emailaddress)
                     .HasName("emailaddress_UNIQUE")
@@ -1058,10 +692,6 @@ namespace TickettingSystem.Data.DbModel
                     .HasColumnName("id")
                     .HasColumnType("int(11)");
 
-                entity.Property(e => e.Languageid)
-                    .HasColumnName("languageid")
-                    .HasColumnType("int(11)");
-
                 entity.Property(e => e.Phonenumber)
                     .HasColumnName("phonenumber")
                     .HasMaxLength(45)
@@ -1100,17 +730,13 @@ namespace TickettingSystem.Data.DbModel
                     .HasColumnName("surname")
                     .HasMaxLength(45)
                     .IsUnicode(false);
-
-                entity.Property(e => e.Territoryid)
-                    .HasColumnName("territoryid")
-                    .HasColumnType("int(11)");
             });
 
             modelBuilder.Entity<UserDocs>(entity =>
             {
                 entity.HasKey(e => e.Userid);
 
-                entity.ToTable("user_docs", "ticketing_db");
+                entity.ToTable("user_docs", "db_a3d3ad_pricing");
 
                 entity.HasIndex(e => e.Userid)
                     .HasName("docs_userid_UNIQUE")
@@ -1150,52 +776,11 @@ namespace TickettingSystem.Data.DbModel
                     .HasConstraintName("FK_user_docs");
             });
 
-            modelBuilder.Entity<UserNotes>(entity =>
-            {
-                entity.HasKey(e => e.Userid);
-
-                entity.ToTable("user_notes", "ticketing_db");
-
-                entity.HasIndex(e => e.Id)
-                    .HasName("id_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.Userid)
-                    .HasColumnName("userid")
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Createdby)
-                    .HasColumnName("createdby")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DtCreated)
-                    .HasColumnName("dt_created")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.DtModified).HasColumnName("dt_modified");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)");
-
-                entity.Property(e => e.Modifiedby)
-                    .HasColumnName("modifiedby")
-                    .HasMaxLength(10)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Note)
-                    .HasColumnName("note")
-                    .IsUnicode(false);
-            });
-
             modelBuilder.Entity<UserPwd>(entity =>
             {
                 entity.HasKey(e => e.Userid);
 
-                entity.ToTable("user_pwd", "ticketing_db");
+                entity.ToTable("user_pwd", "db_a3d3ad_pricing");
 
                 entity.Property(e => e.Userid)
                     .HasColumnName("userid")
@@ -1220,40 +805,6 @@ namespace TickettingSystem.Data.DbModel
                     .HasForeignKey<UserPwd>(d => d.Userid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_user_pwd");
-            });
-
-            modelBuilder.Entity<UserVerification>(entity =>
-            {
-                entity.HasKey(e => e.Userid);
-
-                entity.ToTable("user_verification", "ticketing_db");
-
-                entity.Property(e => e.Userid)
-                    .HasColumnName("userid")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.IdProofFile)
-                    .HasColumnName("idProofFile")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.IdProofVerified)
-                    .HasColumnName("idProofVerified")
-                    .HasColumnType("bit(1)");
-
-                entity.Property(e => e.ResidenceProofFile)
-                    .HasColumnName("residenceProofFile")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ResidenceProofVerified)
-                    .HasColumnName("residenceProofVerified")
-                    .HasColumnType("bit(1)");
-
-                entity.Property(e => e.VerificationCount)
-                    .HasColumnName("verificationCount")
-                    .HasColumnType("int(11)");
             });
         }
     }

@@ -41,7 +41,7 @@ namespace TickettingSystem.Api.Controllers
                 var resp = new List<ClientResponseDTO>();
                 foreach (var client in clients)
                 {
-                    resp.Add(ClientMapper.MapUserDetailsToDto(client));
+                    resp.Add(ClientMapper.MapUserDetailsToDto(client, _clientService));
                 }
                 return Ok(resp);
             }
@@ -54,7 +54,7 @@ namespace TickettingSystem.Api.Controllers
             var client = await _clientService.GetClientById(id);
             if(client != null)
             {
-                var resp = ClientMapper.MapUserDetailsToDto(client);
+                var resp = ClientMapper.MapUserDetailsToDto(client, _clientService);
                 return Ok(resp);
             } 
             return Ok(client);
@@ -69,7 +69,7 @@ namespace TickettingSystem.Api.Controllers
                 var resp = new List<ClientResponseDTO>();
                 foreach (var client in searchResult)
                 {
-                    resp.Add(ClientMapper.MapUserDetailsToDto(client));
+                    resp.Add(ClientMapper.MapUserDetailsToDto(client, _clientService));
                 }
                 return Ok(resp);
             }

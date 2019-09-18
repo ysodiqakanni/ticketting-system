@@ -12,8 +12,5 @@ namespace TickettingSystem.Data.DbModel
         public string Message { get; set; }
         public DateTime? DtCreated { get; set; }
         public DateTime? DtUpdated { get; set; }
-        public int? AssignedTo { get; set; }
-        public int? ParentTicketId { get; set; }
-        public DateTime? DtClosed { get; set; }
     }
 }
