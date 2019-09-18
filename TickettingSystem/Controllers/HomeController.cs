@@ -23,7 +23,7 @@ namespace TickettingSystem.Controllers
 
             var model = new DashboardViewModel();
             model.Clients = allClients; // await ClientsApi.GetAllClients();///.SearchClients("");
-            model.Trades = await TradesApi.GetAllTrades("");
+            model.Trades = new List<TradeDTO>(); // should be empty until a client is selected await TradesApi.GetAllTrades();
 
             model.Notes = await ClientsApi.GetAllNotes();
             model.MembershipData = new Membership
@@ -132,17 +132,22 @@ namespace TickettingSystem.Controllers
         //}
 
         [Route("trades/{id}")]
-        public IActionResult GetTradeById(int? id)
+        public async Task<IActionResult> GetTradeById(int? id)
         {
             if (id == null) throw new ArgumentNullException("Invalid request sent!");
-            var theTrade = TradesApi.GetTradeById(id.Value);
+            var theTrade = await TradesApi.GetTradeById(id.Value);
             if (theTrade == null) return Json(new { success = false, msg = "record not found!" });
             return Json(new { success = true, msg = theTrade });
         }
         [Route("trades/search")]
-        public IActionResult SearchTrade([FromQuery] TradeSearchModel tradeSearch)
+        public async Task<IActionResult> SearchTrade([FromQuery] TradeSearchModel tradeSearch)
         {
-            var trades = TradesApi.SearchTrades(tradeSearch);
+            var trades = await TradesApi.SearchTrades(tradeSearch);
+            var model = new DashboardViewModel();
+            model.Trades = trades;
+            return PartialView("_TradeListPartial", model);
+
+
             if (trades == null) return Json(new { success = false, msg = "record not found!" });
             return Json(new { success = true, msg = trades });
             //var result=(await TradesApi.GetAllTrades()).Where(trade=>tradeSearch.UserId)

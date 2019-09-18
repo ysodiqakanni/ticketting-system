@@ -213,31 +213,35 @@ $(document).on("click", ".clientDataRow", function () {
         contentType: "application/json",
         processData: false,
         success: function (response) {
-            if (response.success) {
-                var searchResult = response.msg.result;
-                var table = document.getElementById("tbTradeSearchResult");
-                for (var i = 2; i < table.rows.length; i++) {
-                    table.deleteRow(i - 1);
-                }
-                $("#srchUserId").val(id);
-                for (var i = 0; i < searchResult.length; i++) {
-                    var tr = table.insertRow(-1);
-                    var tabCell1 = tr.insertCell(-1);
-                    var date = new Date(searchResult[i].createdOn);
+            if (response) {
 
-                    tabCell1.innerHTML = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+                $("#tblTrades").html(response)
 
-                    var tabCell2 = tr.insertCell(-1);
-                    tabCell2.innerHTML = searchResult[i].exchange;
-                    var tabCell3 = tr.insertCell(-1);
-                    tabCell3.innerHTML = searchResult[i].operation;
-                    var tabCell4 = tr.insertCell(-1);
-                    tabCell4.innerHTML = "$" + searchResult[i].price;
-                    var tabCell5 = tr.insertCell(-1);
-                    tabCell5.innerHTML = "Yes";
-                    var tabCell6 = tr.insertCell(-1);
-                    tabCell6.innerHTML = "No";
-                }
+
+                //var searchResult = response.msg.result;
+                //var table = document.getElementById("tblTrades");  // tbTradeSearchResult
+                //for (var i = 2; i < table.rows.length; i++) {
+                //    table.deleteRow(i - 1);
+                //}
+                //$("#srchUserId").val(id);
+                //for (var i = 0; i < searchResult.length; i++) {
+                //    var tr = table.insertRow(-1); 
+                //    var tabCell1 = tr.insertCell(-1);
+                //    var date = new Date(searchResult[i].createdOn);
+
+                //    tabCell1.innerHTML = searchResult[i].userId; // date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+
+                //    var tabCell2 = tr.insertCell(-1);
+                //    tabCell2.innerHTML = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();//  searchResult[i].exchange;
+                //    var tabCell3 = tr.insertCell(-1);
+                //    tabCell3.innerHTML = searchResult[i].exchange;
+                //    var tabCell4 = tr.insertCell(-1);
+                //    tabCell4.innerHTML = searchResult[i].operation;
+                //    var tabCell5 = tr.insertCell(-1);
+                //    tabCell5.innerHTML = "$" + searchResult[i].price;
+                //    //var tabCell6 = tr.insertCell(-1);
+                //    //tabCell6.innerHTML = "No";
+                //}
 
 
             }
@@ -250,14 +254,64 @@ $(document).on("click", ".clientDataRow", function () {
         },
     })
 
-    // populate client's exchanges
-    searchExchanges(id);
+    $(document).on("click", ".tradeDataRow", function () {
+        var id = $(this).find('td:first').html();
+        var table = document.getElementById("tbTradeSearchResult");
 
-    // populate Membership tab
-    searchMemberships(id);
 
-    // populate clien't tickets
-    searchTickets("userid=" + id);
+        $.ajax({
+            type: "GET",
+            url: "/home/trades/" + id,
+            contentType: "application/json",
+            processData: false,
+            success: function (response) {
+                if (response.success) {
+                    trade = response.msg.result;
+                    for (var i = 2; i <= table.rows.length; i++) {
+                        table.deleteRow(i - 1);
+                    }
+
+                    var tr = table.insertRow(-1);
+                    var tabCell1 = tr.insertCell(-1);
+                    var date = new Date(trade.createdOn);
+                    tabCell1.innerHTML = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
+
+                    var tabCell2 = tr.insertCell(-1);
+                    tabCell2.innerHTML = trade.exchange;
+                    var tabCell3 = tr.insertCell(-1);
+                    tabCell3.innerHTML = trade.operation;
+                    var tabCell4 = tr.insertCell(-1);
+                    tabCell4.innerHTML = tabCell3.innerHTML = "$" + trade.price;
+
+                    var tabCell5 = tr.insertCell(-1);
+                    tabCell5.innerHTML = trade.arbitrage;
+
+                    var tabCell6 = tr.insertCell(-1);
+                    tabCell6.innerHTML = trade.social;
+                }
+                else {
+                    alert('error fetching trade data!');
+                }
+            },
+            error: function () {
+                alert("An unknown error has occured");
+            }
+        })
+
+        //ar trade = getTradeById(id);
+        // clear table
+     
+    });
+
+// populate client's exchanges
+searchExchanges(id);
+
+// populate Membership tab
+searchMemberships(id);
+
+// populate clien't tickets
+searchTickets("userid=" + id);
+
 })
 $("#btnAddNote").on("click", function (e) {
     const note = $("#txtNewNote").val();
@@ -502,7 +556,8 @@ function removeSelectedClientRecords() {
     document.getElementById("txtClientJoinedOn").valueAsDate = new Date();
     document.getElementById("txtClientDate").valueAsDate = new Date();
 }
-
+ 
+ 
 
 var searchClients = function (searchStr) {
     var url = "/home/SearchClients/" + searchStr;

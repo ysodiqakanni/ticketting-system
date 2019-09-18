@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TickettingSystem.Api.DTO;
 using TickettingSystem.Services.Contracts;
 using static TickettingSystem.Core.Exchange;
 
 namespace TickettingSystem.Api.Controllers
 {
     [Route("api/v1/[controller]")]
-    [ApiController]
-    [Authorize]
+    [ApiController] 
     public class TradeController : ControllerBase
     {
         private readonly ITradeService _tradeService;
@@ -26,6 +26,11 @@ namespace TickettingSystem.Api.Controllers
         public async Task<IActionResult> GetTradeById(int id)
         {
             var trade = await _tradeService.GetById(id);
+            if(trade != null)
+            {
+                var resp = TradeMapper.MapTradeLogToDto(trade, _tradeService);
+                return Ok(resp);
+            }
             return Ok(trade);
         }
 
@@ -33,19 +38,37 @@ namespace TickettingSystem.Api.Controllers
         public async Task<IActionResult> GetAllTrades()
         {
             var trades = await _tradeService.GetAllTrades();
+            if(trades!= null && trades.Any())
+            {
+                var resp = new List<TradeResponseDTO>();
+                foreach (var trade in trades)
+                {
+                    resp.Add(TradeMapper.MapTradeLogToDto(trade, _tradeService));
+                }
+                return Ok(resp);
+            }
             return Ok(trades);
         }
 
         [HttpGet("search")]
         public async Task<IActionResult> SearchTrades([FromQuery(Name = "searchStr")] string searchStr)
         {
-            var searchResult = await _tradeService.SearchTrades(searchStr);
-            return Ok(searchResult);
+            var trades = await _tradeService.SearchTrades(searchStr);
+            if (trades != null && trades.Any())
+            {
+                var resp = new List<TradeResponseDTO>();
+                foreach (var trade in trades)
+                {
+                    resp.Add(TradeMapper.MapTradeLogToDto(trade, _tradeService));
+                }
+                return Ok(resp);
+            }
+            return Ok(trades);
         }
 
-        [HttpPost]
+        [HttpGet("query")]
         [Consumes("application/json")]
-        public async Task<IActionResult> ComprehensiveSearch([FromBody] int? id, DateTime? startDate, DateTime? endDate,
+        public async Task<IActionResult> ComprehensiveSearch( int? id, DateTime? startDate, DateTime? endDate,
             string exchange = "", string currencyCode = "")
         {
             if (startDate > endDate)
@@ -54,9 +77,18 @@ namespace TickettingSystem.Api.Controllers
             }
 
             
-            var search = await _tradeService
+            var trades = await _tradeService
                 .GetSearchedTradeLines(id, startDate, endDate, exchange, currencyCode);
-            return Ok(search);
+            if (trades != null && trades.Any())
+            {
+                var resp = new List<TradeResponseDTO>();
+                foreach (var trade in trades)
+                {
+                    resp.Add(TradeMapper.MapTradeLogToDto(trade, _tradeService));
+                }
+                return Ok(resp);
+            }
+            return Ok(trades);
         }
     }
 }

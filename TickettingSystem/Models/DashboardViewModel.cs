@@ -10,7 +10,7 @@ namespace TickettingSystem.Models
     public class DashboardViewModel
     {
         public List<ClientDTO> Clients { get; set; }
-        public List<TradeViewModel> Trades { get; set; }
+        public List<TradeDTO> Trades { get; set; }
 
         public List<NoteListViewModel> Notes { get; set; }
         public List<ExchangeListViewModel> Exchanges { get; set; }
