@@ -131,8 +131,9 @@ namespace TickettingSystem.Data.Implementations
         }
 
         public IQueryable<T> QueryAll()
-        {
+        { 
             return Context.Set<T>();
         }
+      
     }
 }

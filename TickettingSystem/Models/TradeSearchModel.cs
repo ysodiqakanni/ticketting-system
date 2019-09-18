@@ -10,5 +10,6 @@ namespace TickettingSystem.Models
         public DateTime FromDateTime { get; set; }
         public DateTime ToDateTime { get; set; }
         public String Exchange { get; set; }
+        public string currencyCode { get; set; }
     }
 }
