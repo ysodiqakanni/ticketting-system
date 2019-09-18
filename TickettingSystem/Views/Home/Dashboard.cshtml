@@ -463,13 +463,20 @@
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">Exchange</label>
-                                                        <input id="tradeSrExch" type="text">
+                                                        @*<input id="tradeSrExch" type="text">*@
+                                                        <select id="tradeSrExch" style="width:150px">
+                                                            <option value="">Select</option>
+                                                            @foreach (var exchange in ViewBag.ExchangeTypes)
+                                                            {
+                                                                <option value="@exchange">@exchange</option>
+                                                            }
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3 col-sm-6">
                                                     <div class="single-trade-form-opt">
                                                         <label for="">Curr Pair</label>
-                                                        <input type="text">
+                                                        <input type="text" id="tradeSrCurr" pattern="[A-Za-z* ]{3,}">
                                                         <input id="btnSearchTrades" type="submit" value="Search">
 
                                                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -496,15 +503,15 @@
                                     <form action="#">
                                         <div class="col-md-7">
                                             <label for="id">Transaction ID</label>
-                                            <input type="text">
+                                            <input type="text" id="transactionId" disabled>
                                             <div class="walet">
                                                 <label for="">Wallet From</label>
-                                                <input type="count">
+                                                <input type="count" id="walletFrom">
                                                 <label style="margin-left: 35px;" for="">Wallet To</label>
-                                                <input type="count">
+                                                <input type="count" id="walletTo">
                                             </div>
-                                            <input type="submit" value="Send">
-                                            <input style="background: #EB5757; border: 1px solid #EB5757; margin-left: 30px;" type="submit" value="Cancel">
+                                            <input type="submit" value="Send" disabled>
+                                            <input style="background: #EB5757; border: 1px solid #EB5757; margin-left: 30px;" type="submit" value="Cancel" id="btnTradesCancel">
                                         </div>
                                     </form>
                                 </div>

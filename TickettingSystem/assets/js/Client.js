@@ -10,6 +10,15 @@ $("#btnSearchClients").on("click", function () {
 
 
 $("#btnSearchTrades").on("click", function () {
+    var userId = $("#srchUserId").val();
+    var dateFrom = $("#tradeFromDate").val();
+    var dateTo = $("#tradeToDate").val();
+    var exchange = $("#tradeSrExch").val();
+    var currencyPair = $("#tradeSrCurr").val();
+    if (userId == "" && dateFrom == "" && dateTo == "" && exchange == "" && currencyPair == "") {
+        alert("Atleast one field must be entered");
+        return;
+    }
 
     var getUserId = $("#srchUserId").val();
 
@@ -43,32 +52,10 @@ $("#btnSearchTrades").on("click", function () {
         contentType: "application/json",
         processData: false,
         success: function (response) {
-            if (response.success) {
-                var searchResult = response.msg.result;
-                var table = document.getElementById("tbTradeSearchResult");
-                for (var i = 2; i < table.rows.length; i++) {
-                    table.deleteRow(i - 1);
-                }
+            if (response) {
 
-                for (var i = 0; i < searchResult.length; i++) {
-                    var tr = table.insertRow(-1);
-                    var tabCell1 = tr.insertCell(-1);
-                    var date = new Date(searchResult[i].createdOn);
-
-                    tabCell1.innerHTML = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-
-                    var tabCell2 = tr.insertCell(-1);
-                    tabCell2.innerHTML = searchResult[i].exchange;
-                    var tabCell3 = tr.insertCell(-1);
-                    tabCell3.innerHTML = searchResult[i].operation;
-                    var tabCell4 = tr.insertCell(-1);
-                    tabCell4.innerHTML = searchResult[i].price;
-                    var tabCell5 = tr.insertCell(-1);
-                    tabCell5.innerHTML = "Yes";
-                    var tabCell6 = tr.insertCell(-1);
-                    tabCell6.innerHTML = "No";
-                }
-
+                $("#tbTradeSearchResult").html(response);
+  
             }
             else {
                 alert("searching error");
@@ -79,7 +66,7 @@ $("#btnSearchTrades").on("click", function () {
         },
     })
 })
-$("#btnCancelClientSearch").on("click", function () {
+$("#btnCancelClientSearch").on("click", function () { 
     $("#txtSearchClients").val("");
     const anyUnsavedChanges = true;
     if (anyUnsavedChanges) {
@@ -254,7 +241,7 @@ $(document).on("click", ".clientDataRow", function () {
         },
     })
 
-    $(document).on("click", ".tradeDataRow", function () {
+    $(document).on("dblclick", ".tradeDataRow", function () {
         var id = $(this).find('td:first').html();
         var table = document.getElementById("tbTradeSearchResult");
 
@@ -266,7 +253,7 @@ $(document).on("click", ".clientDataRow", function () {
             processData: false,
             success: function (response) {
                 if (response.success) {
-                    trade = response.msg.result;
+                    trade = response.msg;
                     for (var i = 2; i <= table.rows.length; i++) {
                         table.deleteRow(i - 1);
                     }
@@ -538,6 +525,25 @@ $("#btnAddTicketNote").on("click", function (e) {
         },
     })
 })
+
+$("#btnTradesCancel").on("click", function () {
+    if (confirm("Are You Sure You Want to Clear inputs?")) {
+        removeTrades();
+    }
+})
+function removeTrades() {
+    $("#srchUserId").val("");
+    $("#tradeSrExch").val("");
+    $("#tradeSrCurr").val("");
+
+    document.getElementById("tradeFromDate").valueAsDate = null;
+    document.getElementById("tradeToDate").valueAsDate = null;
+
+    $("#transactionId").val("");
+    $("#walletFrom").val("");
+    $("#walletTo").val("");
+}
+
 
 function removeSelectedClientRecords() {
     $("#hiddenClientID").val("");

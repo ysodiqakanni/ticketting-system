@@ -37,6 +37,7 @@ namespace TickettingSystem.Controllers
             // initially, no client is selected!
             // so search results (D) should contain each of the known exchanges 
             model.Exchanges = await ExchangeApi.GetAllKnownExchanges();
+            ViewBag.ExchangeTypes = await ExchangeApi.GetAllExchanges();
             model.Tickets = await TicketsApi.GetLastTenTickets();
             model.TicketConversations = new List<TicketConversationViewModel>();
             model.NotesForSelectedTicketClient = new List<NoteListViewModel>();

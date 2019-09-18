@@ -33,5 +33,17 @@ namespace TickettingSystem.ApiHelper
             };
             return Task.Run(() => { return exchanges; });
         }
+        public static Task<List<string>> GetAllExchanges()  // Exchange types actually
+        {
+            List<string> exchanges = new List<string>();
+            exchanges.Add("CoinBase");
+            exchanges.Add("Poloniex");
+            exchanges.Add("Livecoin");
+            exchanges.Add("Bittrex");
+            exchanges.Add("Coinbene");
+            exchanges.Add("Cex");
+
+            return Task.Run(() => { return exchanges; });
+        }
     }
 }
