@@ -13,7 +13,7 @@ namespace TickettingSystem.ApiHelper
 {
     public static class ClientsApi
     {
-        static string apiBaseUrl = "https://localhost:44355/api/v1/";
+        static string apiBaseUrl = "https://localhost:5001/api/v1/";
         public async static Task<List<ClientDTO>> GetAllClients()
         {
             using (HttpClient client = new HttpClient())

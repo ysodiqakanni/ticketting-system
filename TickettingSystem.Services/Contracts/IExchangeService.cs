@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.Core;
+using TickettingSystem.Data.DbModel;
 
 namespace TickettingSystem.Services.Contracts
 {
     public interface IExchangeService
     {
-        Task<IList<Exchange>> GetAllKnownExchanges();
-        Task<IList<Exchange>> SearchExchangesByUserId(string id);
+        Task<IList<Exchangesusers>> GetAllKnownExchanges();
+        Task<IList<Exchangesusers>> SearchExchangesByUserId(string id);
     }
 }

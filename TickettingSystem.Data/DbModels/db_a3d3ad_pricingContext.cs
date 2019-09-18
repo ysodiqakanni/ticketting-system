@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace TickettingSystem.Data.DbModel
+namespace TickettingSystem.Data.DbModels
 {
     public partial class db_a3d3ad_pricingContext : DbContext
     {
@@ -18,9 +18,8 @@ namespace TickettingSystem.Data.DbModel
         public virtual DbSet<Clientinterest> Clientinterest { get; set; }
         public virtual DbSet<CurrentPrice> CurrentPrice { get; set; }
         public virtual DbSet<Departments> Departments { get; set; }
-        public virtual DbSet<ExchangeType> ExchangeType { get; set; }
-        public virtual DbSet<Exchangesmaster> Exchangesmaster { get; set; }
         public virtual DbSet<Exchangesusers> Exchangesusers { get; set; }
+        public virtual DbSet<ExchangeType> ExchangeType { get; set; }
         public virtual DbSet<Languages> Languages { get; set; }
         public virtual DbSet<Notifications> Notifications { get; set; }
         public virtual DbSet<NotificationsUserDetails> NotificationsUserDetails { get; set; }
@@ -42,21 +41,21 @@ namespace TickettingSystem.Data.DbModel
         public virtual DbSet<UserDocs> UserDocs { get; set; }
         public virtual DbSet<UserNotes> UserNotes { get; set; }
         public virtual DbSet<UserPwd> UserPwd { get; set; }
-        public virtual DbSet<UserVerification> UserVerification { get; set; }
+
+        // Unable to generate entity type for table 'db_a3d3ad_pricing.exchangesmaster'. Please see the warning messages.
+        // Unable to generate entity type for table 'db_a3d3ad_pricing.user_verification'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=root;database=db_a3d3ad_pricing");
+                optionsBuilder.UseMySQL("server=localhost;port=3306;user=root;password=root;database=db_a3d3ad_pricing");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
-
             modelBuilder.Entity<Clientinterest>(entity =>
             {
                 entity.ToTable("clientinterest", "db_a3d3ad_pricing");
@@ -198,61 +197,6 @@ namespace TickettingSystem.Data.DbModel
                     .HasColumnType("int(11)");
             });
 
-            modelBuilder.Entity<ExchangeType>(entity =>
-            {
-                entity.ToTable("exchange_type", "db_a3d3ad_pricing");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<Exchangesmaster>(entity =>
-            {
-                entity.HasKey(e => e.ExchangeId);
-
-                entity.ToTable("exchangesmaster", "db_a3d3ad_pricing");
-
-                entity.HasIndex(e => e.ExchangeId)
-                    .HasName("exchangeID_UNIQUE")
-                    .IsUnique();
-
-                entity.Property(e => e.ExchangeId)
-                    .HasColumnName("exchangeID")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.ExchangeCanDt).HasColumnName("exchange_can_dt");
-
-                entity.Property(e => e.ExchangeCrDt)
-                    .HasColumnName("exchange_cr_dt")
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.ExchangeModDt).HasColumnName("exchange_mod_dt");
-
-                entity.Property(e => e.ExchangeName)
-                    .IsRequired()
-                    .HasColumnName("exchangeName")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExchangeSignupUrl)
-                    .IsRequired()
-                    .HasColumnName("exchangeSignupURL")
-                    .HasMaxLength(45)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ExchangeValid)
-                    .HasColumnName("exchangeValid")
-                    .HasColumnType("tinyint(4)");
-            });
-
             modelBuilder.Entity<Exchangesusers>(entity =>
             {
                 entity.HasKey(e => e.EuId);
@@ -305,9 +249,24 @@ namespace TickettingSystem.Data.DbModel
                     .HasColumnType("int(11)");
             });
 
+            modelBuilder.Entity<ExchangeType>(entity =>
+            {
+                entity.ToTable("exchange_type", "db_a3d3ad_pricing");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(45)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Languages>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.Language);
 
                 entity.ToTable("languages", "db_a3d3ad_pricing");
 
@@ -622,7 +581,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<StaffLanguages>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.Staffuserid);
 
                 entity.ToTable("staff_languages", "db_a3d3ad_pricing");
 
@@ -1152,7 +1111,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<UserNotes>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.Userid);
 
                 entity.ToTable("user_notes", "db_a3d3ad_pricing");
 
@@ -1220,40 +1179,6 @@ namespace TickettingSystem.Data.DbModel
                     .HasForeignKey<UserPwd>(d => d.Userid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_user_pwd");
-            });
-
-            modelBuilder.Entity<UserVerification>(entity =>
-            {
-                entity.HasKey(e => e.Userid);
-
-                entity.ToTable("user_verification", "db_a3d3ad_pricing");
-
-                entity.Property(e => e.Userid)
-                    .HasColumnName("userid")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.IdProofFile)
-                    .HasColumnName("idProofFile")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.IdProofVerified)
-                    .HasColumnName("idProofVerified")
-                    .HasColumnType("bit(1)");
-
-                entity.Property(e => e.ResidenceProofFile)
-                    .HasColumnName("residenceProofFile")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ResidenceProofVerified)
-                    .HasColumnName("residenceProofVerified")
-                    .HasColumnType("bit(1)");
-
-                entity.Property(e => e.VerificationCount)
-                    .HasColumnName("verificationCount")
-                    .HasColumnType("int(11)");
             });
         }
     }

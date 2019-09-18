@@ -28,7 +28,7 @@ namespace TickettingSystem.Data.Implementations
         public IBaseRepository<Languages> LanguageRepository { get; set; }
         public IBaseRepository<Trade> TradeRepository { get; set; }
         public IBaseRepository<UserNotes> ClientNoteRepository { get; set; }
-        public IBaseRepository<Exchange> ExchangeRepository { get; set; }
+        public IBaseRepository<Exchangesusers> ExchangeRepository { get; set; }
         public IBaseRepository<Staff> StaffRepository { get; set; }
         public IBaseRepository<UserVerification> UserVerificationRepository { get; set; }
 
