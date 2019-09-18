@@ -67,22 +67,28 @@ namespace TickettingSystem.ApiHelper
                 msg.EnsureSuccessStatusCode(); 
             } 
         }
-        public static async Task<string> CreateNewNote(string note)
+        public static async Task CreateNewNote(string noteData)
         {
-            // return the note after successful insertion to db
-            return note;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+                var httpContent = new StringContent(noteData, Encoding.UTF8, "application/json");
+                HttpResponseMessage msg = await client.PostAsync("clients/notes", httpContent);
+                msg.EnsureSuccessStatusCode();
+            }
+             
+            return;
         }
         public static async Task<List<NoteListViewModel>> GetAllNotes()
         {
-            // Return the MOST RECENT 5 notes
-            return new List<NoteListViewModel>()
+            using (HttpClient client = new HttpClient())
             {
-                new NoteListViewModel{Content = "So Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
-                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
-                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
-                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
-                new NoteListViewModel{Content = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"}
-            };
+                client.BaseAddress = new Uri(apiBaseUrl); 
+                HttpResponseMessage msg = await client.GetAsync("clients/notes");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<NoteListViewModel>>();
+                return responseBody;
+            } 
         }
     }
 

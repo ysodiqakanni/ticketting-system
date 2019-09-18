@@ -2,6 +2,6 @@
 
 @foreach (var note in Model.Notes)
 {
-    <p data-toggle="popover" data-placement="top" data-content="@Html.Raw(note.Content)">@note.ShortNote</p>
+    <p data-toggle="popover" data-placement="top" data-content="@Html.Raw(note.Note)">@note.ShortNote</p>
 }
 

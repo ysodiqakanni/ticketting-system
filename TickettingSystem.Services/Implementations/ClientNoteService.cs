@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.Core;
 using TickettingSystem.Data.Contracts;
+using TickettingSystem.Data.DbModel;
 using TickettingSystem.Services.Contracts;
 
 namespace TickettingSystem.Services.Implementations
@@ -17,16 +18,21 @@ namespace TickettingSystem.Services.Implementations
             uow = _uow;
         }
 
-        public async Task<ClientNote> CreateNote(string notes)
+        public async Task<UserNotes> CreateNote(string notes, string userId, string createdBy, string modifiedBy)
         {
-            var nt = new ClientNote
+            var nt = new UserNotes
             {
-                Notes = notes
+                Modifiedby = modifiedBy,
+                Createdby = createdBy,
+                DtCreated = DateTime.Now,
+                DtModified = DateTime.Now,
+                Note = notes,
+                Userid = userId
             };
             return await uow.ClientNoteRepository.AddAsync(nt);
         }
 
-        public async Task<IList<ClientNote>> GetNotes()
+        public async Task<IList<UserNotes>> GetNotes()
         {
             return await uow.ClientNoteRepository.GetAllAsync();
         }

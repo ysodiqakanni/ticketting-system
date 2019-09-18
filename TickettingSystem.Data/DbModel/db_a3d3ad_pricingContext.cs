@@ -1152,7 +1152,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<UserNotes>(entity =>
             {
-                entity.HasKey(e => e.Userid);
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("user_notes", "ticketing_db");
 

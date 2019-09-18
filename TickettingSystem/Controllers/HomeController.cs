@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TickettingSystem.ApiHelper;
 using TickettingSystem.DTOs;
 using TickettingSystem.Models;
@@ -91,10 +92,15 @@ namespace TickettingSystem.Controllers
             if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
             try
             {
-                await ClientsApi.CreateNewNote(note);
+                string userId = "22341"; // pass with js from the page
+                string createdBy = "system";
+                string modifiedBy = "system";
+                Dictionary<string, string> noteModel = new Dictionary<string, string>() { { "Note", note }, { "Modifiedby", modifiedBy }, { "Createdby", createdBy }, { "Userid", userId } };
+
+                await ClientsApi.CreateNewNote(JsonConvert.SerializeObject(noteModel));
                 return Json(new { success = true, msg = "Note saved!" });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Json(new { success = false, msg = "Error creating note!" });
             }

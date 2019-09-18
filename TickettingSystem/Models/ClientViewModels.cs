@@ -38,16 +38,16 @@ namespace TickettingSystem.Models
     }
     public class NoteListViewModel
     {
-        public string Content { get; set; }
+        public string Note { get; set; }
         public string ShortNote
         {
             get
             {
-                if (Content.Length > 50)
+                if (Note.Length > 50)
                 {
-                    return Content.Substring(0, 50) + "...";
+                    return Note.Substring(0, 50) + "...";
                 }
-                return Content;
+                return Note;
             }
         }
     }

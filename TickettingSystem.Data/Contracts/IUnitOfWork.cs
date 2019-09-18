@@ -10,7 +10,7 @@ namespace TickettingSystem.Data.Contracts
     {
         IBaseRepository<UserDetails> ClientRepository { get; set; }
         IBaseRepository<Trade> TradeRepository { get; set; }
-        IBaseRepository<ClientNote> ClientNoteRepository { get; set; }
+        IBaseRepository<UserNotes> ClientNoteRepository { get; set; }
         IBaseRepository<Exchange> ExchangeRepository { get; set; }
         IBaseRepository<Staff> StaffRepository { get; set; }
         IBaseRepository<Languages> LanguageRepository { get; set; }
