@@ -55,7 +55,7 @@ $("#btnSearchTrades").on("click", function () {
             if (response) {
 
                 $("#tbTradeSearchResult").html(response);
-  
+
             }
             else {
                 alert("searching error");
@@ -66,7 +66,7 @@ $("#btnSearchTrades").on("click", function () {
         },
     })
 })
-$("#btnCancelClientSearch").on("click", function () { 
+$("#btnCancelClientSearch").on("click", function () {
     $("#txtSearchClients").val("");
     const anyUnsavedChanges = true;
     if (anyUnsavedChanges) {
@@ -287,17 +287,17 @@ $(document).on("click", ".clientDataRow", function () {
 
         //ar trade = getTradeById(id);
         // clear table
-     
+
     });
 
-// populate client's exchanges
-searchExchanges(id);
+    // populate client's exchanges
+    searchExchanges(id);
 
-// populate Membership tab
-searchMemberships(id);
+    // populate Membership tab
+    searchMemberships(id);
 
-// populate clien't tickets
-searchTickets("userid=" + id);
+    // populate clien't tickets
+    searchTickets("userid=" + id);
 
 })
 $("#btnAddNote").on("click", function (e) {
@@ -340,6 +340,10 @@ $("#btnSearchExchanges").on("click", function () {
     }
     searchExchanges(userId);
 })
+$("#btnSearchTickets").on("click", function () {
+    searchTickets($("#txtTicketSearchKeyword").val());
+})
+
 $("#btnCancelExchangeSearch").on("click", function () {
     // clear search textbox
     // refresh table
@@ -531,6 +535,84 @@ $("#btnTradesCancel").on("click", function () {
         removeTrades();
     }
 })
+
+
+$("#btnCloseTicket").on("click", function () {
+    if (confirm("Are You Sure You Want to Close this Ticket?")) {
+        var id = $("#SelectedTicketId").val();
+        if (!id) {
+            alert('No ticket selected!');
+            return;
+        }
+        closeTicket(id);
+    }
+})
+$("#btnUpdateTicket").on("click", function () {
+    if (confirm("Proceed to update?")) {
+        var id = $("#SelectedTicketId").val();
+        if (!id) {
+            alert('No ticket selected!');
+            return;
+        }
+        var staffId = $("#txtTicketReAssign").val();
+        var note = "some dummy note";
+        updateTicket(id, staffId, note);
+    }
+})
+
+function closeTicket(id) {
+    var url = "/home/tickets/close/" + id;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                alert(response.msg); 
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+}
+function updateTicket(id, assignedStaffId, note) {
+    var model = {
+        Id: id,
+        AssignedStaffId: assignedStaffId,
+        Note: note
+    };
+    let url = "/home/tickets/update";
+    $.ajax({
+        url: url,
+        type: "POST",
+        url: url,
+        data: JSON.stringify(model),
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                alert(response.msg);
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+}
+
+function ajaxGet(url, callBackFunction) {
+    
+}
+
 function removeTrades() {
     $("#srchUserId").val("");
     $("#tradeSrExch").val("");
@@ -562,8 +644,8 @@ function removeSelectedClientRecords() {
     document.getElementById("txtClientJoinedOn").valueAsDate = new Date();
     document.getElementById("txtClientDate").valueAsDate = new Date();
 }
- 
- 
+
+
 
 var searchClients = function (searchStr) {
     var url = "/home/SearchClients/" + searchStr;

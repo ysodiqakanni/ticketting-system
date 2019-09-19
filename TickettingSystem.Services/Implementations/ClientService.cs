@@ -56,6 +56,39 @@ namespace TickettingSystem.Services.Implementations
             uow.Save();
             return toUpdate;
         }
+        public List<int> GetIdsOfClientsWithNamesContain(string name)
+        {
+            var result = new List<int>();
+            name = name.ToLower();
+            var clients = uow.ClientRepository.QueryAll().Where(c => c.Firstname.ToLower().Contains(name) || c.Surname.ToLower().Contains(name));
+            if (clients != null && clients.Any())
+            {
+                result.AddRange(clients.Select(c => c.Id));
+            }
+            return result;
+        }
+        public List<int> GetIdsOfClientsWithNamesStart(string name)
+        {
+            var result = new List<int>();
+            name = name.ToLower();
+            var clients = uow.ClientRepository.QueryAll().Where(c => c.Firstname.ToLower().StartsWith(name) || c.Surname.ToLower().StartsWith(name));
+            if(clients != null && clients.Any())
+            {
+                result.AddRange(clients.Select(c => c.Id));
+            }
+            return result;
+        }
+        public List<int> GetIdsOfClientsWithNamesEnd(string name)
+        {
+            var result = new List<int>();
+            name = name.ToLower();
+            var clients = uow.ClientRepository.QueryAll().Where(c => c.Firstname.ToLower().EndsWith(name) || c.Surname.ToLower().EndsWith(name));
+            if (clients != null && clients.Any())
+            {
+                result.AddRange(clients.Select(c => c.Id));
+            }
+            return result;
+        }
 
         public string GetLanguageById(int id)
         {

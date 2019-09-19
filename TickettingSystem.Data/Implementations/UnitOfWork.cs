@@ -24,6 +24,7 @@ namespace TickettingSystem.Data.Implementations
             StaffRepository = new StaffRepository(_context);
             LanguageRepository = new LanguageRepository(_context);
             UserVerificationRepository = new UserVerificationRepository(_context);
+            TicketRepository = new TicketRepository(_context);
         }
         public IBaseRepository<UserDetails> ClientRepository { get; set; }
         public IBaseRepository<Languages> LanguageRepository { get; set; }
@@ -33,6 +34,7 @@ namespace TickettingSystem.Data.Implementations
         public IBaseRepository<Exchange> ExchangeRepository { get; set; }
         public IBaseRepository<Staff> StaffRepository { get; set; }
         public IBaseRepository<UserVerification> UserVerificationRepository { get; set; }
+        public IBaseRepository<SupportTicket> TicketRepository { get; set; }
 
         public void Dispose()
         {

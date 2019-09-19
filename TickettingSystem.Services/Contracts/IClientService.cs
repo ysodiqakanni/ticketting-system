@@ -18,5 +18,8 @@ namespace TickettingSystem.Services.Contracts
         // should go to the Language Service
         string GetLanguageById(int id);
         string GetKycLevel(int userId);
+        List<int> GetIdsOfClientsWithNamesStart(string name);
+        List<int> GetIdsOfClientsWithNamesEnd(string name);
+        List<int> GetIdsOfClientsWithNamesContain(string name);
     }
 }

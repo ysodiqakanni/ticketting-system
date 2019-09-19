@@ -219,7 +219,11 @@ namespace TickettingSystem.Controllers
 
             if (string.Compare(type, "id", true) == 0)
             {
-                if (value.StartsWith("*"))
+                if (value == "*") // situation where user enters * to search for all tickets
+                {
+                    result = await TicketsApi.GetLastTenTickets();
+                }
+                else if (value.StartsWith("*"))
                 {
                     result = await TicketsApi.SearchByClientId(value, WilcardType.Prefix);
                 }
@@ -234,7 +238,11 @@ namespace TickettingSystem.Controllers
             }
             else if (string.Compare(type, "name", true) == 0)
             {
-                if (value.StartsWith("*"))
+                if(value == "*") // situation where user enters * to search for all tickets
+                {
+                    result = await TicketsApi.GetLastTenTickets();
+                }
+                else if (value.StartsWith("*"))
                 {
                     result = await TicketsApi.SearchByClientName(value, WilcardType.Prefix);
                 }
@@ -244,6 +252,7 @@ namespace TickettingSystem.Controllers
                 }
                 else
                 {
+                    // not a wildcard search, so search by name 
                     result = await TicketsApi.SearchByClientName(value, WilcardType.None);
                 }
             }
@@ -258,6 +267,39 @@ namespace TickettingSystem.Controllers
 
 
             return PartialView("_ClientTicketsPartial", model);
+        }
+
+        [Route("tickets/close/{id}")] 
+        public async Task<IActionResult> CloseTicket(int id)
+        {
+            try
+            {
+                await TicketsApi.CloseTicket(id);
+                return Json(new { success = true, msg = "Ticket closed sucessfully!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Error closing ticket!" });
+            }
+        }
+
+        [Route("tickets/update")]
+        [HttpPost]
+        public async Task<IActionResult> UpdateTicket([FromBody] TicketUpdateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await TicketsApi.UpdateTicket(model);
+                    return Json(new { success = true, msg = "Data updated sucessfully!" });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, msg = "an error occured while updating records!" });
+                }
+            }
+            return Json(new { success = false, msg = "Fill in all required fields" });
         }
 
         private string GetTicketSearchTypeAndValue(string s)

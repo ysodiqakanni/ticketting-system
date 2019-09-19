@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,5 +20,14 @@ namespace TickettingSystem.Models
         public string Content { get; set; }
         public DateTime DateCreated { get; set; }
         public bool CreatedByClient { get; set; }   // A Conversation message is either sent by a client or a staff
+    }
+    public class TicketUpdateViewModel
+    {
+        [Required]
+        public int Id { get; set; }
+        [Required]
+        public int AssignedStaffId { get; set; }
+        [Required]
+        public string Note { get; set; }
     }
 }

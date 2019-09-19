@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using TickettingSystem.Models;
 
@@ -8,58 +9,88 @@ namespace TickettingSystem.ApiHelper
 {
     public class TicketsApi
     {
-        public static Task<List<TicketsListViewModel>> GetLastTenTickets()
+        static string apiBaseUrl = "https://localhost:44355/api/v1/";
+        public static async Task<List<TicketsListViewModel>> GetLastTenTickets()
         {
             // return last 10 tickets from the db
-            var tickets = new List<TicketsListViewModel>
+            using (HttpClient client = new HttpClient())
             {
-                new TicketsListViewModel{Id = 1, ClientName ="John Wlaters", DateEnabled = DateTime.Now, Description = "Lorem ipsum dolor sit amet.", Price = 100, AssignedToStaffId = 4 },
-                new TicketsListViewModel{Id = 2, ClientName ="Bakers Wlaters", DateEnabled = DateTime.Now, Description = "Lorem ipsum dolor sit amet.", Price = 89 , AssignedToStaffId = 1},
-                new TicketsListViewModel{Id = 3, ClientName ="Roy Mesh", DateEnabled = DateTime.Now, Description = "Lorem ipsum dolor sit amet.", Price = 100 , AssignedToStaffId = 3},
-                new TicketsListViewModel{Id = 4, ClientName ="White Wlaters", DateEnabled = DateTime.Now, Description = "Lorem ipsum dolor sit amet.", Price = 200 , AssignedToStaffId = 2},
-                new TicketsListViewModel{Id = 5, ClientName ="Ola Johnson", DateEnabled = DateTime.Now, Description = "Lorem ipsum dolor sit amet.", Price = 435 , AssignedToStaffId = 2},
-            };
-            return Task.Run(() => { return tickets; });
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("tickets");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<TicketsListViewModel>>();
+                return responseBody;
+            } 
         }
-        public static Task<List<TicketsListViewModel>> GetTicketsForClient(int clientId)
+        public static async Task<List<TicketsListViewModel>> GetTicketsForClient(int clientId)
         {
             // return all tickets for a client
-            var tickets = new List<TicketsListViewModel>
+            using (HttpClient client = new HttpClient())
             {
-                new TicketsListViewModel{Id = 1, ClientName ="John Wlaters", DateEnabled = DateTime.Now, Description = "Lorem ipsum dolor sit amet.", Price = 100 , AssignedToStaffId = 2},
-                new TicketsListViewModel{Id = 2, ClientName ="Bakers Wlaters", DateEnabled = DateTime.Now, Description = "Lorem ipsum dolor sit amet.", Price = 89 , AssignedToStaffId = 1},
-                new TicketsListViewModel{Id = 3, ClientName ="Roy Mesh", DateEnabled = DateTime.Now, Description = "Lorem ipsum dolor sit amet.", Price = 100 },
-                new TicketsListViewModel{Id = 4, ClientName ="White Wlaters", DateEnabled = DateTime.Now, Description = "Lorem ipsum dolor sit amet.", Price = 200 , AssignedToStaffId = 1},
-                new TicketsListViewModel{Id = 5, ClientName ="Ola Johnson", DateEnabled = DateTime.Now, Description = "Lorem ipsum dolor sit amet.", Price = 435 , AssignedToStaffId = 2},
-            };
-            return Task.Run(() => { return tickets; });
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync($"tickets/search/{clientId}");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<TicketsListViewModel>>();
+                return responseBody;
+            } 
         }
 
-        public static Task<List<TicketsListViewModel>> SearchByClientId(string value, WilcardType prefix)
+        public static async Task<List<TicketsListViewModel>> SearchByClientId(string value, WilcardType wilcard)
         {
-            var tickets = new List<TicketsListViewModel>
+            string url = string.Empty;
+            switch (wilcard)
             {
-                new TicketsListViewModel{Id = 1, ClientName ="John Wlaters", DateEnabled = DateTime.Now, Description = "Data retrieved from Id search", Price = 100 , AssignedToStaffId = 2},
-                new TicketsListViewModel{Id = 2, ClientName ="Bakers Wlaters", DateEnabled = DateTime.Now, Description = "Data retrieved from Id search", Price = 89 , AssignedToStaffId = 2},
-                new TicketsListViewModel{Id = 3, ClientName ="Roy Mesh", DateEnabled = DateTime.Now, Description = "Data retrieved from Id search.", Price = 100 , AssignedToStaffId = 2},
-                new TicketsListViewModel{Id = 4, ClientName ="White Wlaters", DateEnabled = DateTime.Now, Description = "Data retrieved from Id search", Price = 200 , AssignedToStaffId = 2},
-                new TicketsListViewModel{Id = 5, ClientName ="Ola Johnson", DateEnabled = DateTime.Now, Description = "Data retrieved from Id search.", Price = 435 , AssignedToStaffId = 2},
-            };
-            return Task.Run(() => { return tickets; });
+                case WilcardType.None:
+                    url = $"tickets/search/{value}";
+                    break;
+                case WilcardType.Prefix:
+                    url = $"tickets/search/{value.TrimStart('*')}/wildcardprefix";
+                    break;
+                case WilcardType.Suffix:
+                    url = $"tickets/search/{value.TrimEnd('*')}/wildcardsuffix";
+                    break;
+                default:
+                    return new List<TicketsListViewModel>();
+            }
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync(url);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<TicketsListViewModel>>();
+                return responseBody;
+            } 
         }
 
-        public static Task<List<TicketsListViewModel>> SearchByClientName(string value, WilcardType prefix)
+        public static async Task<List<TicketsListViewModel>> SearchByClientName(string value, WilcardType wilcard)
         {
-            // search through first and surname
-            var tickets = new List<TicketsListViewModel>
+            string url = string.Empty;
+            switch (wilcard)
             {
-                new TicketsListViewModel{Id = 1, ClientName ="John Wlaters", DateEnabled = DateTime.Now, Description = "Data retrieved from name search", Price = 100 , AssignedToStaffId = 2},
-                new TicketsListViewModel{Id = 2, ClientName ="Bakers Wlaters", DateEnabled = DateTime.Now, Description = "Data retrieved from name search", Price = 89 , AssignedToStaffId = 2},
-                new TicketsListViewModel{Id = 3, ClientName ="Roy Mesh", DateEnabled = DateTime.Now, Description = "Data retrieved from name search.", Price = 100 , AssignedToStaffId = 2},
-                new TicketsListViewModel{Id = 4, ClientName ="White Wlaters", DateEnabled = DateTime.Now, Description = "Data retrieved from name search", Price = 200 , AssignedToStaffId = 2},
-                new TicketsListViewModel{Id = 5, ClientName ="Ola Johnson", DateEnabled = DateTime.Now, Description = "Data retrieved from name search.", Price = 435 , AssignedToStaffId = 2},
-            };
-            return Task.Run(() => { return tickets; });
+                case WilcardType.None:
+                    url = $"tickets/search/{0}/{value}";
+                    break;
+                case WilcardType.Prefix:
+                    url = $"tickets/wildcardsearch/prefix/{value.TrimStart('*')}";
+                    break;
+                case WilcardType.Suffix:
+                    url = $"tickets/wildcardsearch/suffix/{value.TrimEnd('*')}";
+                    break;
+                default:
+                    return new List<TicketsListViewModel>();
+            }
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync(url);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<TicketsListViewModel>>();
+                return responseBody;
+            } 
         }
         public static Task<List<TicketsListViewModel>> SearchByDate(string day, string month, string year)
         {
@@ -76,20 +107,20 @@ namespace TickettingSystem.ApiHelper
             };
             return Task.Run(() => { return tickets; });
         }
-        public static Task<List<TicketConversationViewModel>> GetTicketConversations(int ticketId)
+        public static async Task<List<TicketConversationViewModel>> GetTicketConversations(int ticketId)
         {
             // The convos are by them tickets
             // so retrieve all tickets with parentid = ticketId
-            var convos = new List<TicketConversationViewModel>
+            var url = $"tickets/conversations/{ticketId}";
+            using (HttpClient client = new HttpClient())
             {
-                new TicketConversationViewModel{Content="hello support", DateCreated= DateTime.Now, CreatedByClient = true},
-                new TicketConversationViewModel{Content="I need an assistance", DateCreated= DateTime.Now, CreatedByClient = true},
-                new TicketConversationViewModel{Content="hi client", DateCreated= DateTime.Now, CreatedByClient = false},
-                new TicketConversationViewModel{Content="how do you do", DateCreated= DateTime.Now, CreatedByClient = false},
-                new TicketConversationViewModel{Content="My name is Maurie, how may I help you today?", DateCreated= DateTime.Now, CreatedByClient = false},
-                new TicketConversationViewModel{Content="I can't log in, please help!", DateCreated= DateTime.Now, CreatedByClient = true},
-            };
-            return Task.Run(() => { return convos; });
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync(url);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<TicketConversationViewModel>>();
+                return responseBody;
+            } 
         }
         public static async Task<List<NoteListViewModel>> GetAllNotesForTicketClient(int ticketId)
         {
@@ -102,15 +133,31 @@ namespace TickettingSystem.ApiHelper
                 new NoteListViewModel{Note = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"}
             };
         }
-        public static void CloseTicket(int ticketId)
+        public static async Task CloseTicket(int ticketId)
         {
             // close the ticket
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync($"tickets/close/{ticketId}");
+                msg.EnsureSuccessStatusCode(); 
+                return;
+            }
         }
-        public static void UpdateTicket(int ticketId, int staffId, string note)
+        public static async Task UpdateTicket(TicketUpdateViewModel model)
         {
             // add a note and or reassign staff
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync($"tickets/update/{model.Id}/{model.AssignedStaffId}/{model.Note}");
+                msg.EnsureSuccessStatusCode();
+                return;
+            }
         }
-        public static void SendResponse(int ticketId, string note)
+        public static async Task SendResponse(int ticketId, string note)
         {
             // add a note and or reassign staff
         }

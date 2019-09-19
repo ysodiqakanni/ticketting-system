@@ -608,17 +608,17 @@
                                                 <div class="ticket-assign">
                                                     <div class="single-form-opt tck">
                                                         <label for="level">Assigned to</label>
-
-                                                        <select id="txtTicketAssignedTo" name="txtTicketAssignedTo">
+                                                        <input type="text" value="Asigned staff"/>
+                                                        @*<select id="txtTicketAssignedTo" name="txtTicketAssignedTo">
                                                             @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
                                                             {
                                                                 <option value="@staff.Id">@staff.Name</option>
                                                             }
-                                                        </select>
+                                                        </select>*@
                                                     </div>
                                                     <div class="single-form-opt tck">
                                                         <label for="date">Re-Assign</label>
-                                                        <input type="text" />
+                                                       
                                                         <select id="txtTicketReAssign" name="txtTicketReAssign">
                                                             @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
                                                             {
@@ -634,9 +634,9 @@
                                             <div class="col-md-6">
 
                                                 <div class="custom-ticket-btn">
-                                                    <a href="" class="btn response-btn">Send Response</a>
-                                                    <a href="" class="btn close-btn">Close Ticket</a>
-                                                    <a href="" class="btn update-btn">Update</a>
+                                                    <a href="#" id="btnSendResponse"  class="btn response-btn">Send Response</a>
+                                                    <a href="#" id="btnCloseTicket"  class="btn close-btn">Close Ticket</a>
+                                                    <a href="#" id="btnUpdateTicket" class="btn update-btn">Update</a>
                                                 </div>
                                             </div>
                                         </div>
