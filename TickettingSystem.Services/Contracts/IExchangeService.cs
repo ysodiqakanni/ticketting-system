@@ -11,5 +11,7 @@ namespace TickettingSystem.Services.Contracts
     {
         Task<IList<Exchangesusers>> GetAllKnownExchanges();
         Task<IList<Exchangesusers>> SearchExchangesByUserId(string id);
+        string GetExchangeTypeById(int exchangeTypeId);
+        string GetApiEnteredCount(int exchangeId);
     }
 }

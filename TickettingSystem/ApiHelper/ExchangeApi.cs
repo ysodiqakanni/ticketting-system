@@ -17,12 +17,12 @@ namespace TickettingSystem.ApiHelper
         public static async Task<List<ExchangeListViewModel>> GetAllKnownExchanges()
         {
             // This should return only the name column
-            var exchanges = new List<ExchangeListViewModel>
-            {
-                new ExchangeListViewModel{ExchangeName = "Lorem"},
-                new ExchangeListViewModel{ExchangeName = "Lorem"},
-                new ExchangeListViewModel{ExchangeName = "Lorem"}
-            };
+            //var exchanges = new List<ExchangeListViewModel>
+            //{
+            //    new ExchangeListViewModel{ExchangeName = "Lorem"},
+            //    new ExchangeListViewModel{ExchangeName = "Lorem"},
+            //    new ExchangeListViewModel{ExchangeName = "Lorem"}
+            //};
             
 
             using (HttpClient client = new HttpClient())
