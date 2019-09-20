@@ -46,6 +46,54 @@ namespace TickettingSystem.Api.Controllers
             return Ok(staff);
         }
 
+        [HttpGet("searchlast")]
+        public async Task<IActionResult> SearchByLastName([FromQuery(Name = "searchStr")] string lastname="")
+        {
+            var searchResult = await _staffService.SearchByLastName(lastname);
+            if (searchResult != null && searchResult.Any())
+            {
+                var resp = new List<StaffResponseDTO>();
+                foreach (var search in searchResult)
+                {
+                    resp.Add(StaffMapper.MapStaffDetailsToDto(search, _staffService));
+                }
+                return Ok(resp);
+            }
+            return Ok(searchResult);
+        }
+
+        [HttpGet("searchprefix")]
+        public async Task<IActionResult> SearchByLastNamePrefix([FromQuery(Name = "searchStr")] string prefix = "")
+        {
+            var searchResult = await _staffService.SearchByLastName(prefix);
+            if (searchResult != null && searchResult.Any())
+            {
+                var resp = new List<StaffResponseDTO>();
+                foreach (var search in searchResult)
+                {
+                    resp.Add(StaffMapper.MapStaffDetailsToDto(search, _staffService));
+                }
+                return Ok(resp);
+            }
+            return Ok(searchResult);
+        }
+
+        [HttpGet("searchsuffix")]
+        public async Task<IActionResult> SearchByLastNameSuffix([FromQuery(Name = "searchStr")] string suffix = "")
+        {
+            var searchResult = await _staffService.SearchByLastNameSuffix(suffix);
+            if (searchResult != null && searchResult.Any())
+            {
+                var resp = new List<StaffResponseDTO>();
+                foreach (var search in searchResult)
+                {
+                    resp.Add(StaffMapper.MapStaffDetailsToDto(search, _staffService));
+                }
+                return Ok(resp);
+            }
+            return Ok(searchResult);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetStaffById(int id)
         {

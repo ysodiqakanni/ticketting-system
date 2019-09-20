@@ -36,9 +36,18 @@ namespace TickettingSystem.ApiHelper
         }
         public async static Task<List<StaffListViewModel>> SearchByLastName(string lastname)
         {
-            var staff = (await GetAllStaff()).Where(s => s.Name.ToLower().Contains(lastname.ToLower())).ToList();
+            //var staff = (await GetAllStaff()).Where(s => s.Name.ToLower().Contains(lastname.ToLower())).ToList();
 
-            return staff;
+            //return staff
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("staff/searchlast?searchStr=" + lastname);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<StaffListViewModel>>();
+                return responseBody;
+            }
         }
 
         public async static Task<List<StaffListViewModel>> SearchByLastNamePrefix(string prefix)
@@ -49,20 +58,35 @@ namespace TickettingSystem.ApiHelper
             //    new StaffListViewModel{ Id = 2, Name="Jhon Doe Wills 2", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Secondary", ReferredBy= "Mr Will Smith jr" }
             //};
             //return Task.Run(() => { return staff; });
-            var staff = (await GetAllStaff()).Where(s => s.Name.ToLower().EndsWith(prefix.ToLower())).ToList();
-
-            return staff;
-        }
-        public static Task<List<StaffListViewModel>> SearchByLastNameSuffix(string suffix)
-        {
-            var staff = new List<StaffListViewModel>
+            using (HttpClient client = new HttpClient())
             {
-                new StaffListViewModel{ Id = 3, Name="Jhon Doe Wills 3", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Primary", ReferredBy= "Mr Will Smith jr"},
-                new StaffListViewModel{ Id = 4, Name="Jhon Doe Wills 4", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Secondary", ReferredBy= "Mr Will Smith jr"},
-                new StaffListViewModel{ Id = 5, Name="Jhon Doe Wills 5", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Primary", ReferredBy= "Mr Will Smith jr"},
-            };
+                client.BaseAddress = new Uri(apiBaseUrl);
 
-            return Task.Run(() => { return staff; });
+                HttpResponseMessage msg = await client.GetAsync("staff/searchprefix?searchStr=" + prefix);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<StaffListViewModel>>();
+                return responseBody;
+            }
+        }
+        public static async Task<List<StaffListViewModel>> SearchByLastNameSuffix(string suffix)
+        {
+            //var staff = new List<StaffListViewModel>
+            //{
+            //    new StaffListViewModel{ Id = 3, Name="Jhon Doe Wills 3", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Primary", ReferredBy= "Mr Will Smith jr"},
+            //    new StaffListViewModel{ Id = 4, Name="Jhon Doe Wills 4", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Secondary", ReferredBy= "Mr Will Smith jr"},
+            //    new StaffListViewModel{ Id = 5, Name="Jhon Doe Wills 5", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Primary", ReferredBy= "Mr Will Smith jr"},
+            //};
+
+            //return Task.Run(() => { return staff; });
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("staff/searchsuffix?searchStr="+suffix);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<StaffListViewModel>>();
+                return responseBody;
+            }
         }
         public static async Task<List<StaffListViewModel>> SearchStaffById(int id)
         {
