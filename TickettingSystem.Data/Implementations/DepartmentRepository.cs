@@ -2,15 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TickettingSystem.Core;
 using TickettingSystem.Data.Contracts;
 using TickettingSystem.Data.DbModel;
 
 namespace TickettingSystem.Data.Implementations
 {
-    public class StaffRepository: BaseRepository<StaffDetails>, IStaffRepository
+    public class DepartmentRepository: BaseRepository<Departments>,  IDepartmentRepository
     {
-        public StaffRepository(DbContext ctx): base(ctx)
+        public DepartmentRepository(DbContext ctx) : base(ctx)
         {
 
         }
