@@ -102,6 +102,7 @@ namespace TickettingSystem.Api.DTO
             _staffService = staffService;
             var result = new StaffDetails
             {
+                Id = staffDetails.Id,
                 Staffuserid = staffDetails.StaffUserId,   
                 City = staffDetails.City,
                 State = staffDetails.State,
