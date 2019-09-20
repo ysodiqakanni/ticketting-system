@@ -109,5 +109,19 @@ namespace TickettingSystem.Services.Implementations
             uow.Save();
             return staffUpdate;
         }
+
+        public int GetDepartmentIdFromName(string department)
+        {
+            var departId = uow.DepartmentRepository
+                .Find(x => x.DeptName.ToLower().Equals(department.ToLower())).FirstOrDefault().Id;
+            return departId;
+        }
+
+        public string GetHiredByIdFromDepartmentName(string department)
+        {
+            var HiredById = uow.DepartmentRepository
+                .Find(x => x.DeptName.ToLower().Equals(department.ToLower())).FirstOrDefault().DeptMgr;
+            return HiredById;
+        }
     }
 }

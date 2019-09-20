@@ -28,6 +28,35 @@ namespace TickettingSystem.Api.DTO
         public string HiredBy { get; set; }
     }
 
+    public class StaffDTO
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Department { get; set; }
+        public string Manager { get; set; }
+        public string StreetNumber { get; set; }
+        public string StreetName1 { get; set; }
+        public string StreetName2 { get; set; }
+        public string StreetName3 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Email { get; set; }
+        public string Nationality { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string ReferredBy { get; set; }
+        public DateTime HiredOn { get; set; }
+        public DateTime FiredOn { get; set; }
+        public DateTime ResignedOn { get; set; }
+        public string HiredBy { get; set; }
+        public DateTime Created { get; set; }
+       
+        public StaffDTO()
+        {
+            Created = DateTime.Now;
+        }
+    }
+
     public class StaffNoteResponseDTO
     {
         public int Id { get; set; }
@@ -64,6 +93,31 @@ namespace TickettingSystem.Api.DTO
             result.Department = _staffService.GetDepartmentById(staffDetails.Departmentid.Value);
             result.Manager = _staffService.GetManagerById(staffDetails.Departmentid.Value);
 
+            return result;
+        }
+
+        public static StaffDetails MapDtoToStaffDetails(StaffDTO staffDetails, IStaffService staffService)
+        {
+            _staffService = staffService;
+            var result = new StaffDetails
+            {
+                Id = staffDetails.Id,
+                City = staffDetails.City,
+                State = staffDetails.State,
+                Dob = staffDetails.DateOfBirth,
+                DtCreated = staffDetails.Created,
+                Emailaddress = staffDetails.Email,
+                Firedon = staffDetails.FiredOn,
+                Streetname1 = staffDetails.StreetName1,
+                Streetname2 = staffDetails.StreetName2,
+                Streetname3 = staffDetails.StreetName3,
+                Housenumber = staffDetails.StreetNumber,
+                Firstname = staffDetails.Name,
+                Surname = staffDetails.Surname,
+            };
+
+            result.Hiredbyid = _staffService.GetHiredByIdFromDepartmentName(staffDetails.Department);
+            result.Departmentid = _staffService.GetDepartmentIdFromName(staffDetails.Department);
             return result;
         }
     }

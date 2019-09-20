@@ -16,6 +16,8 @@ namespace TickettingSystem.Services.Contracts
         Task<IList<StaffDetails>> SearchByLastNamePrefix(string prefix);
         Task<IList<StaffDetails>> SearchByLastNameSuffix(string suffix);
         string GetDepartmentById(int departmentId);
+        int GetDepartmentIdFromName(string department);
+        string GetHiredByIdFromDepartmentName(string department);
         string GetManagerById(int departmentId);
         Task<IList<StaffNotes>> GetNotesByStaffId(int id);
         Task<StaffNotes> CreateNewNote(int staffId, string note);

@@ -133,29 +133,31 @@ namespace TickettingSystem.Api.Controllers
         }
 
         [HttpPost("createStaff")]
-        public async Task<IActionResult> CreateStaff([FromBody] StaffDetails staffModel)
+        public async Task<IActionResult> CreateStaff([FromBody] StaffDTO staffModel)
         {
-            var staff = await _staffService.CreateStaff(staffModel);
-            if (staff != null)
+            var staff = StaffMapper.MapDtoToStaffDetails(staffModel, _staffService);
+            var staffNew = await _staffService.CreateStaff(staff);
+            if (staffNew != null)
             {
                 var resp = new List<StaffResponseDTO>();
-                resp.Add(StaffMapper.MapStaffDetailsToDto(staff, _staffService));
+                resp.Add(StaffMapper.MapStaffDetailsToDto(staffNew, _staffService));
                 return Ok(resp);
             }
-            return Ok(staff);
+            return Ok(staffNew);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateStaff(int? value, [FromBody] StaffDetails staffModel)
+        public async Task<IActionResult> UpdateStaff(int? value, [FromBody] StaffDTO staffModel)
         {
-            var staff = await _staffService.UpdateStaff(value.Value, staffModel);
+            var staff = StaffMapper.MapDtoToStaffDetails(staffModel, _staffService);
+            var staffUpdated = await _staffService.UpdateStaff(value.Value, staff);
             if (staff != null)
             {
                 var resp = new List<StaffResponseDTO>();
-                resp.Add(StaffMapper.MapStaffDetailsToDto(staff, _staffService));
+                resp.Add(StaffMapper.MapStaffDetailsToDto(staffUpdated, _staffService));
                 return Ok(resp);
             }
-            return Ok(staff);
+            return Ok(staffUpdated);
         }
 
     }

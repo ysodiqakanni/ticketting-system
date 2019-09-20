@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TickettingSystem.DTOs
 {
-    public class StaffDTO
+    public class StaffCreateDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -16,6 +16,8 @@ namespace TickettingSystem.DTOs
         public string StreetName1 { get; set; }
         public string StreetName2 { get; set; }
         public string StreetName3 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
         public string Email { get; set; }
         public string Nationality { get; set; }
         public DateTime DateOfBirth { get; set; }
@@ -25,7 +27,8 @@ namespace TickettingSystem.DTOs
         public DateTime ResignedOn { get; set; }
         public string HiredBy { get; set; }
         public DateTime Created { get; set; }
-        public StaffDTO()
+
+        public StaffCreateDTO()
         {
             Created = DateTime.Now;
         }
