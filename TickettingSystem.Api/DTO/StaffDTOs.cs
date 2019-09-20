@@ -31,6 +31,7 @@ namespace TickettingSystem.Api.DTO
     public class StaffDTO
     {
         public int Id { get; set; }
+        public string StaffUserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Department { get; set; }
@@ -101,7 +102,7 @@ namespace TickettingSystem.Api.DTO
             _staffService = staffService;
             var result = new StaffDetails
             {
-                Id = staffDetails.Id,
+                Staffuserid = staffDetails.StaffUserId,   
                 City = staffDetails.City,
                 State = staffDetails.State,
                 Dob = staffDetails.DateOfBirth,

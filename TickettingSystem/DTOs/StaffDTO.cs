@@ -25,6 +25,8 @@ namespace TickettingSystem.DTOs
         public DateTime ResignedOn { get; set; }
         public string HiredBy { get; set; }
         public DateTime Created { get; set; }
+        public string StaffUserId { get; set; }
+
         public StaffDTO()
         {
             Created = DateTime.Now;
