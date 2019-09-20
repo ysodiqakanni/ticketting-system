@@ -32,4 +32,12 @@ namespace TickettingSystem.Models
             }
         }
     }
+    public class LoginViewModel
+    {
+        public string Username { get; set; }
+        public string Password { get; set; } 
+        public string Token { get; set; }
+        public string ACCESS_LEVEL { get; set; }
+        public string READ_ONLY { get; set; }
+    }
 }

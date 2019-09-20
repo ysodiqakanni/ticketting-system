@@ -28,5 +28,10 @@ namespace TickettingSystem.Data.DbModel
         public int? Departmentid { get; set; }
         public DateTime DtCreated { get; set; }
         public DateTime? DtModified { get; set; }
+        public string PasswordHash { get; set; }
+
+      
+        public string ACCESS_LEVEL { get; set; }
+        public string READ_ONLY { get; set; }
     }
 }

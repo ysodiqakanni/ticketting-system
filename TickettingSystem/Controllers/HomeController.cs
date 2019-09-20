@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TickettingSystem.ApiHelper;
 using TickettingSystem.DTOs;
 using TickettingSystem.Models;
 using TickettingSystem.Utilities;
+using static TickettingSystem.Utilities.AuthorizeUserAttribute;
 
 namespace TickettingSystem.Controllers
 {
+    [ClaimRequirement("session", "CanReadResource")]
     [Route("home")]
     public class HomeController : Controller
     {
@@ -37,7 +40,7 @@ namespace TickettingSystem.Controllers
             // initially, no client is selected!
             // so search results (D) should contain each of the known exchanges 
             model.Exchanges = await ExchangeApi.GetAllKnownExchanges();
-            ViewBag.ExchangeTypes = await ExchangeApi.GetAllExchanges();
+            ViewBag.ExchangeTypes = await ExchangeApi.GetAllExchangeTypes();
             model.Tickets = await TicketsApi.GetLastTenTickets();
             model.TicketConversations = new List<TicketConversationViewModel>();
             model.NotesForSelectedTicketClient = new List<NoteListViewModel>();
@@ -474,6 +477,40 @@ namespace TickettingSystem.Controllers
 
             return View();
         }
+
+        //[Route("Login")]
+        //public IActionResult Login()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[Route("Login")]
+        //public async Task<IActionResult> Login(LoginViewModel model)
+        //{
+        //    //Authenticate user
+        //    // call the api to authenticate 
+        //    string msg = "";
+           
+        //    try
+        //    {
+        //        var authData = await StaffApi.Authenticate(model);
+        //        if (authData == null || authData.Token == null)
+        //        {
+        //            ViewBag.Msg = "Incorrect username oor password";
+        //            return View(model);
+        //        }
+        //        HttpContext.Session.SetString("JWToken", authData.Token);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        ViewBag.Msg = "Incorrect username oor password";
+        //        return View(model);
+        //    }
+         
+           
+        //    return Redirect("~/Home/dashboard");
+        //}
 
         //[HttpPost]
         //public JsonResult GetData(DataTableParameters dataTableParameters)

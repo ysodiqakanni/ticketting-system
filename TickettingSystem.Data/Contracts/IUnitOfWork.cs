@@ -11,7 +11,7 @@ namespace TickettingSystem.Data.Contracts
         IBaseRepository<UserDetails> ClientRepository { get; set; }
         IBaseRepository<TradeLog> TradeRepository { get; set; }
         IBaseRepository<UserNotes> ClientNoteRepository { get; set; }
-        IBaseRepository<Exchange> ExchangeRepository { get; set; }
+        IBaseRepository<Exchangesusers> ExchangeRepository { get; set; }
         IBaseRepository<ExchangeType> ExchangeTypeRepository { get; set; }
         IBaseRepository<Staff> StaffRepository { get; set; }
         IBaseRepository<Languages> LanguageRepository { get; set; }

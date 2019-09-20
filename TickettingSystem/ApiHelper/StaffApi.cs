@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.DTOs;
 using TickettingSystem.Models;
@@ -9,6 +12,7 @@ namespace TickettingSystem.ApiHelper
 {
     public class StaffApi
     {
+        static string apiBaseUrl = "https://localhost:44355/api/v1/";
         public static Task<List<StaffListViewModel>> GetAllStaff()
         {
             var staff = new List<StaffListViewModel>
@@ -111,6 +115,22 @@ namespace TickettingSystem.ApiHelper
         {
             return Task.Run(() => { });
         }
+
+        public static async Task<LoginViewModel> Authenticate(LoginViewModel model)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+                HttpResponseMessage msg = await client.PostAsync($"account/authenticate", content); //    var httpContent = new StringContent(noteData, Encoding.UTF8, "application/json");
+
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<LoginViewModel>();
+                return responseBody;
+            }
+        }
+
     }
 
 }

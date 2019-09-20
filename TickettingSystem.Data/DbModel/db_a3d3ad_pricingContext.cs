@@ -618,6 +618,11 @@ namespace TickettingSystem.Data.DbModel
                     .HasColumnName("surname")
                     .HasMaxLength(45)
                     .IsUnicode(false);
+
+                entity.Property(e => e.PasswordHash)
+                  .HasColumnName("PasswordHash")
+                  .HasMaxLength(255)
+                  .IsUnicode(false);
             });
 
             modelBuilder.Entity<StaffLanguages>(entity =>

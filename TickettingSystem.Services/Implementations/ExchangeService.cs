@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.Core;
 using TickettingSystem.Data.Contracts;
+using TickettingSystem.Data.DbModel;
+using TickettingSystem.Data.Implementations;
 using TickettingSystem.Services.Contracts;
 
 namespace TickettingSystem.Services.Implementations
@@ -17,19 +19,58 @@ namespace TickettingSystem.Services.Implementations
             uow = _uow;
         }
 
-        public async Task<IList<Exchange>> GetAllKnownExchanges()
+        public async Task<IList<Exchangesusers>> GetAllKnownExchanges()
         {
             var allKnownExchanges = await uow.ExchangeRepository.GetAllAsync();
             return allKnownExchanges;
         }
 
-        public async Task<IList<Exchange>> SearchExchangesByUserId(string id)
+        public async Task<IList<Exchangesusers>> SearchExchangesByUserId(string id)
         {
-            //var sm = uow.ClientRepository.GetAll().Join(uow.ExchangeRepository.GetAll(), cl => cl.ID, ex => ex.ID,
-            //    (cli, exc) => new { Client = cli, Exchange = exc }).ToList().FindAll(x => x.Client.ID.ToString() == id);
-            
-            var allSearch = await uow.ExchangeRepository.FindAllAsync(x => x.ExchangeUserId.ToString() == id);
+            var allSearch = await uow.ExchangeRepository.FindAllAsync(x => x.Exchangeuuserid.ToString() == id);
             return allSearch.ToList();
+        }
+
+        public string GetExchangeTypeById(int exchangeTypeId)
+        {
+            return uow.ExchangeTypeRepository.Get(exchangeTypeId)?.Name;
+        }
+
+        public string GetApiEnteredCount(int exchangeId)
+        {
+            int count = 0;
+            string countVal = string.Empty;
+            var ap = uow.ExchangeRepository.Find(x => x.EuId == exchangeId).FirstOrDefault();
+            if (ap != null)
+            {
+                if (!string.IsNullOrEmpty(ap.Exchangeuapi1) && !string.IsNullOrEmpty(ap.Exchangeuapi2))
+                {
+                    count = 2;
+                }
+                if ((!string.IsNullOrEmpty(ap.Exchangeuapi1) && string.IsNullOrEmpty(ap.Exchangeuapi2))
+                    || (string.IsNullOrEmpty(ap.Exchangeuapi1) && !string.IsNullOrEmpty(ap.Exchangeuapi2)))
+                {
+                    count = 1;
+                }
+            }
+
+            switch (count)
+            {
+                case 2:
+                    countVal = "Two";
+                    break;
+                case 1:
+                    countVal = "One";
+                    break;
+                case 0:
+                    countVal = "NONE ENTERED";
+                    break;
+                default:
+                    break;
+            }
+
+
+            return countVal;
         }
     }
 }
