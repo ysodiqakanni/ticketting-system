@@ -80,7 +80,6 @@ namespace TickettingSystem.Api.DTO
                 DateOfBirth = staffDetails.Dob,
                 Nationality = staffDetails.Country,
                 Email = staffDetails.Emailaddress,
-                HiredOn = staffDetails.HiredOn.Value,
                 StreetName1 = staffDetails.Streetname1,
                 StreetName2 = staffDetails.Streetname2,
                 StreetName3 = staffDetails.Streetname3,
@@ -92,6 +91,7 @@ namespace TickettingSystem.Api.DTO
 
             //FiredOn = staffDetails.Firedon.Value,
             //ResignedOn = staffDetails.Resignedon.Value,
+            //result.HiredOn = staffDetails.HiredOn.Value;
             result.HiredBy = _staffService.GetManagerById(staffDetails.Departmentid.Value);
             result.Department = _staffService.GetDepartmentById(staffDetails.Departmentid.Value);
             result.Manager = _staffService.GetManagerById(staffDetails.Departmentid.Value);
