@@ -67,17 +67,17 @@ namespace TickettingSystem.Services.Implementations
 
         public string GetDepartmentById(int departmentId)
         {
-            return uow.DepartmentRepository.Get(departmentId)?.DeptName;
+            return uow.DepartmentRepository.Find(x => x.Id == departmentId).FirstOrDefault().DeptName;
         }
 
         public string GetManagerById(int departmentId)
         {
-            return uow.DepartmentRepository.Get(departmentId)?.DeptMgr;
+            return uow.DepartmentRepository.Find(x => x.Id == departmentId).FirstOrDefault().DeptMgr;
         }
 
         public async Task<IList<StaffNotes>> GetNotesByStaffId(int id)
         {
-            var notes = await uow.StaffNoteRepository.FindAllAsync(x => x.Userid == id.ToString());
+            var notes = await uow.StaffNoteRepository.FindAllAsync(x => x.Id == id);
             return notes.ToList();
         }
 
@@ -94,7 +94,7 @@ namespace TickettingSystem.Services.Implementations
             
         }
 
-        public async Task<StaffDetails> UpdateStaff(int value, StaffDetails staff)
+        public async Task<StaffDetails> UpdateStaff(int? value, StaffDetails staff)
         {
             var staffUpdate = await uow.StaffRepository.FindAsync(x => x.Staffuserid == staff.Staffuserid);
             if (staffUpdate == null)

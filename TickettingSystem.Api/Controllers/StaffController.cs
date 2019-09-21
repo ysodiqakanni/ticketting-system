@@ -139,8 +139,7 @@ namespace TickettingSystem.Api.Controllers
             var staffNew = await _staffService.CreateStaff(staff);
             if (staffNew != null)
             {
-                var resp = new List<StaffResponseDTO>();
-                resp.Add(StaffMapper.MapStaffDetailsToDto(staffNew, _staffService));
+                var resp = StaffMapper.MapStaffDetailsToDto(staffNew, _staffService);
                 return Ok(resp);
             }
             return Ok(staffNew);
@@ -150,11 +149,10 @@ namespace TickettingSystem.Api.Controllers
         public async Task<IActionResult> UpdateStaff(int? value, [FromBody] StaffDTO staffModel)
         {
             var staff = StaffMapper.MapDtoToStaffDetails(staffModel, _staffService);
-            var staffUpdated = await _staffService.UpdateStaff(value.Value, staff);
+            var staffUpdated = await _staffService.UpdateStaff(value, staff);
             if (staff != null)
             {
-                var resp = new List<StaffResponseDTO>();
-                resp.Add(StaffMapper.MapStaffDetailsToDto(staffUpdated, _staffService));
+                var resp = StaffMapper.MapStaffDetailsToDto(staffUpdated, _staffService);
                 return Ok(resp);
             }
             return Ok(staffUpdated);

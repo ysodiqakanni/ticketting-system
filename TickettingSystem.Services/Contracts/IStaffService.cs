@@ -12,7 +12,7 @@ namespace TickettingSystem.Services.Contracts
         Task<StaffDetails> GetStaffById(int id);
         Task<IList<StaffDetails>> SearchByLastName(string lastname);
         Task<StaffDetails> CreateStaff(StaffDetails staff);
-        Task<StaffDetails> UpdateStaff(int value, StaffDetails staff);
+        Task<StaffDetails> UpdateStaff(int? value, StaffDetails staff);
         Task<IList<StaffDetails>> SearchByLastNamePrefix(string prefix);
         Task<IList<StaffDetails>> SearchByLastNameSuffix(string suffix);
         string GetDepartmentById(int departmentId);

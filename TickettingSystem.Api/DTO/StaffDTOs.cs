@@ -23,8 +23,8 @@ namespace TickettingSystem.Api.DTO
         public DateTime DateOfBirth { get; set; }
         public string ReferredBy { get; set; }
         public DateTime HiredOn { get; set; }
-        public DateTime FiredOn { get; set; }
-        public DateTime ResignedOn { get; set; }
+        public DateTime? FiredOn { get; set; }
+        public DateTime? ResignedOn { get; set; }
         public string HiredBy { get; set; }
     }
 
@@ -47,14 +47,15 @@ namespace TickettingSystem.Api.DTO
         public DateTime DateOfBirth { get; set; }
         public string ReferredBy { get; set; }
         public DateTime HiredOn { get; set; }
-        public DateTime FiredOn { get; set; }
-        public DateTime ResignedOn { get; set; }
+        public DateTime? FiredOn { get; set; }
+        public DateTime? ResignedOn { get; set; }
         public string HiredBy { get; set; }
         public DateTime Created { get; set; }
        
         public StaffDTO()
         {
             Created = DateTime.Now;
+            HiredOn = DateTime.Now;
         }
     }
 
@@ -78,18 +79,19 @@ namespace TickettingSystem.Api.DTO
                 Id = staffDetails.Id,
                 DateOfBirth = staffDetails.Dob,
                 Nationality = staffDetails.Country,
-                FiredOn = staffDetails.Firedon.Value,
                 Email = staffDetails.Emailaddress,
                 HiredOn = staffDetails.HiredOn.Value,
-                ResignedOn = staffDetails.Resignedon.Value,
                 StreetName1 = staffDetails.Streetname1,
                 StreetName2 = staffDetails.Streetname2,
                 StreetName3 = staffDetails.Streetname3,
                 StreetNumber = staffDetails.Housenumber,
                 Name = staffDetails.Firstname,
                 Surname = staffDetails.Surname,
+                
             };
 
+            //FiredOn = staffDetails.Firedon.Value,
+            //ResignedOn = staffDetails.Resignedon.Value,
             result.HiredBy = _staffService.GetManagerById(staffDetails.Departmentid.Value);
             result.Department = _staffService.GetDepartmentById(staffDetails.Departmentid.Value);
             result.Manager = _staffService.GetManagerById(staffDetails.Departmentid.Value);
@@ -108,8 +110,8 @@ namespace TickettingSystem.Api.DTO
                 State = staffDetails.State,
                 Dob = staffDetails.DateOfBirth,
                 DtCreated = staffDetails.Created,
+                HiredOn = staffDetails.HiredOn,
                 Emailaddress = staffDetails.Email,
-                Firedon = staffDetails.FiredOn,
                 Streetname1 = staffDetails.StreetName1,
                 Streetname2 = staffDetails.StreetName2,
                 Streetname3 = staffDetails.StreetName3,
