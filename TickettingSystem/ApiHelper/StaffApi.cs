@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,103 +8,129 @@ using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.DTOs;
 using TickettingSystem.Models;
+using TickettingSystem.Utilities;
 
 namespace TickettingSystem.ApiHelper
 {
     public class StaffApi
     {
-        static string apiBaseUrl = "https://localhost:44355/api/v1/";
-        public static Task<List<StaffListViewModel>> GetAllStaff()
+        private readonly AppSettings _appSettings;
+        //private static string baseUrl;
+        public StaffApi(IOptions<AppSettings> appSettings)
         {
-            var staff = new List<StaffListViewModel>
+            _appSettings = appSettings.Value;
+            //baseUrl = _appSettings.BaseUrl;
+        } 
+
+         static string apiBaseUrl = "https://localhost:44355/api/v1/";
+        public static async Task<List<StaffListViewModel>> GetAllStaff()
+        {
+            using (HttpClient client = new HttpClient())
             {
-                new StaffListViewModel{ Id = 1, Name="Jhon Doe Wills 1", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Primary", ReferredBy= "Mr Will Smith jr"},
-                new StaffListViewModel{ Id = 2, Name="Jhon Doe Wills 2", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Secondary", ReferredBy= "Mr Will Smith jr"},
-                new StaffListViewModel{ Id = 3, Name="Jhon Doe Wills 3", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Primary", ReferredBy= "Mr Will Smith jr"},
-                new StaffListViewModel{ Id = 4, Name="Jhon Doe Wills 4", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Secondary", ReferredBy= "Mr Will Smith jr"},
-                new StaffListViewModel{ Id = 5, Name="Jhon Doe Wills 5", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Primary", ReferredBy= "Mr Will Smith jr"},
-            };
-            return Task.Run(() => { return staff; });
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("staff");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<StaffListViewModel>>();
+                return responseBody;
+            }
+             
         }
         public async static Task<List<StaffListViewModel>> SearchByLastName(string lastname)
         {
-            var staff = (await GetAllStaff()).Where(s => s.Name.ToLower().Contains(lastname.ToLower())).ToList();
-
-            return staff;
-        }
-        public static Task<List<StaffListViewModel>> SearchByLastNamePrefix(string prefix)
-        {
-            var staff = new List<StaffListViewModel>
+            using (HttpClient client = new HttpClient())
             {
-                new StaffListViewModel{ Id = 1, Name="Jhon Doe Wills 1", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Primary", ReferredBy= "Mr Will Smith jr"},
-                new StaffListViewModel{ Id = 2, Name="Jhon Doe Wills 2", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Secondary", ReferredBy= "Mr Will Smith jr" }
-            };
-            return Task.Run(() => { return staff; });
-        }
-        public static Task<List<StaffListViewModel>> SearchByLastNameSuffix(string suffix)
-        {
-            var staff = new List<StaffListViewModel>
-            {
-                new StaffListViewModel{ Id = 3, Name="Jhon Doe Wills 3", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Primary", ReferredBy= "Mr Will Smith jr"},
-                new StaffListViewModel{ Id = 4, Name="Jhon Doe Wills 4", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Secondary", ReferredBy= "Mr Will Smith jr"},
-                new StaffListViewModel{ Id = 5, Name="Jhon Doe Wills 5", Email = "exampleemail@gmail.com", JoinedOn = DateTime.Now, KycLevel = "Primary", ReferredBy= "Mr Will Smith jr"},
-            };
+                client.BaseAddress = new Uri(apiBaseUrl);
 
-            return Task.Run(() => { return staff; });
+                HttpResponseMessage msg = await client.GetAsync("staff/searchlast?searchStr="+lastname);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<StaffListViewModel>>();
+                return responseBody;
+            } 
+        }
+        public static async Task<List<StaffListViewModel>> SearchByLastNamePrefix(string prefix)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("staff/searchsuffix?searchStr=" + prefix);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<StaffListViewModel>>();
+                return responseBody;
+            } 
+        }
+        public static async Task<List<StaffListViewModel>> SearchByLastNameSuffix(string suffix)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("staff/searchprefix?searchStr=" + suffix);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<StaffListViewModel>>();
+                return responseBody;
+            }
         }
         public static async Task<List<StaffListViewModel>> SearchStaffById(int id)
         {
-            var result = new List<StaffListViewModel>();
-            var theStaff = (await GetAllStaff()).Where(s => s.Id == id).FirstOrDefault();
-            if (theStaff != null)
+            using (HttpClient client = new HttpClient())
             {
-                result.Add(theStaff);
-            }
+                client.BaseAddress = new Uri(apiBaseUrl);
 
-            return result;
+                HttpResponseMessage msg = await client.GetAsync("staff/" + id);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<StaffListViewModel>();
+
+                var result = new List<StaffListViewModel>();
+                if (responseBody != null)
+                {
+                    result.Add(responseBody);
+                }
+
+                return result;
+            } 
         }
         public static async Task<StaffDTO> GetStaffById(int id)
         {
-            // var theStaff = (await GetAllStaff()).Where(s => s.Id == id).FirstOrDefault();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
 
-            return new StaffDTO
-            {
-                DateOfBirth = DateTime.Now.AddYears(-56),
-                Department = "Test Department",
-                Email = "test@gmail.com",
-                FiredOn = DateTime.Now,
-                HiredBy = "Jhon Doe Wills 2",
-                HiredOn = DateTime.Now,
-                Id = 3,
-                Manager = "Mr Manager",
-                Name = "Mike",
-                Nationality = "Cyprus",
-                ReferredBy = "test referer",
-                ResignedOn = DateTime.Now,
-                StreetNumber = "390",
-                StreetName1 = "Lakewood Ave",
-                StreetName2 = "Off Becksite Plamer road",
-                StreetName3 = "West wing",
-                Surname = "Doe"
-            };
+                HttpResponseMessage msg = await client.GetAsync("staff/" + id);
+                msg.EnsureSuccessStatusCode();
+
+                var responseBody = await msg.Content.ReadAsAsync<StaffDTO>();
+ 
+                return responseBody;
+            } 
         }
-        public static Task<List<StaffNoteViewModel>> GetNotesByStaffId(int id)
+        public static async Task<List<StaffNoteViewModel>> GetNotesByStaffId(int id)
         {
-            // Note: This list should be ordered by Data desc
-            var notes = new List<StaffNoteViewModel>
+            using (HttpClient client = new HttpClient())
             {
-                new StaffNoteViewModel{ Id = 1, DateCreated = DateTime.Now, Content = $"This not is for staff with id: {id}. It is an important note that should not be overlooked. Pay attention to it! "},
-                new StaffNoteViewModel{ Id = 1, DateCreated = DateTime.Now, Content = $"This not is for staff with id: {id}. It is an important note that should not be overlooked. Pay attention to it! "},
-                new StaffNoteViewModel{ Id = 1, DateCreated = DateTime.Now, Content = $"This not is for staff with id: {id}. It is an important note that should not be overlooked. Pay attention to it! "},
-                new StaffNoteViewModel{ Id = 1, DateCreated = DateTime.Now, Content = $"This not is for staff with id: {id}. It is an important note that should not be overlooked. Pay attention to it! "}
-            };
-            return Task.Run(() => { return notes; });
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("staff/notes/" + id);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<StaffNoteViewModel>>();
+
+                return responseBody;
+            } 
         }
 
         public static async Task<string> CreateNewNote(int staffId, string note)
         {
-            // return the note after successful insertion to db
-            return note;
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync($"staff/{staffId}/createnote/{note}");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsStringAsync();
+
+                return responseBody;
+            } 
         }
 
         public static Task CreateNewStaff(StaffDTO staff)

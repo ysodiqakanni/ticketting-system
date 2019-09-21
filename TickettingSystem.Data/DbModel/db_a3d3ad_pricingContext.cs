@@ -170,7 +170,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<Departments>(entity =>
             {
-                entity.HasKey(e => e.DeptName);
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("departments", "ticketing_db");
 
@@ -502,7 +502,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<StaffDetails>(entity =>
             {
-                entity.HasKey(e => e.Staffuserid);
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("staff_details", "ticketing_db");
 
@@ -658,7 +658,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<StaffNotes>(entity =>
             {
-                entity.HasKey(e => e.Userid);
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("staff_notes", "ticketing_db");
 

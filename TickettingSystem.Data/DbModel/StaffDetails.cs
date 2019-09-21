@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TickettingSystem.Data.DbModel
 {
@@ -30,8 +31,9 @@ namespace TickettingSystem.Data.DbModel
         public DateTime? DtModified { get; set; }
         public string PasswordHash { get; set; }
 
-      
+      [NotMapped]
         public string ACCESS_LEVEL { get; set; }
+        [NotMapped]
         public string READ_ONLY { get; set; }
     }
 }

@@ -384,7 +384,7 @@ $(document).on("click", ".staffDataRow", function () {  // https://stackoverflow
         processData: false,
         success: function (response) {
             if (response.success) {
-                var staff = response.msg.result;
+                var staff = response.msg;
                 $("#txtStaffName").val(staff.name);
                 $("#txtStaffSurname").val(staff.surname);
                 $("#txtStaffStreetNumber").val(staff.streetNumber);
@@ -406,7 +406,7 @@ $(document).on("click", ".staffDataRow", function () {  // https://stackoverflow
                 alert(response.msg);
             }
         },
-        error: function () {
+        error: function (e) {
             alert("An error occured");
         },
     })

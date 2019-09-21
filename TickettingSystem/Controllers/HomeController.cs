@@ -14,7 +14,7 @@ using static TickettingSystem.Utilities.AuthorizeUserAttribute;
 
 namespace TickettingSystem.Controllers
 {
-    [ClaimRequirement("session", "CanReadResource")]
+    //[ClaimRequirement("session", "CanReadResource")]
     [Route("home")]
     public class HomeController : Controller
     {
@@ -389,10 +389,10 @@ namespace TickettingSystem.Controllers
         }
 
         [Route("staff/{id}")]
-        public IActionResult GetStaffById(int? id)
+        public async Task<IActionResult> GetStaffById(int? id)
         {
             if (id == null) throw new ArgumentNullException("Invalid request sent!");
-            var theStaff = StaffApi.GetStaffById(id.Value);
+            var theStaff = await StaffApi.GetStaffById(id.Value);
             if (theStaff == null) return Json(new { success = false, msg = "record not found!" });
             return Json(new { success = true, msg = theStaff });
         }
