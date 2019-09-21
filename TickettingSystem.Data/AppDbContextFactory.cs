@@ -14,7 +14,7 @@ namespace TickettingSystem.Data
         {
             var optionsBuilder = new DbContextOptionsBuilder<db_a3d3ad_pricingContext>();
             //var connection = @"Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=TicketingDb;Data Source=.";
-            var connection = @"server=localhost;port=3306;user=root;password=root;database=db_a3d3ad_pricing";
+            var connection = @"server=localhost;port=3306;user=root;password=root;database=ticketing_db";
             optionsBuilder.UseMySql(connection);
             return new db_a3d3ad_pricingContext(optionsBuilder.Options);
         }

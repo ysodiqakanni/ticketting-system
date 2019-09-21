@@ -8,87 +8,96 @@ using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.DTOs;
 using TickettingSystem.Models;
+using TickettingSystem.Utilities;
 
 namespace TickettingSystem.ApiHelper
 {
-    public static class ClientsApi
+    public class ClientsApi
     {
-        static string apiBaseUrl = "https://localhost:44355/api/v1/";
-        public async static Task<List<ClientDTO>> GetAllClients()
+        private readonly AppSettings _appSettings;
+
+        private string baseUrl;
+        public ClientsApi(AppSettings appSettings)
+        {
+            _appSettings = appSettings;
+            baseUrl = _appSettings.BaseUrl;
+        }
+         
+        public async Task<List<ClientDTO>> GetAllClients()
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync("clients");
                 msg.EnsureSuccessStatusCode();
                 var responseBody = await msg.Content.ReadAsAsync<List<ClientDTO>>();
                 return responseBody;
-            } 
+            }
         }
 
-        public async static Task<List<ClientDTO>> SearchClients(string searchStr)
+        public async Task<List<ClientDTO>> SearchClients(string searchStr)
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
-                HttpResponseMessage msg = await client.GetAsync("clients/search?searchStr="+searchStr);
+                HttpResponseMessage msg = await client.GetAsync("clients/search?searchStr=" + searchStr);
                 msg.EnsureSuccessStatusCode();
                 var responseBody = await msg.Content.ReadAsAsync<List<ClientDTO>>();
                 return responseBody;
-            } 
+            }
 
         }
-        public async static Task<ClientDTO> GetClientById(int id)
+        public async Task<ClientDTO> GetClientById(int id)
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync($"clients/{id}");
                 msg.EnsureSuccessStatusCode();
                 var responseBody = await msg.Content.ReadAsAsync<ClientDTO>();
                 return responseBody;
             }
-             
+
         }
-        public static async Task ResetPassword(int clientId)
+        public async Task ResetPassword(int clientId)
         {
             return;
         }
-        public static async Task Update(ClientUpdateViewModel model)
+        public async Task Update(ClientUpdateViewModel model)
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
                 var httpContent = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
                 HttpResponseMessage msg = await client.PutAsync("clients", httpContent);
-                msg.EnsureSuccessStatusCode(); 
-            } 
+                msg.EnsureSuccessStatusCode();
+            }
         }
-        public static async Task CreateNewNote(string noteData)
+        public async Task CreateNewNote(string noteData)
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
                 var httpContent = new StringContent(noteData, Encoding.UTF8, "application/json");
                 HttpResponseMessage msg = await client.PostAsync("clients/notes", httpContent);
                 msg.EnsureSuccessStatusCode();
             }
-             
+
             return;
         }
-        public static async Task<List<NoteListViewModel>> GetAllNotes()
+        public async Task<List<NoteListViewModel>> GetAllNotes()
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl); 
+                client.BaseAddress = new Uri(baseUrl);
                 HttpResponseMessage msg = await client.GetAsync("clients/notes");
                 msg.EnsureSuccessStatusCode();
                 var responseBody = await msg.Content.ReadAsAsync<List<NoteListViewModel>>();
                 return responseBody;
-            } 
+            }
         }
     }
 

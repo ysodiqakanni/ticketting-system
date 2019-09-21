@@ -4,16 +4,21 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using TickettingSystem.DTOs;
 using TickettingSystem.Models;
+using TickettingSystem.Utilities;
 
 namespace TickettingSystem.ApiHelper
 {
     public class TradesApi
     {
-        static string apiBaseUrl = "https://localhost:44355/api/v1/";
-        public TradesApi()
+        private readonly AppSettings _appSettings;
+
+        private string apiBaseUrl;
+        public TradesApi(AppSettings appSettings)
         {
+            _appSettings = appSettings;
+            apiBaseUrl = _appSettings.BaseUrl;
         }
-        public async static Task<List<TradeDTO>> SearchTrades(TradeSearchModel tradeSearch)
+        public async Task<List<TradeDTO>> SearchTrades(TradeSearchModel tradeSearch)
         {
             // return the last 10 trades for the client/user
             // search for trade using the tradesearch properties
@@ -28,7 +33,7 @@ namespace TickettingSystem.ApiHelper
                 return responseBody;
             } 
         }
-        public async static Task<TradeDTO> GetTradeById(int id)
+        public async Task<TradeDTO> GetTradeById(int id)
         {
             using (HttpClient client = new HttpClient())
             {

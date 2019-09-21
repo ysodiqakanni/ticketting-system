@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using TickettingSystem.ApiHelper;
 using TickettingSystem.DTOs;
@@ -14,34 +15,49 @@ using static TickettingSystem.Utilities.AuthorizeUserAttribute;
 
 namespace TickettingSystem.Controllers
 {
-    //[ClaimRequirement("session", "CanReadResource")]
+    [ClaimRequirement("session", "CanReadResource")]
     [Route("home")]
     public class HomeController : Controller
     {
+        private StaffApi staffApi;
+        private ClientsApi clientApi;
+        private ExchangeApi exchangeApi;
+        private TicketsApi ticketsApi;
+        private TradesApi tradesApi;
+        private readonly AppSettings _appSettings;
+        public HomeController(IOptions<AppSettings> appSettings)
+        {
+            _appSettings = appSettings.Value;
+            staffApi = new StaffApi(_appSettings);
+            clientApi = new ClientsApi(_appSettings);
+            exchangeApi = new ExchangeApi(_appSettings);
+            ticketsApi = new TicketsApi(_appSettings);
+            tradesApi = new TradesApi(_appSettings);
+        }
         [Route("dashboard")]
         public async Task<IActionResult> Dashboard()
         {
-            var allClients = await ClientsApi.GetAllClients();
+            var allClients = await clientApi.GetAllClients();
             ViewBag.AllClients = allClients;
 
             var model = new DashboardViewModel();
             model.Clients = allClients; // await ClientsApi.GetAllClients();///.SearchClients("");
             model.Trades = new List<TradeDTO>(); // should be empty until a client is selected await TradesApi.GetAllTrades();
 
-            model.Notes = await ClientsApi.GetAllNotes();
+            model.Notes = await clientApi.GetAllNotes();
             model.MembershipData = new Membership
             {
                 PackagesAvailable = new List<MembershipAvailablePackagesViewModel>(),
                 PackagesPurchased = new List<MembershipPackagesPurchasedViewModel>()
             };
-            model.StaffList = await StaffApi.GetAllStaff();
+            model.StaffList = await staffApi.GetAllStaff();
             ViewBag.AllStaff = model.StaffList;
             model.NotesForTheSelectedStaff = new List<StaffNoteViewModel>() { }; // since no staff has been selected yet
             // initially, no client is selected!
             // so search results (D) should contain each of the known exchanges 
-            model.Exchanges = await ExchangeApi.GetAllKnownExchanges();
-            ViewBag.ExchangeTypes = await ExchangeApi.GetAllExchangeTypes();
-            model.Tickets = await TicketsApi.GetLastTenTickets();
+            model.Exchanges = await exchangeApi.GetAllKnownExchanges();
+            ViewBag.ExchangeTypes = await exchangeApi.GetAllExchangeTypes();
+            model.Tickets = await ticketsApi.GetLastTenTickets();
             model.TicketConversations = new List<TicketConversationViewModel>();
             model.NotesForSelectedTicketClient = new List<NoteListViewModel>();
 
@@ -52,7 +68,7 @@ namespace TickettingSystem.Controllers
         public async Task<IActionResult> GetClientById(int? id)
         {
             if (id == null) throw new ArgumentNullException("Invalid request sent!");
-            var theClient = await ClientsApi.GetClientById(id.Value);
+            var theClient = await clientApi.GetClientById(id.Value);
             if (theClient == null) return Json(new { success = false, msg = "record not found!" });
             return Json(new { success = true, msg = theClient });
         }
@@ -62,7 +78,7 @@ namespace TickettingSystem.Controllers
             if (id == null) throw new ArgumentNullException("Invalid request sent!");
             try
             {
-                await ClientsApi.ResetPassword(id.Value);
+                await clientApi.ResetPassword(id.Value);
                 return Json(new { success = true, msg = "password successfully reset!" });
             }
             catch (Exception)
@@ -79,7 +95,7 @@ namespace TickettingSystem.Controllers
             {
                 try
                 {
-                    await ClientsApi.Update(updateModel);
+                    await clientApi.Update(updateModel);
                     return Json(new { success = true, msg = "Data updated sucessfully!" });
                 }
                 catch (Exception ex)
@@ -101,7 +117,7 @@ namespace TickettingSystem.Controllers
                 string modifiedBy = "system";
                 Dictionary<string, string> noteModel = new Dictionary<string, string>() { { "Note", note }, { "Modifiedby", modifiedBy }, { "Createdby", createdBy }, { "Userid", userId } };
 
-                await ClientsApi.CreateNewNote(JsonConvert.SerializeObject(noteModel));
+                await clientApi.CreateNewNote(JsonConvert.SerializeObject(noteModel));
                 return Json(new { success = true, msg = "Note saved!" });
             }
             catch (Exception ex)
@@ -114,7 +130,7 @@ namespace TickettingSystem.Controllers
         public async Task<PartialViewResult> SearchClients(string searchStr = "")
         {
             var model = new DashboardViewModel();
-            model.Clients = await ClientsApi.SearchClients(searchStr);
+            model.Clients = await clientApi.SearchClients(searchStr);
             return PartialView("_ClientListPartial", model);
         }
 
@@ -122,40 +138,24 @@ namespace TickettingSystem.Controllers
         public async Task<PartialViewResult> Notes()
         {
             var model = new DashboardViewModel();
-            model.Notes = await ClientsApi.GetAllNotes();
+            model.Notes = await clientApi.GetAllNotes();
             return PartialView("_NotesPartial", model);
-        }
-
-        //[Route("trades/all")]
-        //public IActionResult GetTrades()
-        //{
-
-        //    var trades = TradesApi.GetAllTrades();
-        //    if (trades == null) return Json(new { success = false, msg = "record not found!" });
-        //    return Json(new { success = true, msg = trades });
-        //}
-
+        } 
         [Route("trades/{id}")]
         public async Task<IActionResult> GetTradeById(int? id)
         {
             if (id == null) throw new ArgumentNullException("Invalid request sent!");
-            var theTrade = await TradesApi.GetTradeById(id.Value);
+            var theTrade = await tradesApi.GetTradeById(id.Value);
             if (theTrade == null) return Json(new { success = false, msg = "record not found!" });
             return Json(new { success = true, msg = theTrade });
         }
         [Route("trades/search")]
         public async Task<IActionResult> SearchTrade([FromQuery] TradeSearchModel tradeSearch)
         {
-            var trades = await TradesApi.SearchTrades(tradeSearch);
+            var trades = await tradesApi.SearchTrades(tradeSearch);
             var model = new DashboardViewModel();
             model.Trades = trades;
-            return PartialView("_TradeListPartial", model);
-
-
-            if (trades == null) return Json(new { success = false, msg = "record not found!" });
-            return Json(new { success = true, msg = trades });
-            //var result=(await TradesApi.GetAllTrades()).Where(trade=>tradeSearch.UserId)
-            //return Json(new { success = true, msg = theTrade });
+            return PartialView("_TradeListPartial", model); 
         }
 
         [Route("exchanges/{userId?}")]
@@ -168,7 +168,7 @@ namespace TickettingSystem.Controllers
             }
             else
             {
-                model.Exchanges = await ExchangeApi.SearchExchangesByUserId(userId);
+                model.Exchanges = await exchangeApi.SearchExchangesByUserId(userId);
             }
 
             return PartialView("_ExchangeListPartial", model);
@@ -203,7 +203,7 @@ namespace TickettingSystem.Controllers
             }
             else
             {
-                model.Tickets = await TicketsApi.GetTicketsForClient(userId.Value);
+                model.Tickets = await ticketsApi.GetTicketsForClient(userId.Value);
             }
 
             return PartialView("_ClientTicketsPartial", model);
@@ -224,45 +224,45 @@ namespace TickettingSystem.Controllers
             {
                 if (value == "*") // situation where user enters * to search for all tickets
                 {
-                    result = await TicketsApi.GetLastTenTickets();
+                    result = await ticketsApi.GetLastTenTickets();
                 }
                 else if (value.StartsWith("*"))
                 {
-                    result = await TicketsApi.SearchByClientId(value, WilcardType.Prefix);
+                    result = await ticketsApi.SearchByClientId(value, WilcardType.Prefix);
                 }
                 else if (value.EndsWith("*"))
                 {
-                    result = await TicketsApi.SearchByClientId(value, WilcardType.Suffix);
+                    result = await ticketsApi.SearchByClientId(value, WilcardType.Suffix);
                 }
                 else
                 {
-                    result = await TicketsApi.SearchByClientId(value, WilcardType.None);
+                    result = await ticketsApi.SearchByClientId(value, WilcardType.None);
                 }
             }
             else if (string.Compare(type, "name", true) == 0)
             {
                 if(value == "*") // situation where user enters * to search for all tickets
                 {
-                    result = await TicketsApi.GetLastTenTickets();
+                    result = await ticketsApi.GetLastTenTickets();
                 }
                 else if (value.StartsWith("*"))
                 {
-                    result = await TicketsApi.SearchByClientName(value, WilcardType.Prefix);
+                    result = await ticketsApi.SearchByClientName(value, WilcardType.Prefix);
                 }
                 else if (value.EndsWith("*"))
                 {
-                    result = await TicketsApi.SearchByClientName(value, WilcardType.Suffix);
+                    result = await ticketsApi.SearchByClientName(value, WilcardType.Suffix);
                 }
                 else
                 {
                     // not a wildcard search, so search by name 
-                    result = await TicketsApi.SearchByClientName(value, WilcardType.None);
+                    result = await ticketsApi.SearchByClientName(value, WilcardType.None);
                 }
             }
             // date
             else
             {
-                result = await TicketsApi.SearchByDate(value.Split('/')[0], value.Split('/')[1], value.Split('/')[2]);
+                result = await ticketsApi.SearchByDate(value.Split('/')[0], value.Split('/')[1], value.Split('/')[2]);
             }
 
             var model = new DashboardViewModel();
@@ -277,7 +277,7 @@ namespace TickettingSystem.Controllers
         {
             try
             {
-                await TicketsApi.CloseTicket(id);
+                await ticketsApi.CloseTicket(id);
                 return Json(new { success = true, msg = "Ticket closed sucessfully!" });
             }
             catch (Exception ex)
@@ -294,7 +294,7 @@ namespace TickettingSystem.Controllers
             {
                 try
                 {
-                    await TicketsApi.UpdateTicket(model);
+                    await ticketsApi.UpdateTicket(model);
                     return Json(new { success = true, msg = "Data updated sucessfully!" });
                 }
                 catch (Exception ex)
@@ -345,7 +345,7 @@ namespace TickettingSystem.Controllers
             var model = new DashboardViewModel();
             model.StaffList = new List<StaffListViewModel>();
 
-            if (s == "*") model.StaffList = await StaffApi.GetAllStaff();
+            if (s == "*") model.StaffList = await staffApi.GetAllStaff();
             // searching by surname
             else if (s.Contains("*"))
             {
@@ -451,8 +451,8 @@ namespace TickettingSystem.Controllers
         {
             if (id == null) throw new ArgumentNullException("Invalid request sent!");
 
-            var convos = await TicketsApi.GetTicketConversations(id.Value);
-            var notes = await TicketsApi.GetAllNotesForTicketClient(id.Value);
+            var convos = await ticketsApi.GetTicketConversations(id.Value);
+            var notes = await ticketsApi.GetAllNotesForTicketClient(id.Value);
             return Json(new { success = true, notes = notes, convos = convos });
         }
 
@@ -476,50 +476,7 @@ namespace TickettingSystem.Controllers
 
 
             return View();
-        }
-
-        //[Route("Login")]
-        //public IActionResult Login()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //[Route("Login")]
-        //public async Task<IActionResult> Login(LoginViewModel model)
-        //{
-        //    //Authenticate user
-        //    // call the api to authenticate 
-        //    string msg = "";
-           
-        //    try
-        //    {
-        //        var authData = await StaffApi.Authenticate(model);
-        //        if (authData == null || authData.Token == null)
-        //        {
-        //            ViewBag.Msg = "Incorrect username oor password";
-        //            return View(model);
-        //        }
-        //        HttpContext.Session.SetString("JWToken", authData.Token);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        ViewBag.Msg = "Incorrect username oor password";
-        //        return View(model);
-        //    }
-         
-           
-        //    return Redirect("~/Home/dashboard");
-        //}
-
-        //[HttpPost]
-        //public JsonResult GetData(DataTableParameters dataTableParameters)
-        //{
-        //    // put a debug here to see the values
-        //    // do anything else to handel to posted data
-        //    return View();
-        //}
-
+        } 
 
         public IActionResult Privacy()
         {

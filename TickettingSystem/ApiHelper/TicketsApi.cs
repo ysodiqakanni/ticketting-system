@@ -4,18 +4,27 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using TickettingSystem.Models;
+using TickettingSystem.Utilities;
 
 namespace TickettingSystem.ApiHelper
 {
     public class TicketsApi
     {
-        static string apiBaseUrl = "https://localhost:44355/api/v1/";
-        public static async Task<List<TicketsListViewModel>> GetLastTenTickets()
+        private readonly AppSettings _appSettings;
+
+        private string baseUrl;
+        public TicketsApi(AppSettings appSettings)
+        {
+            _appSettings = appSettings;
+            baseUrl = _appSettings.BaseUrl;
+        }
+         
+        public async Task<List<TicketsListViewModel>> GetLastTenTickets()
         {
             // return last 10 tickets from the db
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync("tickets");
                 msg.EnsureSuccessStatusCode();
@@ -23,12 +32,12 @@ namespace TickettingSystem.ApiHelper
                 return responseBody;
             } 
         }
-        public static async Task<List<TicketsListViewModel>> GetTicketsForClient(int clientId)
+        public async Task<List<TicketsListViewModel>> GetTicketsForClient(int clientId)
         {
             // return all tickets for a client
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync($"tickets/search/{clientId}");
                 msg.EnsureSuccessStatusCode();
@@ -37,7 +46,7 @@ namespace TickettingSystem.ApiHelper
             } 
         }
 
-        public static async Task<List<TicketsListViewModel>> SearchByClientId(string value, WilcardType wilcard)
+        public async Task<List<TicketsListViewModel>> SearchByClientId(string value, WilcardType wilcard)
         {
             string url = string.Empty;
             switch (wilcard)
@@ -56,7 +65,7 @@ namespace TickettingSystem.ApiHelper
             }
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync(url);
                 msg.EnsureSuccessStatusCode();
@@ -65,7 +74,7 @@ namespace TickettingSystem.ApiHelper
             } 
         }
 
-        public static async Task<List<TicketsListViewModel>> SearchByClientName(string value, WilcardType wilcard)
+        public async Task<List<TicketsListViewModel>> SearchByClientName(string value, WilcardType wilcard)
         {
             string url = string.Empty;
             switch (wilcard)
@@ -84,7 +93,7 @@ namespace TickettingSystem.ApiHelper
             }
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync(url);
                 msg.EnsureSuccessStatusCode();
@@ -92,7 +101,7 @@ namespace TickettingSystem.ApiHelper
                 return responseBody;
             } 
         }
-        public static Task<List<TicketsListViewModel>> SearchByDate(string day, string month, string year)
+        public Task<List<TicketsListViewModel>> SearchByDate(string day, string month, string year)
         {
             // not that either or all of day, month and year could be *
             // so date=*/8/2019 would be all data for august 2019 - */*/2019 would return all data from 2019.
@@ -107,14 +116,14 @@ namespace TickettingSystem.ApiHelper
             };
             return Task.Run(() => { return tickets; });
         }
-        public static async Task<List<TicketConversationViewModel>> GetTicketConversations(int ticketId)
+        public async Task<List<TicketConversationViewModel>> GetTicketConversations(int ticketId)
         {
             // The convos are by them tickets
             // so retrieve all tickets with parentid = ticketId
             var url = $"tickets/conversations/{ticketId}";
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync(url);
                 msg.EnsureSuccessStatusCode();
@@ -122,7 +131,7 @@ namespace TickettingSystem.ApiHelper
                 return responseBody;
             } 
         }
-        public static async Task<List<NoteListViewModel>> GetAllNotesForTicketClient(int ticketId)
+        public async Task<List<NoteListViewModel>> GetAllNotesForTicketClient(int ticketId)
         {
             return new List<NoteListViewModel>()
             {
@@ -133,31 +142,31 @@ namespace TickettingSystem.ApiHelper
                 new NoteListViewModel{Note = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"}
             };
         }
-        public static async Task CloseTicket(int ticketId)
+        public async Task CloseTicket(int ticketId)
         {
             // close the ticket
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync($"tickets/close/{ticketId}");
                 msg.EnsureSuccessStatusCode(); 
                 return;
             }
         }
-        public static async Task UpdateTicket(TicketUpdateViewModel model)
+        public async Task UpdateTicket(TicketUpdateViewModel model)
         {
             // add a note and or reassign staff
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync($"tickets/update/{model.Id}/{model.AssignedStaffId}/{model.Note}");
                 msg.EnsureSuccessStatusCode();
                 return;
             }
         }
-        public static async Task SendResponse(int ticketId, string note)
+        public async Task SendResponse(int ticketId, string note)
         {
             // add a note and or reassign staff
         }

@@ -15,19 +15,20 @@ namespace TickettingSystem.ApiHelper
     public class StaffApi
     {
         private readonly AppSettings _appSettings;
-        //private static string baseUrl;
-        public StaffApi(IOptions<AppSettings> appSettings)
+       
+        private static string baseUrl;
+        public StaffApi(AppSettings appSettings)
         {
-            _appSettings = appSettings.Value;
-            //baseUrl = _appSettings.BaseUrl;
+            _appSettings = appSettings;
+            baseUrl = _appSettings.BaseUrl;
         } 
 
-         static string apiBaseUrl = "https://localhost:44355/api/v1/";
-        public static async Task<List<StaffListViewModel>> GetAllStaff()
+        // static string baseUrl = "https://localhost:44355/api/v1/";
+        public async Task<List<StaffListViewModel>> GetAllStaff()
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync("staff");
                 msg.EnsureSuccessStatusCode();
@@ -40,7 +41,7 @@ namespace TickettingSystem.ApiHelper
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync("staff/searchlast?searchStr="+lastname);
                 msg.EnsureSuccessStatusCode();
@@ -52,9 +53,9 @@ namespace TickettingSystem.ApiHelper
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
-                HttpResponseMessage msg = await client.GetAsync("staff/searchsuffix?searchStr=" + prefix);
+                HttpResponseMessage msg = await client.GetAsync("staff/searchprefix?searchStr=" + prefix);
                 msg.EnsureSuccessStatusCode();
                 var responseBody = await msg.Content.ReadAsAsync<List<StaffListViewModel>>();
                 return responseBody;
@@ -64,9 +65,9 @@ namespace TickettingSystem.ApiHelper
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
-                HttpResponseMessage msg = await client.GetAsync("staff/searchprefix?searchStr=" + suffix);
+                HttpResponseMessage msg = await client.GetAsync("staff/searchsuffix?searchStr=" + suffix);
                 msg.EnsureSuccessStatusCode();
                 var responseBody = await msg.Content.ReadAsAsync<List<StaffListViewModel>>();
                 return responseBody;
@@ -76,7 +77,7 @@ namespace TickettingSystem.ApiHelper
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync("staff/" + id);
                 msg.EnsureSuccessStatusCode();
@@ -95,7 +96,7 @@ namespace TickettingSystem.ApiHelper
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync("staff/" + id);
                 msg.EnsureSuccessStatusCode();
@@ -109,7 +110,7 @@ namespace TickettingSystem.ApiHelper
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync("staff/notes/" + id);
                 msg.EnsureSuccessStatusCode();
@@ -123,7 +124,7 @@ namespace TickettingSystem.ApiHelper
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync($"staff/{staffId}/createnote/{note}");
                 msg.EnsureSuccessStatusCode();
@@ -147,7 +148,7 @@ namespace TickettingSystem.ApiHelper
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
                 HttpResponseMessage msg = await client.PostAsync($"account/authenticate", content); //    var httpContent = new StringContent(noteData, Encoding.UTF8, "application/json");
