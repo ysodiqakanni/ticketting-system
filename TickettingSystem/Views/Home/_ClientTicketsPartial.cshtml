@@ -1,0 +1,20 @@
+﻿@model TickettingSystem.Models.DashboardViewModel
+<table style="width:100%">
+    <tr>
+        <th class="round-1">ID</th>
+        <th>Client Name</th>
+        <th>Enabled</th>
+        <th>Description</th>
+        <th class="round-2">Assigned To</th>
+    </tr>
+    @foreach (var ticket in Model.Tickets)
+    {
+    <tr class="ticketDataRow">
+        <td>@ticket.Id</td>
+        <td>@ticket.ClientName</td>
+        <td>@ticket.DateEnabled.ToString("dd/mm/yyyy")</td>
+        <td>@ticket.Description</td>
+        <td>@ticket.AssignedToStaffId</td>
+    </tr>
+    } 
+</table>

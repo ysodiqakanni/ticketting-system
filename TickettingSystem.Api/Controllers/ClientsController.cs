@@ -5,42 +5,96 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TickettingSystem.Api.DTO;
+using TickettingSystem.Core;
+using TickettingSystem.Data.Contracts;
+using TickettingSystem.Data.DbModel;
+using TickettingSystem.Services.Contracts; 
 
 namespace TickettingSystem.Api.Controllers
 {
-    
+
     /// <summary>
     /// Endpoints to manage Clients
     /// </summary>
     [Produces("application/json")]
     [Route("api/v1/[controller]")]
     [ApiController]
-    [Authorize]
     public class ClientsController : ControllerBase
     {
-        public async Task<IActionResult> Search()
-        { 
-            return Ok();
-        }
-        public async Task<IActionResult> Get()
+        private readonly IClientService _clientService;
+        private readonly IClientNoteService _clientNoteService;
+        IUnitOfWork uow;
+
+        public ClientsController(IClientService clientService, IClientNoteService clientNoteService )
         {
-            return Ok();
+            _clientService = clientService;
+            _clientNoteService = clientNoteService;
         }
-        public async Task<IActionResult> ResetVerificationStatus()
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllClients()
         {
-            return Ok();
+            var clients = await _clientService.GetAllAsync();
+            if(clients != null && clients.Any())
+            {
+                var resp = new List<ClientResponseDTO>();
+                foreach (var client in clients)
+                {
+                    resp.Add(ClientMapper.MapUserDetailsToDto(client, _clientService));
+                }
+                return Ok(resp);
+            }
+            return Ok(clients);
         }
-        public async Task<IActionResult> GetImages()
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetClientById(int id)
         {
-            return Ok();
+            var client = await _clientService.GetClientById(id);
+            if(client != null)
+            {
+                var resp = ClientMapper.MapUserDetailsToDto(client, _clientService);
+                return Ok(resp);
+            } 
+            return Ok(client);
         }
-        public async Task<IActionResult> BlockAccess()
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchClient([FromQuery(Name ="searchStr")] string searchStr = "")
         {
-            return Ok();
+            var searchResult = await _clientService.SearchClient(searchStr);
+            if (searchResult != null && searchResult.Any())
+            {
+                var resp = new List<ClientResponseDTO>();
+                foreach (var client in searchResult)
+                {
+                    resp.Add(ClientMapper.MapUserDetailsToDto(client, _clientService));
+                }
+                return Ok(resp);
+            }
+            return Ok(searchResult);
         }
-        public async Task<IActionResult> GetTradingActivities()
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateClient(UserDetails client)
         {
-            return Ok();
+            var result = await _clientService.UpdateClient(client);
+            return Ok(result);
+        }
+
+        [HttpPost("notes")]
+        public async Task<IActionResult> CreateNote([FromBody] IDictionary<string, string> noteModel)
+        {
+            var addNote = await _clientNoteService.CreateNote(noteModel["Note"], noteModel["Userid"], noteModel["Createdby"], noteModel["Modifiedby"]);
+            return Ok(addNote);
+        }
+
+        [HttpGet("notes")]
+        public async Task<IActionResult> GetNotes()
+        {
+            var notes = await _clientNoteService.GetNotes();
+            return Ok(notes);
         }
     }
 }

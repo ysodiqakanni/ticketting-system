@@ -1,0 +1,30 @@
+﻿
+@model TickettingSystem.Models.DashboardViewModel
+<table id="tblTrades" style="width:100%">
+    <tr>
+        <th class="round-1">User Id</th>
+        <th>Date time</th>
+        <th>Exchange</th>
+        <th>Operation</th>
+        <th class="round-2">Price</th>
+    </tr>
+    @if (Model.Trades.Count < 1)
+    {
+        <tr><td> No Records Found! </td></tr>
+    }
+    else
+    {
+        foreach (var trade in Model.Trades)
+        {
+            <tr class="tradeDataRow">
+                <td>@trade.UserId</td>
+                <td>@trade.CreatedOn.ToString("MM/dd/yyyy")</td>
+                <td>@trade.Exchange</td>
+                <td>@trade.Operation</td>
+                <td>$@trade.Price</td>
+
+            </tr>
+        }
+    }
+
+</table>

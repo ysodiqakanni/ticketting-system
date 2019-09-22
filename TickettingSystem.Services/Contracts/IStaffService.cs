@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+using TickettingSystem.Data.DbModel;
+
+namespace TickettingSystem.Services.Contracts
+{
+    public interface IStaffService
+    {
+        StaffDetails Authenticate(string username, string password, out string accessToken);
+        IEnumerable<StaffDetails> GetAll();
+
+        Task<IList<StaffDetails>> GetAllStaffs();
+        Task<StaffDetails> GetStaffById(int id);
+        Task<IList<StaffDetails>> SearchByLastName(string lastname);
+        Task<StaffDetails> CreateStaff(StaffDetails staff);
+        Task<StaffDetails> UpdateStaff(int value, StaffDetails staff);
+        Task<IList<StaffDetails>> SearchByLastNamePrefix(string prefix);
+        Task<IList<StaffDetails>> SearchByLastNameSuffix(string suffix);
+        string GetDepartmentById(int departmentId);
+        int GetDepartmentIdFromName(string department);
+        string GetHiredByIdFromDepartmentName(string department);
+        string GetManagerById(int departmentId);
+        Task<IList<StaffNotes>> GetNotesByStaffId(int id);
+        Task<StaffNotes> CreateNewNote(int staffId, string note);
+    }
+}
+ 

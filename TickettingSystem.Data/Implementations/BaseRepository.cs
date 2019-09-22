@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.Data.Contracts;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace TickettingSystem.Data.Implementations
 { 
@@ -131,8 +131,9 @@ namespace TickettingSystem.Data.Implementations
         }
 
         public IQueryable<T> QueryAll()
-        {
+        { 
             return Context.Set<T>();
         }
+      
     }
 }
