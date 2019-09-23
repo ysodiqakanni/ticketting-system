@@ -48,16 +48,24 @@ namespace TickettingSystem.Services.Implementations
                 trades = trades.Where(x => x.TraderUid.ToString() == id.ToString());
 
             if (startDate != null && startDate != default(DateTime))
-                trades = trades.Where(x => x.TradePlaceDate >= startDate);
+                trades = trades.Where(x => x.TradePlaceDate.Date >= startDate.Value.Date);
             if (endDate != null && endDate != default(DateTime))
-                trades = trades.Where(x => x.TradePlaceDate <= endDate);
+                trades = trades.Where(x => x.TradePlaceDate.Date <= endDate.Value.Date);
+
+            if (!string.IsNullOrEmpty(currencyCode))
+                trades = trades.Where(t => t.CurrencyPair.ToLower().Contains(currencyCode.ToLower()));
+
+            if (!String.IsNullOrEmpty(exchangeCode))
+            {
+                // get ids of exchanges with names containing exchangeCode
+                // check if ids contains t.id
+                exchangeCode = exchangeCode.ToLower();
+                var ids = _uow.ExchangeTypeRepository.QueryAll().Where(e => e.Name.Contains(exchangeCode)).Select(e => e.Id).ToList();
+                trades = trades.Where(t => ids.Contains(t.ExchangeFromTypeId.Value) || ids.Contains(t.ExchangeToTypeId.Value));
+            }
 
             trades = trades.OrderByDescending(x => x.TradePlaceDate).Take(10);
 
-            //var trades = _uow.TradeRepository.Find(x => x.TraderUid.ToString() == id.ToString()
-            //|| (x.TradePlaceDate >= startDate && x.TradePlaceDate <= endDate)).OrderByDescending(x => x.TradePlaceDate).ToList().Take(10) ;
-            // Todo: include exchange criterion
-            // || x.ex.Exchange.ToLower().Contains(exchangeCode.ToLower()) || x.CurrencyCode.ToLower().Contains(currencyCode.ToLower()));
             return trades.ToList();
         }
 

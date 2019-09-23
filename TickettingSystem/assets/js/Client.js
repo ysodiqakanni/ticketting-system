@@ -39,11 +39,15 @@ $("#btnSearchTrades").on("click", function () {
         searchObject["exchange"] = getExchange;
     }
     if (getToDate) {
-        searchObject["toDate"] = getToDate.toLocaleDateString();
+        searchObject["ToDateTime"] = getToDate.toISOString();  // https://github.com/Automattic/mongoose/issues/756#issuecomment-65924767
     }
     if (getFromDate) {
-        searchObject["fromDate"] = getFromDate.toLocaleDateString();
+        searchObject["FromDateTime"] = getFromDate.toLocaleDateString();
     }
+    if (currencyPair) {
+        searchObject["currencyCode"] = currencyPair;
+    }
+
     var url = "/home/trades/search?" + $.param(searchObject, true);
     $.ajax({
         url: url,
@@ -217,8 +221,7 @@ $(document).on("click", ".clientDataRow", function () {
         },
     })
 
-    $(document).on("dblclick", ".tradeDataRow", function () {
-        // var id = $(this).find('td:first').html();
+    $(document).on("dblclick", ".tradeDataRow", function () { 
         var id = $($(this).find('td:last').html()).val();
         var table = document.getElementById("tbTradeSearchResult");
 
