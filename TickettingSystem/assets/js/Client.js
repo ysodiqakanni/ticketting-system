@@ -297,8 +297,7 @@ $("#btnAddNote").on("click", function (e) {
         contentType: "application/json",
         processData: false,
         success: function (response) {
-            if (response.success) {
-                alert(response.msg);
+            if (response.success) { 
                 $("#txtNewNote").val("");
                 // Todo: re-render notes partial
                 loadClientNotes(clientId);
@@ -421,8 +420,7 @@ $("#btnAddStaffNote").on("click", function (e) {
         contentType: "application/json",
         processData: false,
         success: function (response) {
-            if (response.success) {
-                alert(response.msg);
+            if (response.success) { 
                 $("#txtNewStaffNote").val("");
                 // Todo: re-render notes partial
                 loadStaffNotes(staffId);
@@ -495,8 +493,7 @@ $("#btnAddTicketNote").on("click", function (e) {
         contentType: "application/json",
         processData: false,
         success: function (response) {
-            if (response.success) {
-                alert(response.msg);
+            if (response.success) { 
                 $("#txtNewTicketNote").val("");
                 // Todo: re-render notes partial
                 loadTicketDetails(ticketId);
