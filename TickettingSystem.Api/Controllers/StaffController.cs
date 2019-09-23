@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TickettingSystem.Api.DTO;
+using TickettingSystem.Api.Helper;
 using TickettingSystem.Data.Contracts;
 using TickettingSystem.Data.DbModel;
 using TickettingSystem.Services.Contracts;
@@ -22,10 +23,11 @@ namespace TickettingSystem.Api.Controllers
     public class StaffController : ControllerBase
     {
         private readonly IStaffService _staffService;
+        private readonly ITicketService _ticketService;
 
         IUnitOfWork uow;
 
-        public StaffController(IStaffService staffService)
+        public StaffController(IStaffService staffService, ITicketService ticketService)
         {
             _staffService = staffService;
         }
@@ -135,18 +137,33 @@ namespace TickettingSystem.Api.Controllers
         public async Task<IActionResult> CreateStaff([FromBody] StaffDTO staffModel)
         {
             var staff = StaffMapper.MapDtoToStaffDetails(staffModel, _staffService);
+            
             var staffNew = await _staffService.CreateStaff(staff);
             if (staffNew != null)
             {
-                var resp = new List<StaffResponseDTO>();
-                resp.Add(StaffMapper.MapStaffDetailsToDto(staffNew, _staffService));
+                if (staffModel.Languages?.Count() > 0 || staffModel.Territory?.Count() > 0)
+                {
+                    var staffLan = await StaffHelperMethod.ProcessStaffLanguage(staffModel, _staffService);
+                    var staffTerritry = await StaffHelperMethod.ProcessStaffTerritory(staffModel, _staffService);
+                    try
+                    {
+                        _staffService.PostStaffTerritory(staffTerritry);
+                        _staffService.PostStaffLanguage(staffLan);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("an error occured while persisting your data to the database");
+                    }
+                }
+                var resp = StaffMapper.MapStaffDetailsToDto(staffNew, _staffService);
+               
                 return Ok(resp);
             }
             return Ok(staffNew);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateStaff(int? value, [FromBody] StaffDTO staffModel)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateStaff(int value, [FromBody] StaffDTO staffModel)
         {
             /*
              * Update ONLY::: Name: $("#txtStaffName").val(),
@@ -158,16 +175,43 @@ namespace TickettingSystem.Api.Controllers
             //Nationality: $("#txtStaffNationality").val()
 
              */
+           
             var staff = StaffMapper.MapDtoToStaffDetails(staffModel, _staffService);
-            var staffUpdated = await _staffService.UpdateStaff(value.Value, staff);
+            var staffUpdated = await _staffService.UpdateStaff(value, staff);
             if (staff != null)
             {
-                var resp = new List<StaffResponseDTO>();
-                resp.Add(StaffMapper.MapStaffDetailsToDto(staffUpdated, _staffService));
+                if (staffModel.Languages?.Count() > 0 || staffModel.Territory?.Count() > 0)
+                {
+                    var staffLan = await StaffHelperMethod.ProcessStaffLanguage(staffModel, _staffService);
+                    var staffTerritry = await StaffHelperMethod.ProcessStaffTerritory(staffModel, _staffService);
+                    try
+                    {
+                        foreach (var item in staffLan.ToList())
+                        {
+                            if (_staffService.GetStaffLanguages(staffModel.StaffUserId).Any(x => x.Languageid == item.Languageid))
+                            {
+                                staffLan.Remove(item);
+                            }
+                        }
+                        foreach (var item in staffTerritry.ToList())
+                        {
+                            if (_staffService.GetStaffTerritory(staffModel.StaffUserId).Any(x => x.Territory == item.Territory))
+                            {
+                                staffTerritry.Remove(item);
+                            }
+                        }
+                        _staffService.PostStaffTerritory(staffTerritry);
+                        _staffService.PostStaffLanguage(staffLan);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("an error occured while persisting your data to the database");
+                    }
+                }
+                var resp = StaffMapper.MapStaffDetailsToDto(staffUpdated, _staffService);
                 return Ok(resp);
             }
             return Ok(staffUpdated);
         }
-
     }
 }

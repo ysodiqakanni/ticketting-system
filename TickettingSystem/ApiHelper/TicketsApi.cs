@@ -9,7 +9,7 @@ namespace TickettingSystem.ApiHelper
 {
     public class TicketsApi
     {
-        static string apiBaseUrl = "https://localhost:44355/api/v1/";
+        static string apiBaseUrl = "https://localhost:5001/api/v1/";
         public static async Task<List<TicketsListViewModel>> GetLastTenTickets()
         {
             // return last 10 tickets from the db

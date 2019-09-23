@@ -24,6 +24,14 @@ namespace TickettingSystem.Services.Contracts
         string GetManagerById(int departmentId);
         Task<IList<StaffNotes>> GetNotesByStaffId(int id);
         Task<StaffNotes> CreateNewNote(int staffId, string note);
+        int GetLanguageIdByName(string language);
+        void PostStaffLanguage(List<StaffLanguages> stLang);
+        void PostStaffTerritory(List<StaffTerritory> stTerritory);
+        int GetTerritoryByName(string territory);
+        List<StaffLanguages> GetStaffLanguages(string staffId);
+        List<StaffTerritory> GetStaffTerritory(string staffId);
+        string GetLanguageById(int id);
+        string GetTerritoryById(int territoryId);
     }
 }
  

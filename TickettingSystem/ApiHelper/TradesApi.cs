@@ -9,7 +9,7 @@ namespace TickettingSystem.ApiHelper
 {
     public class TradesApi
     {
-        static string apiBaseUrl = "https://localhost:44355/api/v1/";
+        static string apiBaseUrl = "https://localhost:5001/api/v1/";
         public TradesApi()
         {
         }

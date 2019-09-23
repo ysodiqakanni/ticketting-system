@@ -50,6 +50,7 @@ namespace TickettingSystem.Data.DbModel
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=root;database=ticketing_db");
+                //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             }
         }
 
@@ -699,7 +700,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<StaffTerritory>(entity =>
             {
-                entity.HasKey(e => e.Staffuserid);
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("staff_territory", "ticketing_db");
 

@@ -19,7 +19,9 @@ namespace TickettingSystem.Data.Contracts
         IBaseRepository<SupportTicket> TicketRepository { get; set; }
         IBaseRepository<Departments> DepartmentRepository { get; set; }
         IBaseRepository<StaffNotes> StaffNoteRepository { get; set; }
-
+        IBaseRepository<StaffLanguages> StaffLanguageRepository { get; set; }
+        IBaseRepository<Territories> TerritoriesRepository { get; set; }
+        IBaseRepository<StaffTerritory> StaffTerritoryRepository { get; set; }
 
         int Save();
     }

@@ -26,6 +26,9 @@ namespace TickettingSystem.Api.DTO
         public DateTime FiredOn { get; set; }
         public DateTime ResignedOn { get; set; }
         public string HiredBy { get; set; }
+        public List<string> Territory { get; set; }
+        public List<string> Languages { get; set; }
+        public string StaffUserId { get; set; }
     }
 
     public class StaffDTO
@@ -51,6 +54,8 @@ namespace TickettingSystem.Api.DTO
         public DateTime ResignedOn { get; set; }
         public string HiredBy { get; set; }
         public DateTime Created { get; set; }
+        public List<string> Languages { get; set; }
+        public List<string> Territory { get; set; }
 
         public StaffDTO()
         {
@@ -88,11 +93,29 @@ namespace TickettingSystem.Api.DTO
                 StreetNumber = staffDetails.Housenumber,
                 Name = staffDetails.Firstname + " "+ staffDetails.Surname,
                 Surname = staffDetails.Surname,
+                StaffUserId = staffDetails.Staffuserid,
             };
 
             result.HiredBy = "Human Rsource Mgr"; // _staffService.GetManagerById(staffDetails.Departmentid.Value);
             result.Department = _staffService.GetDepartmentById(staffDetails.Departmentid.Value);
             result.Manager = _staffService.GetManagerById(staffDetails.Departmentid.Value);
+            var languages = _staffService.GetStaffLanguages(staffDetails.Staffuserid);
+            var stfTerritory = _staffService.GetStaffTerritory(staffDetails.Staffuserid);
+            var strList = new List<string>();
+            var stfTerritoryList = new List<string>();
+            foreach (var lang in languages)
+            {
+                var lan = _staffService.GetLanguageById((int)lang.Languageid);
+                strList.Add(lan);
+            }
+
+            foreach (var stf in stfTerritory)
+            {
+                var territry = _staffService.GetTerritoryById((int)stf.Territory);
+                stfTerritoryList.Add(territry);
+            }
+            result.Languages = strList;
+            result.Territory = stfTerritoryList;
 
             return result;
         }
@@ -117,9 +140,10 @@ namespace TickettingSystem.Api.DTO
                 Firstname = staffDetails.Name,
                 Surname = staffDetails.Surname, 
                 DtModified = DateTime.Now, 
-                Phonenumber = "123456789"
+                Phonenumber = "12722224333"
             };
 
+            //result.HiredOn = staffDetails.HiredOn;
             result.Hiredbyid = _staffService.GetHiredByIdFromDepartmentName(staffDetails.Department);
             result.Departmentid = _staffService.GetDepartmentIdFromName(staffDetails.Department);
             return result;

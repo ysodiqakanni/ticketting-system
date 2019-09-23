@@ -159,15 +159,32 @@ namespace TickettingSystem.Services.Implementations
 
         public async Task<StaffDetails> UpdateStaff(int value, StaffDetails staff)
         {
-            var staffUpdate = await uow.StaffRepository.FindAsync(x => x.Staffuserid == staff.Staffuserid);
+            /*
+            * Update ONLY::: Name: $("#txtStaffName").val(),
+           //Surname: $("#txtStaffSurname").val(),
+           //Department: $("#txtStaffDepartment").val(),
+           //Manager: $("#txtStaffManager").val(),
+           //StreetNumber: $("#txtStaffStreetNumber").val(),
+           //HiredBy: $("#txtStaffHiredBy").val(),
+           //Nationality: $("#txtStaffNationality").val()
+
+            */
+            //var staffModify = 
+            var staffUpdate = await uow.StaffRepository.FindAsync(x => x.Id == value);
             if (staffUpdate == null)
                 throw new Exception("Record not found!");
+            staffUpdate.Firstname = staff.Firstname;
+            staffUpdate.Surname = staff.Surname;
+
             staffUpdate.Housenumber = staff.Housenumber;
             staffUpdate.Streetname1 = staff.Streetname1;
-            staffUpdate.Streetname2 = staff.Streetname2;
-            staffUpdate.Streetname3 = staff.Streetname3;
+            //staffUpdate.Streetname2 = staff.Streetname2;
+            //staffUpdate.Streetname3 = staff.Streetname3;
             staffUpdate.Country = staff.Country;
             staffUpdate.Dob = staff.Dob;
+            staffUpdate.Departmentid = staff.Departmentid;
+            staffUpdate.Hiredbyid = staff.Hiredbyid;
+            staffUpdate.Country = staff.Country;
 
             uow.Save();
             return staffUpdate;
@@ -187,6 +204,51 @@ namespace TickettingSystem.Services.Implementations
             return HiredById;
         }
 
+        public int GetLanguageIdByName(string language)
+        {
+            var langId = uow.LanguageRepository.Find(x => x.Language.ToLower().Equals(language.ToLower())).FirstOrDefault().Id;
+            return langId;
+        }
+
+        public int GetTerritoryByName(string territory)
+        {
+            var territoryId = uow.TerritoriesRepository.Find(x => x.TerritoryName.ToLower().Equals(territory.ToLower())).FirstOrDefault().Id;
+            return territoryId;
+        }
+
+        public void PostStaffLanguage(List<StaffLanguages> stLang=null)
+        {
+            uow.StaffLanguageRepository.AddRange(stLang);
+            uow.Save();
+        }
+
+        public void PostStaffTerritory(List<StaffTerritory> stTerritory=null)
+        {
+            uow.StaffTerritoryRepository.AddRange(stTerritory);
+            uow.Save();
+        }
+
+        public string GetLanguageById(int id)
+        {
+            return uow.LanguageRepository.Get(id).Language;
+        }
+
+        public string GetTerritoryById(int territoryId)
+        {
+            return uow.TerritoriesRepository.Find(x => x.Id == territoryId).FirstOrDefault().TerritoryName;
+        }
+
+        public List<StaffLanguages> GetStaffLanguages(string staffId)
+        {
+            var staffLanguages = uow.StaffLanguageRepository.Find(x => x.Staffuserid.Equals(staffId));
+            return staffLanguages.ToList();
+        }
+
+        public List<StaffTerritory> GetStaffTerritory(string staffId)
+        {
+            var staffTerritory = uow.StaffTerritoryRepository.Find(x => x.Staffuserid.Equals(staffId));
+            return staffTerritory.ToList();
+        }
     }
 }
  
