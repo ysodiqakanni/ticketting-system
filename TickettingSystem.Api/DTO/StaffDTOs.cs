@@ -140,9 +140,9 @@ namespace TickettingSystem.Api.DTO
                 Firstname = staffDetails.Name,
                 Surname = staffDetails.Surname, 
                 DtModified = DateTime.Now, 
-                Phonenumber = "12722224333"
+                
             };
-
+            //Phonenumber = "127222624333"
             //result.HiredOn = staffDetails.HiredOn;
             result.Hiredbyid = _staffService.GetHiredByIdFromDepartmentName(staffDetails.Department);
             result.Departmentid = _staffService.GetDepartmentIdFromName(staffDetails.Department);

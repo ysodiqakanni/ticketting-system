@@ -141,20 +141,32 @@ namespace TickettingSystem.Api.Controllers
             var staffNew = await _staffService.CreateStaff(staff);
             if (staffNew != null)
             {
-                if (staffModel.Languages?.Count() > 0 || staffModel.Territory?.Count() > 0)
+                if (staffModel.Languages != null && staffModel.Languages.Any())
                 {
                     var staffLan = await StaffHelperMethod.ProcessStaffLanguage(staffModel, _staffService);
-                    var staffTerritry = await StaffHelperMethod.ProcessStaffTerritory(staffModel, _staffService);
                     try
                     {
-                        _staffService.PostStaffTerritory(staffTerritry);
                         _staffService.PostStaffLanguage(staffLan);
+                        
                     }
                     catch (Exception)
                     {
                         throw new Exception("an error occured while persisting your data to the database");
                     }
                 }
+                if (staffModel.Territory != null && staffModel.Territory.Any())
+                {
+                    var staffTerritry = await StaffHelperMethod.ProcessStaffTerritory(staffModel, _staffService);
+                    try
+                    {
+                        _staffService.PostStaffTerritory(staffTerritry);
+                    }
+                    catch (Exception)
+                    {
+                        throw new Exception("an error occured while persisting your data to the database");
+                    }
+                }
+
                 var resp = StaffMapper.MapStaffDetailsToDto(staffNew, _staffService);
                
                 return Ok(resp);
@@ -162,7 +174,7 @@ namespace TickettingSystem.Api.Controllers
             return Ok(staffNew);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{value}")]
         public async Task<IActionResult> UpdateStaff(int value, [FromBody] StaffDTO staffModel)
         {
             /*
@@ -186,22 +198,30 @@ namespace TickettingSystem.Api.Controllers
                     var staffTerritry = await StaffHelperMethod.ProcessStaffTerritory(staffModel, _staffService);
                     try
                     {
-                        foreach (var item in staffLan.ToList())
+                        if (staffLan != null)
                         {
-                            if (_staffService.GetStaffLanguages(staffModel.StaffUserId).Any(x => x.Languageid == item.Languageid))
+                            foreach (var item in staffLan.ToList())
                             {
-                                staffLan.Remove(item);
+                                if (_staffService.GetStaffLanguages(staffModel.StaffUserId).Any(x => x.Languageid == item.Languageid))
+                                {
+                                    staffLan.Remove(item);
+                                }
                             }
+                            _staffService.PostStaffLanguage(staffLan);
                         }
-                        foreach (var item in staffTerritry.ToList())
+                        
+                        if (staffTerritry != null)
                         {
-                            if (_staffService.GetStaffTerritory(staffModel.StaffUserId).Any(x => x.Territory == item.Territory))
+                            foreach (var item in staffTerritry.ToList())
                             {
-                                staffTerritry.Remove(item);
+                                if (_staffService.GetStaffTerritory(staffModel.StaffUserId).Any(x => x.Territory == item.Territory))
+                                {
+                                    staffTerritry.Remove(item);
+                                }
                             }
+                            _staffService.PostStaffTerritory(staffTerritry);
                         }
-                        _staffService.PostStaffTerritory(staffTerritry);
-                        _staffService.PostStaffLanguage(staffLan);
+                       
                     }
                     catch (Exception)
                     {

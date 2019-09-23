@@ -133,14 +133,30 @@ namespace TickettingSystem.ApiHelper
             } 
         }
 
-        public static Task CreateNewStaff(StaffDTO staff)
+        public static async Task<StaffDTO> CreateNewStaff(StaffDTO staff)
         {
-            return Task.Run(() => { });
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(staff), Encoding.UTF8, "application/json");
+                HttpResponseMessage msg = await client.PostAsync("staff", httpContent);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<StaffDTO>();
+                return responseBody;
+            }
         }
 
-        public static Task UpdateStaff(int value, StaffDTO staff)
+        public static async Task<StaffDTO> UpdateStaff(int value, StaffDTO staff)
         {
-            return Task.Run(() => { });
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiBaseUrl);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(staff), Encoding.UTF8, "application/json");
+                HttpResponseMessage msg = await client.PutAsync("staff/${value}", httpContent);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<StaffDTO>();
+                return responseBody;
+            }
         }
 
         public static async Task<LoginViewModel> Authenticate(LoginViewModel model)

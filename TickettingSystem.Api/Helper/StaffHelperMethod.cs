@@ -15,7 +15,7 @@ namespace TickettingSystem.Api.Helper
         {
             _staffService = staffService;
             var staffLangList = new List<StaffLanguages>();
-
+            if (staffModel.Languages == null) return null;
             foreach (var lang in staffModel.Languages)
             {
                 var langId = _staffService.GetLanguageIdByName(lang);
@@ -35,7 +35,7 @@ namespace TickettingSystem.Api.Helper
         {
             _staffService = staffService;
             var staffTerritory = new List<StaffTerritory>();
-
+            if (staffModel.Territory == null) return null;
             foreach (var territory in staffModel.Territory)
             {
                 var territoryId = _staffService.GetTerritoryByName(territory);
