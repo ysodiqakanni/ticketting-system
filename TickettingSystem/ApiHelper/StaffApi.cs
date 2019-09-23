@@ -138,7 +138,7 @@ namespace TickettingSystem.ApiHelper
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
                 var httpContent = new StringContent(JsonConvert.SerializeObject(staff), Encoding.UTF8, "application/json");
                 HttpResponseMessage msg = await client.PostAsync("staff", httpContent);
                 msg.EnsureSuccessStatusCode();
@@ -151,7 +151,7 @@ namespace TickettingSystem.ApiHelper
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
                 var httpContent = new StringContent(JsonConvert.SerializeObject(staff), Encoding.UTF8, "application/json");
                 HttpResponseMessage msg = await client.PutAsync("staff/${value}", httpContent);
                 msg.EnsureSuccessStatusCode();
