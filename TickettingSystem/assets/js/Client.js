@@ -218,7 +218,8 @@ $(document).on("click", ".clientDataRow", function () {
     })
 
     $(document).on("dblclick", ".tradeDataRow", function () {
-        var id = $(this).find('td:first').html();
+        // var id = $(this).find('td:first').html();
+        var id = $($(this).find('td:last').html()).val();
         var table = document.getElementById("tbTradeSearchResult");
 
 
@@ -243,14 +244,18 @@ $(document).on("click", ".clientDataRow", function () {
                     tabCell2.innerHTML = trade.exchange;
                     var tabCell3 = tr.insertCell(-1);
                     tabCell3.innerHTML = trade.operation;
+
                     var tabCell4 = tr.insertCell(-1);
-                    tabCell4.innerHTML = tabCell3.innerHTML = "$" + trade.price;
+                    tabCell4.innerHTML = trade.currencyPair;
 
                     var tabCell5 = tr.insertCell(-1);
-                    tabCell5.innerHTML = trade.arbitrage;
+                    tabCell5.innerHTML = tabCell3.innerHTML = "$" + trade.price;
 
                     var tabCell6 = tr.insertCell(-1);
-                    tabCell6.innerHTML = trade.social;
+                    tabCell6.innerHTML = trade.arbitrage; 
+
+                    var tabCell7 = tr.insertCell(-1);
+                    tabCell7.innerHTML = trade.social;
                 }
                 else {
                     alert('error fetching trade data!');

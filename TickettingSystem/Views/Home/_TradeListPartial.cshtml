@@ -6,7 +6,9 @@
         <th>Date time</th>
         <th>Exchange</th>
         <th>Operation</th>
+        <th>Currency Pair</th>
         <th class="round-2">Price</th>
+        <th></th>
     </tr>
     @if (Model.Trades.Count < 1)
     {
@@ -16,14 +18,15 @@
     {
         foreach (var trade in Model.Trades)
         {
-            <tr class="tradeDataRow">
-                <td>@trade.UserId</td>
-                <td>@trade.CreatedOn.ToString("MM/dd/yyyy")</td>
-                <td>@trade.Exchange</td>
-                <td>@trade.Operation</td>
-                <td>$@trade.Price</td>
-
-            </tr>
+        <tr class="tradeDataRow">
+            <td>@trade.UserId</td>
+            <td>@trade.CreatedOn.ToString("MM/dd/yyyy")</td>
+            <td>@trade.Exchange</td>
+            <td>@trade.Operation</td>
+            <td>@trade.CurrencyPair</td>
+            <td>$@trade.Price</td>
+            <td><input type="hidden" value="@trade.ID" /></td>
+        </tr>
         }
     }
 
