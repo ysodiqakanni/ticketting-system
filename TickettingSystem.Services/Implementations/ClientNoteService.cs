@@ -6,6 +6,7 @@ using TickettingSystem.Core;
 using TickettingSystem.Data.Contracts;
 using TickettingSystem.Data.DbModel;
 using TickettingSystem.Services.Contracts;
+using System.Linq;
 
 namespace TickettingSystem.Services.Implementations
 {
@@ -35,6 +36,11 @@ namespace TickettingSystem.Services.Implementations
         public async Task<IList<UserNotes>> GetNotes()
         {
             return await uow.ClientNoteRepository.GetAllAsync();
+        }
+
+        public async Task<IList<UserNotes>> GetNotesByClientId(int id)
+        {
+            return uow.ClientNoteRepository.QueryAll().Where(n => n.Userid == id.ToString()).ToList(); 
         }
     }
 }

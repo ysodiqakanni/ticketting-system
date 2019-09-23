@@ -1,6 +1,6 @@
 ﻿@model TickettingSystem.Models.DashboardViewModel
 
-@foreach (var note in Model.Notes)
+@foreach (var note in Model.NotesForSelectedClient)
 {
     <p data-toggle="popover" data-placement="top" data-content="@Html.Raw(note.Note)">@note.ShortNote</p>
 }

@@ -99,6 +99,20 @@ namespace TickettingSystem.ApiHelper
                 return responseBody;
             }
         }
+        public async Task<List<NoteListViewModel>> GetNotesByClientId(int id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("clients/notes/" + id);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<NoteListViewModel>>();
+
+                return responseBody;
+            }
+        }
+
     }
 
 }

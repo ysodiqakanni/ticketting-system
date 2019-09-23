@@ -68,6 +68,7 @@ $("#btnSearchTrades").on("click", function () {
 })
 $("#btnCancelClientSearch").on("click", function () {
     $("#txtSearchClients").val("");
+    $("#clientTableDiv").html("");
     const anyUnsavedChanges = true;
     if (anyUnsavedChanges) {
         if (confirm("Are You Sure That You Want to Abandon Changes?")) {
@@ -117,10 +118,10 @@ $("#btnUpdateClient").on("click", function () {
             StreetName3: $("#txtClientAddressLine4").val(),
             Nationality: $("#txtClientNationailty").val(),
             Language: $("#txtClientLanguage").val(),
-            DateOfBirth: $("#txtClientDOB").val()
+            Dob: $("#txtClientDOB").val()
         };
         // validate inputs
-        if (!clientData.HouseNumber || !clientData.Nationality || !clientData.Language || !clientData.DateOfBirth) {
+        if (!clientData.HouseNumber || !clientData.Nationality || !clientData.Language || !clientData.Dob) {
             alert("Fill in all required fields");
             return;
         }
@@ -183,6 +184,8 @@ $(document).on("click", ".clientDataRow", function () {
                 document.getElementById("txtClientDOB").valueAsDate = new Date(client.dateOfBirth);
                 document.getElementById("txtClientJoinedOn").valueAsDate = new Date(client.joinedDate);
                 document.getElementById("txtClientDate").valueAsDate = new Date();
+
+                loadClientNotes(id);
             }
             else {
                 alert(response.msg);
@@ -202,34 +205,7 @@ $(document).on("click", ".clientDataRow", function () {
         success: function (response) {
             if (response) {
 
-                $("#tblTrades").html(response)
-
-
-                //var searchResult = response.msg.result;
-                //var table = document.getElementById("tblTrades");  // tbTradeSearchResult
-                //for (var i = 2; i < table.rows.length; i++) {
-                //    table.deleteRow(i - 1);
-                //}
-                //$("#srchUserId").val(id);
-                //for (var i = 0; i < searchResult.length; i++) {
-                //    var tr = table.insertRow(-1); 
-                //    var tabCell1 = tr.insertCell(-1);
-                //    var date = new Date(searchResult[i].createdOn);
-
-                //    tabCell1.innerHTML = searchResult[i].userId; // date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-
-                //    var tabCell2 = tr.insertCell(-1);
-                //    tabCell2.innerHTML = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();//  searchResult[i].exchange;
-                //    var tabCell3 = tr.insertCell(-1);
-                //    tabCell3.innerHTML = searchResult[i].exchange;
-                //    var tabCell4 = tr.insertCell(-1);
-                //    tabCell4.innerHTML = searchResult[i].operation;
-                //    var tabCell5 = tr.insertCell(-1);
-                //    tabCell5.innerHTML = "$" + searchResult[i].price;
-                //    //var tabCell6 = tr.insertCell(-1);
-                //    //tabCell6.innerHTML = "No";
-                //}
-
+                $("#tblTrades").html(response) 
 
             }
             else {
@@ -301,6 +277,11 @@ $(document).on("click", ".clientDataRow", function () {
 
 })
 $("#btnAddNote").on("click", function (e) {
+    var clientId = $("#hiddenClientID").val();
+    if (!clientId) {
+        alert("Not client selected!");
+        return;
+    }
     const note = $("#txtNewNote").val();
     if (!note) {
         alert("Note can not be empty!");
@@ -308,7 +289,7 @@ $("#btnAddNote").on("click", function (e) {
     }
     e.preventDefault();
 
-    var url = "/home/createNote/" + note;
+    var url = "/home/createNote/" + note + "/" + clientId;
     $.ajax({
         url: url,
         type: "GET",
@@ -320,7 +301,7 @@ $("#btnAddNote").on("click", function (e) {
                 alert(response.msg);
                 $("#txtNewNote").val("");
                 // Todo: re-render notes partial
-                loadNotes();
+                loadClientNotes(clientId);
             }
             else {
                 alert(response.msg);
@@ -632,6 +613,9 @@ function removeSelectedClientRecords() {
     $("#txtClientName").val("");
     $("#txtClientSurname").val("");
     $("#txtClientAddressLine1").val("");
+    $("#txtClientAddressLine2").val("");
+    $("#txtClientAddressLine3").val("");
+    $("#txtClientAddressLine4").val("");
     $("#txtClientNationailty").val("");
     $("#txtClientLanguage").val("");
     $("#txtClientSurname").val("");
@@ -643,6 +627,9 @@ function removeSelectedClientRecords() {
     document.getElementById("txtClientDOB").valueAsDate = new Date();
     document.getElementById("txtClientJoinedOn").valueAsDate = new Date();
     document.getElementById("txtClientDate").valueAsDate = new Date();
+
+    // clear notes
+    $("#clientNotes").html("");
 }
 
 
@@ -734,27 +721,27 @@ var searchTickets = function (s) {
     })
 }
 
-var loadNotes = function () {
-    var url = "/home/Notes";;
-    $.ajax({
-        url: url,
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response) {
-                $("#clientNotes").html(response);
-            }
-            else {
-                alert("loading error");
-            }
-        },
-        error: function () {
-            alert("An unknown error has occured");
-        },
-    })
-}
+//var loadNotes = function () {
+//    var url = "/home/Notes";;
+//    $.ajax({
+//        url: url,
+//        type: "GET",
+//        url: url,
+//        contentType: "application/json",
+//        processData: false,
+//        success: function (response) {
+//            if (response) {
+//                $("#clientNotes").html(response);
+//            }
+//            else {
+//                alert("loading error");
+//            }
+//        },
+//        error: function () {
+//            alert("An unknown error has occured");
+//        },
+//    })
+//}
 
 var connectExchange = function (el) {
     var connected = $(el).attr('data-connected');
@@ -814,6 +801,30 @@ var loadStaffNotes = function (staffId) {
         },
     })
 }
+
+var loadClientNotes = function (clientId) {
+    var url = "/home/clients/" + clientId + "/Notes";
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) {
+                $("#clientNotes").html(response);
+                $('[data-toggle="popover"]').popover();
+            }
+            else {
+                alert("loading error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+}
+
 function resetStaffForm() {
     $("#formUpdateStaff")[0].reset();
     $("#hiddenSelectedStaffID").val("");

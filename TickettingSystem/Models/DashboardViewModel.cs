@@ -12,7 +12,7 @@ namespace TickettingSystem.Models
         public List<ClientDTO> Clients { get; set; }
         public List<TradeDTO> Trades { get; set; }
 
-        public List<NoteListViewModel> Notes { get; set; }
+        public List<NoteListViewModel> NotesForSelectedClient { get; set; }
         public List<ExchangeListViewModel> Exchanges { get; set; }
 
         public Membership MembershipData { get; set; }

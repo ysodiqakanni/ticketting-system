@@ -96,5 +96,12 @@ namespace TickettingSystem.Api.Controllers
             var notes = await _clientNoteService.GetNotes();
             return Ok(notes);
         }
+
+        [HttpGet("notes/{id}")]
+        public async Task<IActionResult> GetNotesByClientId(int id)
+        {
+            var notes = await _clientNoteService.GetNotesByClientId(id); 
+            return Ok(notes);
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace TickettingSystem.Controllers
             }
             catch (Exception)
             {
-                ViewBag.Msg = "Invalid username or password";
+                ViewBag.Msg = "An error occured!";
                 return View(model);
             }
 

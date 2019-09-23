@@ -11,5 +11,6 @@ namespace TickettingSystem.Services.Contracts
     {
         Task<UserNotes> CreateNote(string notes, string userId, string createdBy, string modifiedBy);
         Task<IList<UserNotes>> GetNotes();
+        Task<IList<UserNotes>> GetNotesByClientId(int id);
     }
 }
