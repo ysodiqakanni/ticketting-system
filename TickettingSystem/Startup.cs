@@ -58,7 +58,7 @@ namespace TickettingSystem
             }
 
             app.UseHttpsRedirection();
-            //app.UseStaticFiles();
+            app.UseStaticFiles();
             // This will add "assets" as another valid static content location
             app.UseStaticFiles(new StaticFileOptions()
             {

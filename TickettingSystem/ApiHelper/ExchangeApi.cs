@@ -9,25 +9,33 @@ using System.Threading.Tasks;
 using System.Web;
 using TickettingSystem.DTOs;
 using TickettingSystem.Models;
+using TickettingSystem.Utilities;
 
 namespace TickettingSystem.ApiHelper
 {
 
-    public static class ExchangeApi
+    public class ExchangeApi
     {
-        static string apiBaseUrl = "https://localhost:5001/api/v1/";
-        public static async Task<List<ExchangeListViewModel>> GetAllKnownExchanges()
+        private readonly AppSettings _appSettings;
+
+        private string baseUrl;
+        public ExchangeApi(AppSettings appSettings)
+        {
+            _appSettings = appSettings;
+            baseUrl = _appSettings.BaseUrl;
+        } 
+        public async Task<List<ExchangeListViewModel>> GetAllKnownExchanges()
         {
             var knownExchanges = (await GetAllExchangeTypes()).Select(x => new ExchangeListViewModel { ExchangeName = x, APIsEntered = null }).ToList();
             return knownExchanges; 
              
         }
-        public static async Task<List<ExchangeListViewModel>> SearchExchangesByUserId(string id)
+        public async Task<List<ExchangeListViewModel>> SearchExchangesByUserId(string id)
         {
 
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(apiBaseUrl);
+                client.BaseAddress = new Uri(baseUrl);
 
                 HttpResponseMessage msg = await client.GetAsync("exchange/search?userId="+id);
                 msg.EnsureSuccessStatusCode();
@@ -35,7 +43,7 @@ namespace TickettingSystem.ApiHelper
                 return responseBody;
             } 
         }
-        public static Task<List<string>> GetAllExchangeTypes()  
+        public Task<List<string>> GetAllExchangeTypes()  
         {
             List<string> exchanges = new List<string>();
             exchanges.Add("CoinBase");
