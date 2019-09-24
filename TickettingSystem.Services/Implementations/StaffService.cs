@@ -157,34 +157,132 @@ namespace TickettingSystem.Services.Implementations
 
         }
 
-        public async Task<StaffDetails> UpdateStaff(int value, StaffDetails staff)
-        {
-            var staffUpdate = await uow.StaffRepository.FindAsync(x => x.Staffuserid == staff.Staffuserid);
-            if (staffUpdate == null)
-                throw new Exception("Record not found!");
-            staffUpdate.Housenumber = staff.Housenumber;
-            staffUpdate.Streetname1 = staff.Streetname1;
-            staffUpdate.Streetname2 = staff.Streetname2;
-            staffUpdate.Streetname3 = staff.Streetname3;
-            staffUpdate.Countrycode = staff.Countrycode;
-            staffUpdate.Dob = staff.Dob;
+        public async Task<StaffDetails> UpdateStaff(int value, StaffDetails staff, List<string> langIds, List<string> territoryIds)
+        { 
+            // save languages
+            if(langIds != null && langIds.Any())
+            {
+                // remove all language entries of this staff from the db
+                var staffLangs = uow.StaffLanguageRepository.Find(s => s.Staffuserid == staff.Staffuserid).ToList();
+                if(staffLangs != null && staffLangs.Any())
+                {
+                    uow.StaffLanguageRepository.RemoveRange(staffLangs);
+                }
+
+                // save new languages
+                var data = new List<StaffLanguages>();
+                foreach (var id in langIds)
+                {
+                    data.Add(new StaffLanguages
+                    {
+                        Languageid = int.Parse(id),
+                        Staffuserid = staff.Staffuserid,
+                        DtCreated = DateTime.Now,
+                        DtModified = DateTime.Now
+                    });
+                }
+                uow.StaffLanguageRepository.AddRange(data);
+            }
+
+            // save the territories
+            if (territoryIds != null && territoryIds.Any())
+            {
+                // remove all language entries of this staff from the db
+                var staffTers = uow.StaffTerritoryRepository.Find(s => s.Staffuserid == staff.Staffuserid).ToList();
+                if (staffTers != null && staffTers.Any())
+                {
+                    uow.StaffTerritoryRepository.RemoveRange(staffTers);
+                }
+
+                // save new territories
+                var data = new List<StaffTerritory>();
+                foreach (var id in territoryIds)
+                {
+                    data.Add(new StaffTerritory
+                    {
+                        Territory = int.Parse(id),
+                        Staffuserid = staff.Staffuserid,
+                        DtCreated = DateTime.Now,
+                        DtModified = DateTime.Now
+                    });
+                }
+                uow.StaffTerritoryRepository.AddRange(data);
+            }
+
 
             uow.Save();
-            return staffUpdate;
+
+            return staff;
         }
 
-        public int GetDepartmentIdFromName(string department)
+        public int? GetDepartmentIdFromName(string department)
         {
             var departId = uow.DepartmentRepository
-                .Find(x => x.DeptName.ToLower().Equals(department.ToLower())).FirstOrDefault().Id;
+                .Find(x => x.DeptName.ToLower().Equals(department.ToLower())).FirstOrDefault()?.Id;
             return departId;
         }
 
         public string GetHiredByIdFromDepartmentName(string department)
         {
             var HiredById = uow.DepartmentRepository
-                .Find(x => x.DeptName.ToLower().Equals(department.ToLower())).FirstOrDefault().DeptMgr;
+                .Find(x => x.DeptName.ToLower().Equals(department.ToLower())).FirstOrDefault()?.DeptMgr;
             return HiredById;
+        }
+
+        public int GetLanguageIdByName(string language)
+        {
+            var langId = uow.LanguageRepository.Find(x => x.Language.ToLower().Equals(language.ToLower())).FirstOrDefault().Id;
+            return langId;
+        }
+
+        public int GetTerritoryByName(string territory)
+        {
+            var territoryId = uow.TerritoriesRepository.Find(x => x.TerritoryName.ToLower().Equals(territory.ToLower())).FirstOrDefault().Id;
+            return territoryId;
+        }
+
+        public void PostStaffLanguage(List<StaffLanguages> stLang = null)
+        {
+            uow.StaffLanguageRepository.AddRange(stLang);
+            uow.Save();
+        }
+
+        public void PostStaffTerritory(List<StaffTerritory> stTerritory = null)
+        {
+            uow.StaffTerritoryRepository.AddRange(stTerritory);
+            uow.Save();
+        }
+
+        public string GetLanguageById(int id)
+        {
+            return uow.LanguageRepository.Get(id).Language;
+        }
+
+        public string GetTerritoryById(int territoryId)
+        {
+            return uow.TerritoriesRepository.Find(x => x.Id == territoryId).FirstOrDefault().TerritoryName;
+        }
+
+        public List<StaffLanguages> GetStaffLanguages(string staffId)
+        {
+            var staffLanguages = uow.StaffLanguageRepository.Find(x => x.Staffuserid.Equals(staffId));
+            return staffLanguages.ToList();
+        }
+        public List<string> GetStaffLanguageIds(string staffId)
+        { 
+            var ids = uow.StaffLanguageRepository.QueryAll().Where(x => x.Staffuserid.Equals(staffId)).Select(s => s.Languageid.ToString()).ToList();
+            return ids;
+        }
+        public List<string> GetStaffTeritoryIds(string staffId)
+        {
+            var ids = uow.StaffTerritoryRepository.Find(x => x.Staffuserid.Equals(staffId)).Select(s => s.Territory.ToString()).ToList();
+            return ids;
+        }
+
+        public List<StaffTerritory> GetStaffTerritory(string staffId)
+        {
+            var staffTerritory = uow.StaffTerritoryRepository.Find(x => x.Staffuserid.Equals(staffId));
+            return staffTerritory.ToList();
         }
 
     }

@@ -25,7 +25,7 @@ namespace TickettingSystem.DTOs
         public DateTime ResignedOn { get; set; }
         public string HiredBy { get; set; }
 
-        public string[] Teritories { get; set; }
-        public string[] Languages { get; set; }
+        public List<string> Teritories { get; set; }
+        public List<string> Languages { get; set; }
     }
 }

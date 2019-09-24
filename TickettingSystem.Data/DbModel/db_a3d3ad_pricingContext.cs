@@ -700,7 +700,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<StaffTerritory>(entity =>
             {
-                entity.HasKey(e => e.Staffuserid);
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("staff_territory", "ticketing_db");
 

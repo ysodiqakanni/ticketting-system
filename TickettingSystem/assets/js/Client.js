@@ -591,6 +591,8 @@ $(document).on("click", ".staffDataRow", function () {  // https://stackoverflow
                 document.getElementById("txtStaffFiredOnDate").valueAsDate = new Date(staff.firedOn);
                 document.getElementById("txtStaffResignedOnDate").valueAsDate = new Date(staff.firedOn);
                 document.getElementById("txtStaffDOB").valueAsDate = new Date(staff.dateOfBirth);
+                $("#teritories").val(staff.teritories);
+                $("#txtStaffLanguages").val(staff.languages);
 
                 loadStaffNotes(id);
             }
@@ -607,7 +609,7 @@ $(document).on("click", ".staffDataRow", function () {  // https://stackoverflow
 
 $("#formUpdateStaff :input").change(function () {
     if ($("#hiddenSelectedStaffID").val()) {
-        $("#btnUpdateStaff").attr("disabled", false);
+        $("#btnUpdateStaff").removeClass("disabled");
     }
 
 });
@@ -662,8 +664,17 @@ $("#btnUpdateStaff").on("click", function (e) {
         Department: $("#txtStaffDepartment").val(),
         Manager: $("#txtStaffManager").val(),
         StreetNumber: $("#txtStaffStreetNumber").val(),
+        StreetName1: $("#txtStaffStreetName1").val(),
+        StreetName2: $("#txtStaffStreetName2").val(),
+        StreetName3: $("#txtStaffStreetName3").val(),
         HiredBy: $("#txtStaffHiredBy").val(),
-        Nationality: $("#txtStaffNationality").val()
+        Nationality: $("#txtStaffNationality").val(),
+        Teritories: $("#teritories").val(),
+        Languages: $("#txtStaffLanguages").val(),
+        DateOfBirth: $("#txtStaffDOB").val(),
+        FiredOn: $("#txtStaffFiredOnDate").val(),
+        HiredOn: $("#txtStaffHiredOnDate").val(),
+        ResignedOn: $("#txtStaffResignedOnDate").val(),
     };
 
     if (!validateStaffInputFields(staff)) {

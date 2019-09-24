@@ -28,7 +28,7 @@ namespace TickettingSystem.Data.Implementations
             DepartmentRepository = new DepartmentRepository(_context);
             StaffNoteRepository = new StaffNoteRepository(_context);
             TicketNoteRepository = new TicketNoteRepository(_context);
-            //StaffLanguageRepository = new StaffLanguageRepository(_context);
+            StaffLanguageRepository = new StaffLanguageRepository(_context);
             TerritoriesRepository = new TerritoriesRepository(_context);
             StaffTerritoryRepository = new StaffTerritoryRepository(_context);
         }

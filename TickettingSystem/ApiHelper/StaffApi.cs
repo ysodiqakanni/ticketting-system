@@ -139,9 +139,15 @@ namespace TickettingSystem.ApiHelper
             return Task.Run(() => { });
         }
 
-        public static Task UpdateStaff(int value, StaffDTO staff)
+        public static async Task UpdateStaff(int value, StaffDTO staff)
         {
-            return Task.Run(() => { });
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(staff), Encoding.UTF8, "application/json");
+                HttpResponseMessage msg = await client.PutAsync("staff", httpContent);
+                msg.EnsureSuccessStatusCode();
+            }
         }
 
         public static async Task<LoginViewModel> Authenticate(LoginViewModel model)

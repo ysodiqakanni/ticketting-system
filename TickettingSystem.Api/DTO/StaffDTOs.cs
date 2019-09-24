@@ -26,9 +26,10 @@ namespace TickettingSystem.Api.DTO
         public DateTime FiredOn { get; set; }
         public DateTime ResignedOn { get; set; }
         public string HiredBy { get; set; }
+        public DateTime HiredOn { get; set; }
 
-        public string[] Teritories { get; set; }
-        public string[] Languages { get; set; }
+        public List<string> Teritories { get; set; }
+        public List<string> Languages { get; set; }
     }
 
     public class StaffDTO
@@ -54,6 +55,9 @@ namespace TickettingSystem.Api.DTO
         public DateTime ResignedOn { get; set; }
         public string HiredBy { get; set; }
         public DateTime Created { get; set; }
+
+        public List<string> Teritories { get; set; }
+        public List<string> Languages { get; set; }
 
         public StaffDTO()
         {
@@ -91,11 +95,18 @@ namespace TickettingSystem.Api.DTO
                 StreetNumber = staffDetails.Housenumber,
                 Name = staffDetails.Firstname + " "+ staffDetails.Surname,
                 Surname = staffDetails.Surname,
+               
             };
 
+            result.HiredOn = result.JoinedOn;
             result.HiredBy = staffDetails.Hiredbyid; // "Human Rsource Mgr"; // _staffService.GetManagerById(staffDetails.Departmentid.Value);
             result.Department = _staffService.GetDepartmentById(staffDetails.Departmentid.Value);
             result.Manager = _staffService.GetManagerById(staffDetails.Departmentid.Value);
+
+            // retrieve staff teritories and languages
+            result.Languages = _staffService.GetStaffLanguageIds(staffDetails.Staffuserid);
+            result.Teritories = _staffService.GetStaffTeritoryIds(staffDetails.Staffuserid);
+             
 
             return result;
         }
@@ -103,24 +114,29 @@ namespace TickettingSystem.Api.DTO
         public static StaffDetails MapDtoToStaffDetails(StaffDTO staffDetails, IStaffService staffService)
         {
             _staffService = staffService;
-            var result = new StaffDetails
+             var result = new StaffDetails
             {
-                Id = staffDetails.Id,
-                Staffuserid = staffDetails.StaffUserId,
-                City = staffDetails.City,
-                State = staffDetails.State,
-                Dob = staffDetails.DateOfBirth,
-                DtCreated = DateTime.Now,
-                Emailaddress = staffDetails.Email,
-                Firedon = staffDetails.FiredOn,
-                Streetname1 = staffDetails.StreetName1,
-                Streetname2 = staffDetails.StreetName2,
-                Streetname3 = staffDetails.StreetName3,
-                Housenumber = staffDetails.StreetNumber,
-                Firstname = staffDetails.Name,
-                Surname = staffDetails.Surname, 
+                //Id = staffDetails.Id,
+                //Staffuserid = staffDetails.StaffUserId,
+               //City = staffDetails.City,
+                //State = staffDetails.State,
+                Dob = staffDetails.DateOfBirth, //
+                //DtCreated = DateTime.Now,
+                // Emailaddress = staffDetails.Email,
+                Firedon = staffDetails.FiredOn, //
+                Streetname1 = staffDetails.StreetName1, //
+                Streetname2 = staffDetails.StreetName2, //
+                Streetname3 = staffDetails.StreetName3, //
+                Housenumber = staffDetails.StreetNumber, //
+                Firstname = staffDetails.Name,   //
+                Surname = staffDetails.Surname,  //
                 DtModified = DateTime.Now, 
-                Phonenumber = "123456789"
+                //Phonenumber = "123456789",
+                Countrycode = staffDetails.Nationality, //
+                 HiredOn = staffDetails.HiredOn, //
+               Hiredbyid = staffDetails.HiredBy, //
+               Resignedon = staffDetails.ResignedOn, //
+             
             };
 
             result.Hiredbyid = _staffService.GetHiredByIdFromDepartmentName(staffDetails.Department);
