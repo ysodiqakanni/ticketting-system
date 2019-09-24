@@ -29,7 +29,7 @@ namespace TickettingSystem.Controllers
             //Authenticate user
             // call the api to authenticate 
             string msg = "";
-
+             
             try
             {
                 var authData = await StaffApi.Authenticate(model);

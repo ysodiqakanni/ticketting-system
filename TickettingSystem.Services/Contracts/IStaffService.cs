@@ -14,7 +14,7 @@ namespace TickettingSystem.Services.Contracts
         Task<IList<StaffDetails>> GetAllStaffs();
         Task<StaffDetails> GetStaffById(int id);
         Task<IList<StaffDetails>> SearchByLastName(string lastname);
-        Task<StaffDetails> CreateStaff(StaffDetails staff);
+        Task<StaffDetails> CreateStaff(StaffDetails staff, List<string> langIds, List<string> territoryIds);
         Task<StaffDetails> UpdateStaff(int value, StaffDetails staff, List<string> langIds, List<string> territoryIds);
         Task<IList<StaffDetails>> SearchByLastNamePrefix(string prefix);
         Task<IList<StaffDetails>> SearchByLastNameSuffix(string suffix);

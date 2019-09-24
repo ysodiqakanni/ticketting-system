@@ -649,13 +649,15 @@ $("#btnAddStaffNote").on("click", function (e) {
     })
 })
 $("#btnCreateNewStaff").on("click", function (e) {
+
+    $("#btnUpdateStaff").removeClass("disabled");
     resetStaffForm();
 })
 $("#btnUpdateStaff").on("click", function (e) {
     // save or update opn
     // check input fields
     var id = $("#hiddenSelectedStaffID").val();
-    if (!id) id = "0";
+    if (!id) id = '0';
 
     let staff = {
         Id: id,
@@ -687,6 +689,10 @@ $("#btnUpdateStaff").on("click", function (e) {
 
     // reset form
     // disable update button
+    if (!id) {  // "save" operation
+        $("#btnUpdateStaff").addClass("disabled");
+    }
+   
 })
 
 
@@ -919,10 +925,13 @@ function resetStaffForm() {
     $("#hiddenSelectedStaffID").val("");
     $("#staffNotes").html("");
     document.getElementById("txtStaffHiredOnDate").valueAsDate = new Date();
+    document.getElementById("txtStaffDOB").valueAsDate = new Date();
+    document.getElementById("txtStaffFiredOnDate").valueAsDate = new Date();
+    document.getElementById("txtStaffResignedOnDate").valueAsDate = new Date();
 }
 
 function validateStaffInputFields(staff) {
-    if (staff.Nationality && staff.HiredBy) {  // check for other things
+    if (staff.Nationality && staff.HiredBy && staff.Name && staff.Surname && staff.Nationality && staff.StreetNumber && staff.DateOfBirth) {  // check for other things
         return true;
     }
     return false;

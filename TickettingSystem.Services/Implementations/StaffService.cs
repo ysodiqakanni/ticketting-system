@@ -92,9 +92,51 @@ namespace TickettingSystem.Services.Implementations
             return staff;
         }
 
-        public async Task<StaffDetails> CreateStaff(StaffDetails staff)
+        public async Task<StaffDetails> CreateStaff(StaffDetails staff, List<string> langIds, List<string> territoryIds)
         {
+            string userId = RandomString(10);  
+
+            staff.Staffuserid = userId;
             var staffD = await uow.StaffRepository.AddAsync(staff);
+
+            // save languages
+            if (langIds != null && langIds.Any())
+            {
+                // save new languages
+                var data = new List<StaffLanguages>();
+                foreach (var id in langIds)
+                {
+                    data.Add(new StaffLanguages
+                    {
+                        Languageid = int.Parse(id),
+                        Staffuserid = staff.Staffuserid,
+                        DtCreated = DateTime.Now,
+                        DtModified = DateTime.Now
+                    });
+                }
+                uow.StaffLanguageRepository.AddRange(data);
+            }
+
+            // save the territories
+            if (territoryIds != null && territoryIds.Any())
+            {
+                // save new territories
+                var data = new List<StaffTerritory>();
+                foreach (var id in territoryIds)
+                {
+                    data.Add(new StaffTerritory
+                    {
+                        Territory = int.Parse(id),
+                        Staffuserid = staff.Staffuserid,
+                        DtCreated = DateTime.Now,
+                        DtModified = DateTime.Now
+                    });
+                }
+                uow.StaffTerritoryRepository.AddRange(data);
+            }
+
+            uow.Save();
+
             return staffD;
         }
 
@@ -158,13 +200,13 @@ namespace TickettingSystem.Services.Implementations
         }
 
         public async Task<StaffDetails> UpdateStaff(int value, StaffDetails staff, List<string> langIds, List<string> territoryIds)
-        { 
+        {
             // save languages
-            if(langIds != null && langIds.Any())
+            if (langIds != null && langIds.Any())
             {
                 // remove all language entries of this staff from the db
                 var staffLangs = uow.StaffLanguageRepository.Find(s => s.Staffuserid == staff.Staffuserid).ToList();
-                if(staffLangs != null && staffLangs.Any())
+                if (staffLangs != null && staffLangs.Any())
                 {
                     uow.StaffLanguageRepository.RemoveRange(staffLangs);
                 }
@@ -269,7 +311,7 @@ namespace TickettingSystem.Services.Implementations
             return staffLanguages.ToList();
         }
         public List<string> GetStaffLanguageIds(string staffId)
-        { 
+        {
             var ids = uow.StaffLanguageRepository.QueryAll().Where(x => x.Staffuserid.Equals(staffId)).Select(s => s.Languageid.ToString()).ToList();
             return ids;
         }
@@ -285,6 +327,14 @@ namespace TickettingSystem.Services.Implementations
             return staffTerritory.ToList();
         }
 
+
+        public static string RandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
     }
 }
- 

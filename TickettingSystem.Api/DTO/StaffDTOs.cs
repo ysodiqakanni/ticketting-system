@@ -99,10 +99,12 @@ namespace TickettingSystem.Api.DTO
             };
 
             result.HiredOn = result.JoinedOn;
-            result.HiredBy = staffDetails.Hiredbyid; // "Human Rsource Mgr"; // _staffService.GetManagerById(staffDetails.Departmentid.Value);
-            result.Department = _staffService.GetDepartmentById(staffDetails.Departmentid.Value);
-            result.Manager = _staffService.GetManagerById(staffDetails.Departmentid.Value);
-
+            result.HiredBy = staffDetails.Hiredbyid;  
+            if(staffDetails.Departmentid != null)
+            {
+                result.Department = _staffService.GetDepartmentById(staffDetails.Departmentid.Value);
+                result.Manager = _staffService.GetManagerById(staffDetails.Departmentid.Value);
+            } 
             // retrieve staff teritories and languages
             result.Languages = _staffService.GetStaffLanguageIds(staffDetails.Staffuserid);
             result.Teritories = _staffService.GetStaffTeritoryIds(staffDetails.Staffuserid);
@@ -121,7 +123,7 @@ namespace TickettingSystem.Api.DTO
                //City = staffDetails.City,
                 //State = staffDetails.State,
                 Dob = staffDetails.DateOfBirth, //
-                //DtCreated = DateTime.Now,
+                DtCreated = DateTime.Now,
                 // Emailaddress = staffDetails.Email,
                 Firedon = staffDetails.FiredOn, //
                 Streetname1 = staffDetails.StreetName1, //
@@ -136,10 +138,10 @@ namespace TickettingSystem.Api.DTO
                  HiredOn = staffDetails.HiredOn, //
                Hiredbyid = staffDetails.HiredBy, //
                Resignedon = staffDetails.ResignedOn, //
-             
+           
             };
 
-            result.Hiredbyid = _staffService.GetHiredByIdFromDepartmentName(staffDetails.Department);
+            //result.Hiredbyid = _staffService.GetHiredByIdFromDepartmentName(staffDetails.Department);
             result.Departmentid = _staffService.GetDepartmentIdFromName(staffDetails.Department);
             return result;
         }

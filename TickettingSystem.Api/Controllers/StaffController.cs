@@ -131,18 +131,19 @@ namespace TickettingSystem.Api.Controllers
             return Ok(newNotes);
         }
 
-        [HttpPost("createStaff")]
+        [HttpPost]
         public async Task<IActionResult> CreateStaff([FromBody] StaffDTO staffModel)
         {
-            var staff = StaffMapper.MapDtoToStaffDetails(staffModel, _staffService);
-            var staffNew = await _staffService.CreateStaff(staff);
-            if (staffNew != null)
+            try
             {
-                var resp = new List<StaffResponseDTO>();
-                resp.Add(StaffMapper.MapStaffDetailsToDto(staffNew, _staffService));
-                return Ok(resp);
+                var staff = StaffMapper.MapDtoToStaffDetails(staffModel, _staffService);
+                var staffNew = await _staffService.CreateStaff(staff, staffModel.Languages, staffModel.Teritories);
+                return Ok(staff);
             }
-            return Ok(staffNew);
+            catch (Exception ex)
+            {
+                return BadRequest("Error saving staff!");
+            } 
         }
 
         [HttpPut]
@@ -170,20 +171,12 @@ namespace TickettingSystem.Api.Controllers
                 theStaff.HiredOn = staffModel.HiredOn;
                 theStaff.Hiredbyid = staffModel.HiredBy;
                 theStaff.Resignedon = staffModel.ResignedOn;
-                theStaff.Hiredbyid = staffModel.HiredBy; // _staffService.GetHiredByIdFromDepartmentName(staffModel.Department);
-                //theStaff.Departmentid = _staffService.GetDepartmentIdFromName(staffModel.Department);
+                theStaff.Hiredbyid = staffModel.HiredBy;  
 
                 var staffUpdated = await _staffService.UpdateStaff(0, theStaff, staffModel.Languages, staffModel.Teritories);
 
                 return Ok(staffUpdated);
-
-                //var staff = StaffMapper.MapDtoToStaffDetails(staffModel, _staffService);
-
-                //if (staffUpdated != null)
-                //{
-                //    var resp = StaffMapper.MapStaffDetailsToDto(staffUpdated, _staffService);
-                //    return Ok(resp);
-                //}
+ 
             }
             catch (Exception ex)
             {
