@@ -373,7 +373,7 @@ $("#btnAddTicketNote").on("click", function (e) {
         return;
     }
     e.preventDefault();
-
+     
     var url = "/home/ticket/" + ticketId + "/createNote/" + note;
     $.ajax({
         url: url,

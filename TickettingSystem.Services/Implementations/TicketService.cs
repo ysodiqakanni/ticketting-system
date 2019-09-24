@@ -5,6 +5,7 @@ using TickettingSystem.Data.Contracts;
 using TickettingSystem.Data.DbModel;
 using TickettingSystem.Services.Contracts;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace TickettingSystem.Services.Implementations
 {
@@ -106,6 +107,31 @@ namespace TickettingSystem.Services.Implementations
 
             uow.Save();
             return ticket;
+        }
+
+        public List<SupportTicketNotes> GetNotesByTicketId(int id)
+        {
+            return uow.TicketNoteRepository.Find(n => n.Ticketid == id).ToList();
+        }
+
+        public SupportTicketNotes CreateNewNote(int ticketId, string note, int? staffId)
+        {
+            if (ticketId < 1)
+                throw new Exception("Invalid ticket selected!");
+            if (string.IsNullOrEmpty(note))
+                throw new Exception("Note cannot be empty!");
+            var data = new SupportTicketNotes
+            {
+                DtCreated = DateTime.Now,
+                DtModified = DateTime.Now,
+                Note = note,
+                Ticketid = ticketId,
+                Createdbystaffid = staffId,
+                Modifiedbystaffid = staffId
+            };
+            uow.TicketNoteRepository.Add(data);
+            uow.Save();
+            return data;
         }
     }
 }

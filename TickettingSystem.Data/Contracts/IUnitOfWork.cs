@@ -19,7 +19,7 @@ namespace TickettingSystem.Data.Contracts
         IBaseRepository<SupportTicket> TicketRepository { get; set; }
         IBaseRepository<Departments> DepartmentRepository { get; set; }
         IBaseRepository<StaffNotes> StaffNoteRepository { get; set; }
-
+        IBaseRepository<SupportTicketNotes> TicketNoteRepository { get; set; }
 
         int Save();
     }

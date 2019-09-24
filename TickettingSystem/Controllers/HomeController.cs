@@ -323,11 +323,16 @@ namespace TickettingSystem.Controllers
         [Route("ticket/{id}/createNote/{note}")]
         public async Task<IActionResult> CreateTicketNote(int id, string note)
         {
+            string sessionStaff = HttpContext.Session.GetString("usrId_");
+            int staffid = 0;
+            if (string.IsNullOrEmpty(sessionStaff) || !int.TryParse(sessionStaff, out staffid))
+            {
+                return Json(new { success = false, msg = "You have to be logged in!" });
+            }
             if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
             try
             {
-                throw new Exception("Ed");
-                // await ticketsApi.CreateNewNote(id, note);
+                 await ticketsApi.CreateNewNote(staffid, note, id);
                 return Json(new { success = true, msg = "Note saved!" });
             }
             catch (Exception)

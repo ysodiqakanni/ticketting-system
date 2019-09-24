@@ -131,16 +131,34 @@ namespace TickettingSystem.ApiHelper
                 return responseBody;
             } 
         }
+
+        public async Task<string> CreateNewNote(int? staffId, string note, int ticketId)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                if (staffId == null) staffId = 0; 
+                client.BaseAddress = new Uri(baseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync($"tickets/{ticketId}/createnote/{staffId}/{note}");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsStringAsync();
+
+                return responseBody;
+            }
+        }
+
         public async Task<List<NoteListViewModel>> GetAllNotesForTicketClient(int ticketId)
         {
-            return new List<NoteListViewModel>()
+            using (HttpClient client = new HttpClient())
             {
-                new NoteListViewModel{Note = "So Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
-                new NoteListViewModel{Note = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
-                new NoteListViewModel{Note = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
-                new NoteListViewModel{Note = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"},
-                new NoteListViewModel{Note = "Full Notes go here. Ask me why it should go in here and I will ask you why it shouldn't. Not all issues deseve questions and not all questions deserve answers. Tainkyu"}
-            };
+                client.BaseAddress = new Uri(baseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync($"tickets/notes/{ticketId}");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<NoteListViewModel>>();
+                return responseBody;
+            }
+ 
         }
         public async Task CloseTicket(int ticketId)
         {

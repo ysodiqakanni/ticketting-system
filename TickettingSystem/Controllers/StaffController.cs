@@ -39,6 +39,7 @@ namespace TickettingSystem.Controllers
                     return View(model);
                 }
                 HttpContext.Session.SetString("JWToken", authData.Token);
+                HttpContext.Session.SetString("usrId_", authData.Id.ToString());
             }
             catch (Exception)
             {

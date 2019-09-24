@@ -27,6 +27,7 @@ namespace TickettingSystem.Data.Implementations
             TicketRepository = new TicketRepository(_context);
             DepartmentRepository = new DepartmentRepository(_context);
             StaffNoteRepository = new StaffNoteRepository(_context);
+            TicketNoteRepository = new TicketNoteRepository(_context);
         }
         public IBaseRepository<UserDetails> ClientRepository { get; set; }
         public IBaseRepository<Languages> LanguageRepository { get; set; }
@@ -39,6 +40,7 @@ namespace TickettingSystem.Data.Implementations
         public IBaseRepository<SupportTicket> TicketRepository { get; set; }
         public IBaseRepository<Departments> DepartmentRepository { get; set; }
         public IBaseRepository<StaffNotes> StaffNoteRepository { get; set; }
+        public IBaseRepository<SupportTicketNotes> TicketNoteRepository { get; set; }
 
         public void Dispose()
         {

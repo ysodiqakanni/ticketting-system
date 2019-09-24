@@ -201,6 +201,20 @@ namespace TickettingSystem.Api.Controllers
             }
         }
 
+        [HttpGet("notes/{id}")]
+        public async Task<IActionResult> GetNotesByTicketId(int id)
+        {
+            var notes =  ticketSvc.GetNotesByTicketId(id); 
+            return Ok(notes);
+        }
+
+        [HttpGet("{id}/createnote/{staffId}/{note}")]
+        public async Task<IActionResult> CreateNewNote(int id, int? staffId, string note)
+        {
+            var newNote = ticketSvc.CreateNewNote(id, note, staffId.Value);
+            return Ok(newNote);
+        }
+
         private async Task<TicketDTO> MapTicketToDto(SupportTicket ticket)
         {
             var result = new TicketDTO

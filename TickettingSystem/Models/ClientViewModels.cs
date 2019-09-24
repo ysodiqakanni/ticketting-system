@@ -52,6 +52,7 @@ namespace TickettingSystem.Models
     }
     public class NoteListViewModel
     {
+        public int ID { get; set; }
         public string Note { get; set; }
         public string ShortNote
         {

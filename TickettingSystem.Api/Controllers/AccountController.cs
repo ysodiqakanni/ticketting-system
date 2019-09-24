@@ -31,7 +31,8 @@ namespace TickettingSystem.Api.Controllers
             var response = new LoginParams
             {
                 Username = user.Staffuserid,
-                Token = token
+                Token = token,
+                Id = user.Id
             };
 
        
@@ -47,6 +48,7 @@ namespace TickettingSystem.Api.Controllers
     }
     public class LoginParams
     {
+        public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Token { get; set; }
