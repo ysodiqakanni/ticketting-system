@@ -21,5 +21,12 @@ namespace TickettingSystem.Models
         public List<TicketsListViewModel> Tickets { get; set; }
         public List<TicketConversationViewModel> TicketConversations { get; set; }
         public List<NoteListViewModel> NotesForSelectedTicketClient { get; set; }
+
+        public List<LanguageViewModel> Languages { get; set; }
+    }
+    public class LanguageViewModel
+    {
+        public int Id { get; set; }
+        public string Language { get; set; }
     }
 }

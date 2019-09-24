@@ -19,7 +19,7 @@ namespace TickettingSystem.Data.DbModel
         public string City { get; set; }
         public string State { get; set; }
         public string Country { get; set; }
-        public int? Countrycode { get; set; }
+        public string Countrycode { get; set; }
         public string Phonenumber { get; set; }
         public string Referralcode { get; set; }
         public DateTime DtCreated { get; set; }

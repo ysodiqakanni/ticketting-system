@@ -3,72 +3,10 @@ $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 });
 
+
+// CLIENT FUNCTIONS
 $("#btnSearchClients").on("click", function () {
     searchClients($("#txtSearchClients").val());
-})
-
-
-
-$("#btnSearchTrades").on("click", function () {
-    var userId = $("#srchUserId").val();
-    var dateFrom = $("#tradeFromDate").val();
-    var dateTo = $("#tradeToDate").val();
-    var exchange = $("#tradeSrExch").val();
-    var currencyPair = $("#tradeSrCurr").val();
-    if (userId == "" && dateFrom == "" && dateTo == "" && exchange == "" && currencyPair == "") {
-        alert("Atleast one field must be entered");
-        return;
-    }
-
-    var getUserId = $("#srchUserId").val();
-
-    var getToDate = !!$("#tradeToDate").val() ? new Date($("#tradeToDate").val()) : null;
-    var getFromDate = !!$("#tradeFromDate").val() ? new Date($("#tradeFromDate").val()) : null;
-    var getExchange = $("#tradeSrExch").val();
-    if (getToDate != null && getFromDate != null) {
-        if (getToDate < getFromDate) {
-            alert("to date must come after from date");
-            return;
-        }
-    }
-    var searchObject = {};
-    if (getUserId) {
-        searchObject["userId"] = getUserId;
-    }
-    if (getExchange) {
-        searchObject["exchange"] = getExchange;
-    }
-    if (getToDate) {
-        searchObject["ToDateTime"] = getToDate.toISOString();  // https://github.com/Automattic/mongoose/issues/756#issuecomment-65924767
-    }
-    if (getFromDate) {
-        searchObject["FromDateTime"] = getFromDate.toLocaleDateString();
-    }
-    if (currencyPair) {
-        searchObject["currencyCode"] = currencyPair;
-    }
-
-    var url = "/home/trades/search?" + $.param(searchObject, true);
-    $.ajax({
-        url: url,
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response) {
-
-                $("#tbTradeSearchResult").html(response);
-
-            }
-            else {
-                alert("searching error");
-            }
-        },
-        error: function () {
-            alert("An unknown error has ;occured");
-        },
-    })
 })
 $("#btnCancelClientSearch").on("click", function () {
     $("#txtSearchClients").val("");
@@ -320,6 +258,71 @@ $("#btnAddNote").on("click", function (e) {
     })
 })
 
+// TRADES FUNCTIONS
+$("#btnSearchTrades").on("click", function () {
+    var userId = $("#srchUserId").val();
+    var dateFrom = $("#tradeFromDate").val();
+    var dateTo = $("#tradeToDate").val();
+    var exchange = $("#tradeSrExch").val();
+    var currencyPair = $("#tradeSrCurr").val();
+    if (userId == "" && dateFrom == "" && dateTo == "" && exchange == "" && currencyPair == "") {
+        alert("Atleast one field must be entered");
+        return;
+    }
+
+    var getUserId = $("#srchUserId").val();
+
+    var getToDate = !!$("#tradeToDate").val() ? new Date($("#tradeToDate").val()) : null;
+    var getFromDate = !!$("#tradeFromDate").val() ? new Date($("#tradeFromDate").val()) : null;
+    var getExchange = $("#tradeSrExch").val();
+    if (getToDate != null && getFromDate != null) {
+        if (getToDate < getFromDate) {
+            alert("to date must come after from date");
+            return;
+        }
+    }
+    var searchObject = {};
+    if (getUserId) {
+        searchObject["userId"] = getUserId;
+    }
+    if (getExchange) {
+        searchObject["exchange"] = getExchange;
+    }
+    if (getToDate) {
+        searchObject["ToDateTime"] = getToDate.toISOString();  // https://github.com/Automattic/mongoose/issues/756#issuecomment-65924767
+    }
+    if (getFromDate) {
+        searchObject["FromDateTime"] = getFromDate.toLocaleDateString();
+    }
+    if (currencyPair) {
+        searchObject["currencyCode"] = currencyPair;
+    }
+
+    var url = "/home/trades/search?" + $.param(searchObject, true);
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) {
+
+                $("#tbTradeSearchResult").html(response);
+
+            }
+            else {
+                alert("searching error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has ;occured");
+        },
+    })
+})
+
+
+// EXCHANGE FUNCTIONS
 $("#btnSearchExchanges").on("click", function () {
     var userId = $("#txtUserIdForExchangeSearch").val();
     if (!userId) {
@@ -328,16 +331,221 @@ $("#btnSearchExchanges").on("click", function () {
     }
     searchExchanges(userId);
 })
-$("#btnSearchTickets").on("click", function () {
-    searchTickets($("#txtTicketSearchKeyword").val());
-})
-
 $("#btnCancelExchangeSearch").on("click", function () {
     // clear search textbox
     // refresh table
     $("#txtUserIdForExchangeSearch").val("");
     searchExchanges("");
 })
+
+
+// TICKET FUNCTIONS
+$("#btnSearchTickets").on("click", function () {
+    searchTickets($("#txtTicketSearchKeyword").val());
+})
+$("#btnCancelTicketSearch").on("click", function () {
+    $("#txtTicketSearchKeyword").val("*");
+    searchTickets("*");
+})
+$(document).on("click", ".ticketDataRow", function () {
+    var id = $(this).find('td:first').html();
+    $("#SelectedTicketId").val(id);
+    let name = ($(this).find('td')[4]).innerText;
+    $("#txtTicketAssignedTo").val(name);
+    loadTicketDetails(id);
+
+    // unable the buttons
+    $("#btnSendResponse").removeClass("disabled");
+    $("#btnCloseTicket").removeClass("disabled");
+    $("#btnUpdateTicket").removeClass("disabled");
+    $("#btnShowTicketModal").removeClass("disabled");
+})
+
+$("#btnAddTicketNote").on("click", function (e) {
+    var ticketId = $("#SelectedTicketId").val();
+    if (!ticketId) {
+        alert("No ticket selected!");
+        return;
+    }
+    const note = $("#txtNewTicketNote").val();
+    if (!note) {
+        alert("Note can not be empty!");
+        return;
+    }
+    e.preventDefault();
+
+    var url = "/home/ticket/" + ticketId + "/createNote/" + note;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                $("#txtNewTicketNote").val("");
+                // Todo: re-render notes partial
+                loadTicketDetails(ticketId);
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+})
+$("#btnCloseTicket").on("click", function () {
+    if (confirm("Are You Sure You Want to Close this Ticket?")) {
+        var id = $("#SelectedTicketId").val();
+        if (!id) {
+            alert('No ticket selected!');
+            return;
+        }
+        closeTicket(id);
+    }
+})
+$("#btnUpdateTicket").on("click", function () {
+    if (confirm("Proceed to update?")) {
+        var id = $("#SelectedTicketId").val();
+        if (!id) {
+            alert('No ticket selected!');
+            return;
+        }
+        var staffId = $("#txtTicketReAssign").val();
+        var note = "some dummy note";
+        updateTicket(id, staffId, note);
+
+        // successful update
+        // reload ticket table
+        searchTickets("*");
+        // clear the selected ticket data
+        $("#txtTicketAssignedTo").val("");
+    }
+})
+
+function closeTicket(id) {
+    var url = "/home/tickets/close/" + id;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                alert(response.msg);
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+}
+function updateTicket(id, assignedStaffId, note) {
+    var model = {
+        Id: id,
+        AssignedStaffId: assignedStaffId,
+        Note: note
+    };
+    let url = "/home/tickets/update";
+    $.ajax({
+        url: url,
+        type: "POST",
+        url: url,
+        data: JSON.stringify(model),
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                alert(response.msg);
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+}
+var searchTickets = function (s) {
+    var url = "/home/tickets/search?s=" + s;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) {
+                $("#divClientTickets").html(response);
+            }
+            else {
+                alert("loading error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+}
+function loadTicketDetails(id) {
+    var url = "/Home/tickets/" + id;
+    // populate ticket's details
+    $.ajax({
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                var notes = response.notes;
+                $("#clientTicketNotes").html("");
+                for (ind in notes) {
+                    $('#clientTicketNotes').append('<p data-toggle="popover" data-placement="top" data-content="' + notes[ind].content + '" >' + notes[ind].shortNote + '</p >')
+                }
+                $('[data-toggle="popover"]').popover();
+
+                var convos = response.convos;
+                $("#divTicketConversation").html("");
+                for (i in convos) {
+                    var d = new Date(convos[i].dateCreated)
+                    var t = d.getHours() + ":" + d.getMinutes();
+                    if (convos[i].createdByClient) {
+                        $("#divTicketConversation").append('<div class="single-comment">' +
+                            '<p class="text-danger">' + convos[i].content + '</p>' +
+                            '<p class="somoy">' + d.toDateString() + '   <span>' + t + '</span></p>' +
+                            ' </div>'
+                        )
+                    }
+                    else {
+                        $("#divTicketConversation").append('<div class="single-comment">' +
+                            '<p class="text-primary">' + convos[i].content + '</p>' +
+                            '<p class="somoy">' + d.toDateString() + '   <span>' + t + '</span></p>' +
+                            ' </div>'
+                        )
+                    }
+
+                }
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An error occured");
+        },
+    })
+}
+
+
+
+// STAFF FUNCTIONS
 $("#btnSearchStaff").on("click", function () {
     var keyword = $("#txtStaffSearchKeyword").val();
     if (!keyword) {
@@ -352,11 +560,6 @@ $("#btnCancelStaffSearch").on("click", function () {
 $("#btnCancelStaffSearch").on("click", function () {
     $("#txtStaffSearchKeyword").val("*");
     searchStaff("*");
-})
-
-$("#btnCancelTicketSearch").on("click", function () {
-    $("#txtTicketSearchKeyword").val("*");
-    searchTickets("*");
 })
 
 //$(".staffDataRow").live("click", function () {  
@@ -474,47 +677,7 @@ $("#btnUpdateStaff").on("click", function (e) {
     // disable update button
 })
 
-$(document).on("click", ".ticketDataRow", function () {
-    var id = $(this).find('td:first').html();
-    $("#SelectedTicketId").val(id);
-    loadTicketDetails(id);
-})
 
-$("#btnAddTicketNote").on("click", function (e) {
-    var ticketId = $("#SelectedTicketId").val();
-    if (!ticketId) {
-        alert("No ticket selected!");
-        return;
-    }
-    const note = $("#txtNewTicketNote").val();
-    if (!note) {
-        alert("Note can not be empty!");
-        return;
-    }
-    e.preventDefault();
-
-    var url = "/home/ticket/" + ticketId + "/createNote/" + note;
-    $.ajax({
-        url: url,
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response.success) { 
-                $("#txtNewTicketNote").val("");
-                // Todo: re-render notes partial
-                loadTicketDetails(ticketId);
-            }
-            else {
-                alert(response.msg);
-            }
-        },
-        error: function () {
-            alert("An unknown error has occured");
-        },
-    })
-})
 
 $("#btnTradesCancel").on("click", function () {
     if (confirm("Are You Sure You Want to Clear inputs?")) {
@@ -523,77 +686,7 @@ $("#btnTradesCancel").on("click", function () {
 })
 
 
-$("#btnCloseTicket").on("click", function () {
-    if (confirm("Are You Sure You Want to Close this Ticket?")) {
-        var id = $("#SelectedTicketId").val();
-        if (!id) {
-            alert('No ticket selected!');
-            return;
-        }
-        closeTicket(id);
-    }
-})
-$("#btnUpdateTicket").on("click", function () {
-    if (confirm("Proceed to update?")) {
-        var id = $("#SelectedTicketId").val();
-        if (!id) {
-            alert('No ticket selected!');
-            return;
-        }
-        var staffId = $("#txtTicketReAssign").val();
-        var note = "some dummy note";
-        updateTicket(id, staffId, note);
-    }
-})
 
-function closeTicket(id) {
-    var url = "/home/tickets/close/" + id;
-    $.ajax({
-        url: url,
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response.success) {
-                alert(response.msg); 
-            }
-            else {
-                alert(response.msg);
-            }
-        },
-        error: function () {
-            alert("An unknown error has occured");
-        },
-    })
-}
-function updateTicket(id, assignedStaffId, note) {
-    var model = {
-        Id: id,
-        AssignedStaffId: assignedStaffId,
-        Note: note
-    };
-    let url = "/home/tickets/update";
-    $.ajax({
-        url: url,
-        type: "POST",
-        url: url,
-        data: JSON.stringify(model),
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response.success) {
-                alert(response.msg);
-            }
-            else {
-                alert(response.msg);
-            }
-        },
-        error: function () {
-            alert("An unknown error has occured");
-        },
-    })
-}
 
 function ajaxGet(url, callBackFunction) {
     
@@ -694,27 +787,6 @@ var searchMemberships = function (userId) {
         success: function (response) {
             if (response) {
                 $("#custom-tab-5").html(response);
-            }
-            else {
-                alert("loading error");
-            }
-        },
-        error: function () {
-            alert("An unknown error has occured");
-        },
-    })
-}
-var searchTickets = function (s) {
-    var url = "/home/tickets/search?s=" + s;
-    $.ajax({
-        url: url,
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response) {
-                $("#divClientTickets").html(response);
             }
             else {
                 alert("loading error");
@@ -875,51 +947,3 @@ function saveOrUpdateStaff(staff) {
     })
 }
 
-function loadTicketDetails(id) {
-    var url = "/Home/tickets/" + id;
-    // populate ticket's details
-    $.ajax({
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response.success) {
-                var notes = response.notes;
-                $("#clientTicketNotes").html("");
-                for (ind in notes) {
-                    $('#clientTicketNotes').append('<p data-toggle="popover" data-placement="top" data-content="' + notes[ind].content + '" >' + notes[ind].shortNote + '</p >')
-                }
-                $('[data-toggle="popover"]').popover();
-
-                var convos = response.convos;
-                $("#divTicketConversation").html("");
-                for (i in convos) {
-                    var d = new Date(convos[i].dateCreated)
-                    var t = d.getHours() + ":" + d.getMinutes();
-                    if (convos[i].createdByClient) {
-                        $("#divTicketConversation").append('<div class="single-comment">' +
-                            '<p class="text-danger">' + convos[i].content + '</p>' +
-                            '<p class="somoy">' + d.toDateString() + '   <span>' + t + '</span></p>' +
-                            ' </div>'
-                        )
-                    }
-                    else {
-                        $("#divTicketConversation").append('<div class="single-comment">' +
-                            '<p class="text-primary">' + convos[i].content + '</p>' +
-                            '<p class="somoy">' + d.toDateString() + '   <span>' + t + '</span></p>' +
-                            ' </div>'
-                        )
-                    }
-
-                }
-            }
-            else {
-                alert(response.msg);
-            }
-        },
-        error: function () {
-            alert("An error occured");
-        },
-    })
-}

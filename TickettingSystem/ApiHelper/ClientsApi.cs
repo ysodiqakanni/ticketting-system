@@ -113,6 +113,20 @@ namespace TickettingSystem.ApiHelper
             }
         }
 
+        public async Task<List<LanguageViewModel>> GetAllLanguages()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("clients/languages");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<LanguageViewModel>>();
+
+                return responseBody;
+            }
+        }
+
     }
 
 }

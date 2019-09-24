@@ -326,7 +326,13 @@
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Language</label>
-                                                            <input type="text" id="txtClientLanguage">
+                                                            @*<input type="text" id="txtClientLanguage">*@
+                                                            <select id="txtClientLanguage" style="width:200px">
+                                                                @foreach(var lang in Model.Languages)
+                                                                {
+                                                                    <option value="@lang.Id">@lang.Language</option>
+                                                                }
+                                                                </select>
                                                         </div>
                                                     </div>
 
@@ -517,7 +523,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <div id="custom-tab-4" class="tab-pane fade"> 
+                            <div id="custom-tab-4" class="tab-pane fade">
                                 <div id="divClientExchanges" class="data-table-section">
 
                                     @{await Html.RenderPartialAsync("_ExchangeListPartial", Model);}
@@ -567,7 +573,7 @@
                                                     </div>
 
                                                     @*<a href="" class="note-btn">+ Add New Note</a>*@
-                                                    <a href="#" class="note-btn" data-toggle="modal" data-target="#addTicketNoteModal">+ Add New Note</a>
+                                                    <a href="#" id="btnShowTicketModal" class="note-btn disabled" data-toggle="modal" data-target="#addTicketNoteModal">+ Add New Note</a> 
                                                 </div>
 
                                                 <!-- Add Notes Modal -->
@@ -602,17 +608,17 @@
                                                 <div class="ticket-assign">
                                                     <div class="single-form-opt tck">
                                                         <label for="level">Assigned to</label>
-                                                        <input type="text" value="Asigned staff"/>
+                                                        <input id="txtTicketAssignedTo" type="text" readonly />
                                                         @*<select id="txtTicketAssignedTo" name="txtTicketAssignedTo">
-                                                            @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
-                                                            {
-                                                                <option value="@staff.Id">@staff.Name</option>
-                                                            }
-                                                        </select>*@
+                                                                @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
+                                                                {
+                                                                    <option value="@staff.Id">@staff.Name</option>
+                                                                }
+                                                            </select>*@
                                                     </div>
                                                     <div class="single-form-opt tck">
                                                         <label for="date">Re-Assign</label>
-                                                      
+
                                                         <select id="txtTicketReAssign" name="txtTicketReAssign">
                                                             @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
                                                             {
@@ -628,9 +634,12 @@
                                             <div class="col-md-6">
 
                                                 <div class="custom-ticket-btn">
-                                                    <a href="#" id="btnSendResponse"  class="btn response-btn">Send Response</a>
-                                                    <a href="#" id="btnCloseTicket"  class="btn close-btn">Close Ticket</a>
-                                                    <a href="#" id="btnUpdateTicket" class="btn update-btn">Update</a>
+                                                    <a href="#" id="btnSendResponse" class="btn response-btn disabled">Send Response</a>
+                                                                                                    <a href="#" id="btnCloseTicket" class="btn close-btn disabled">Close Ticket</a>
+                                                        <a href="#" id="btnUpdateTicket" class="btn update-btn disabled">Update</a>
+                                                    @*<input type="button" id="btnSendResponse" class="btn response-btn btn-success" value="Send Response" disabled />
+                                                    <input type="button" id="btnCloseTicket" class="btn close-btn btn-danger" value="Close Ticket" disabled />
+                                                    <input type="button" id="btnUpdateTicket" class="btn update-btn btn-primary" value="Update" disabled />*@
                                                 </div>
                                             </div>
                                         </div>
@@ -877,8 +886,8 @@
                                                         </div>
                                                         <div class="finally-btn">
                                                             <a href="#" id="btnCreateNewStaff" style="background: #55C1FF;" class="reset-btn btn">New</a>
-                                                            @*<a href="#" id="btnUpdateStaff" style="background: #6FCF97;" class="update-btn btn" disabled>Update</a>*@
-                                                            <input type="button" style="background: #6FCF97;" class="update-btn btn" disabled value="Update" />
+                                                            <a href="#" id="btnUpdateStaff" style="background: #6FCF97;" class="update-btn btn disabled">Update</a>
+                                                            @*<input type="button" style="background: #6FCF97;" class="update-btn btn" disabled value="Update" /*@>
                                                         </div>
                                                     </div>
                                                 </div>

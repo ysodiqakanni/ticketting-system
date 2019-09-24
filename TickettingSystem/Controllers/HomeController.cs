@@ -60,6 +60,7 @@ namespace TickettingSystem.Controllers
             model.Tickets = await ticketsApi.GetLastTenTickets();
             model.TicketConversations = new List<TicketConversationViewModel>();
             model.NotesForSelectedTicketClient = new List<NoteListViewModel>();
+            model.Languages = await clientApi.GetAllLanguages();
 
             return View(model);
         }
@@ -225,8 +226,8 @@ namespace TickettingSystem.Controllers
         [Route("tickets/search/{s?}")]
         public async Task<PartialViewResult> SearchTickets(string s)
         {
-            // process the search keywords
-            // by date, client name or client id
+            if (string.IsNullOrEmpty(s))
+                s = "*";  // return all tickets
 
             var result = new List<TicketsListViewModel>();
             // search by 
@@ -317,6 +318,32 @@ namespace TickettingSystem.Controllers
                 }
             }
             return Json(new { success = false, msg = "Fill in all required fields" });
+        }
+
+        [Route("ticket/{id}/createNote/{note}")]
+        public async Task<IActionResult> CreateTicketNote(int id, string note)
+        {
+            if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
+            try
+            {
+                throw new Exception("Ed");
+                // await ticketsApi.CreateNewNote(id, note);
+                return Json(new { success = true, msg = "Note saved!" });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false, msg = "Error creating note!" });
+            }
+        }
+
+        [Route("tickets/{id}")]
+        public async Task<IActionResult> GetTicketDataById(int? id)
+        {
+            if (id == null) throw new ArgumentNullException("Invalid request sent!");
+
+            var convos = await ticketsApi.GetTicketConversations(id.Value);
+            var notes = await ticketsApi.GetAllNotesForTicketClient(id.Value);
+            return Json(new { success = true, notes = notes, convos = convos });
         }
 
         private string GetTicketSearchTypeAndValue(string s)
@@ -460,15 +487,7 @@ namespace TickettingSystem.Controllers
             }
         }
 
-        [Route("tickets/{id}")]
-        public async Task<IActionResult> GetTicketDataById(int? id)
-        {
-            if (id == null) throw new ArgumentNullException("Invalid request sent!");
-
-            var convos = await ticketsApi.GetTicketConversations(id.Value);
-            var notes = await ticketsApi.GetAllNotesForTicketClient(id.Value);
-            return Json(new { success = true, notes = notes, convos = convos });
-        }
+     
 
 
         [Route("")]

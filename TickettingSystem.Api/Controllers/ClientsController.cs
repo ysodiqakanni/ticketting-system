@@ -77,8 +77,19 @@ namespace TickettingSystem.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateClient(UserDetails client)
+        public async Task<IActionResult> UpdateClient(ClientUpdateDTO dto)
         {
+            var client = new UserDetails
+            {
+                Id = dto.ID,
+                Countrycode = dto.Nationality,
+                Languageid = int.Parse(dto.Language),
+                Dob = dto.Dob,
+                Housenumber = dto.HouseNumber,
+                Streetname1 = dto.StreetName1,
+                Streetname2 = dto.StreetName2,
+                Streetname3 = dto.StreetName3
+            };
             var result = await _clientService.UpdateClient(client);
             return Ok(result);
         }
@@ -102,6 +113,13 @@ namespace TickettingSystem.Api.Controllers
         {
             var notes = await _clientNoteService.GetNotesByClientId(id); 
             return Ok(notes);
+        }
+
+        [HttpGet("languages")]
+        public async Task<IActionResult> GetAllLanguages()
+        {
+            var languages =  _clientService.GetAllLanguages();
+            return Ok(languages);
         }
     }
 }
