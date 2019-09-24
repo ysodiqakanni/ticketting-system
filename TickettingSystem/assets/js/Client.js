@@ -586,6 +586,7 @@ $(document).on("click", ".staffDataRow", function () {  // https://stackoverflow
                 $("#txtStaffManager").val(staff.manager);
                 $("#txtStaffDepartment").val(staff.department);
                 $("#txtStaffHiredBy").val(staff.hiredBy);
+                $("#txtStaffNationality").val(staff.nationality);
                 document.getElementById("txtStaffHiredOnDate").valueAsDate = new Date(staff.hiredOn);
                 document.getElementById("txtStaffFiredOnDate").valueAsDate = new Date(staff.firedOn);
                 document.getElementById("txtStaffResignedOnDate").valueAsDate = new Date(staff.firedOn);

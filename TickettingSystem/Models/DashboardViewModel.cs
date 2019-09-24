@@ -23,10 +23,17 @@ namespace TickettingSystem.Models
         public List<NoteListViewModel> NotesForSelectedTicketClient { get; set; }
 
         public List<LanguageViewModel> Languages { get; set; }
+        public List<TeritoryViewModel> Teritories { get; set; }
     }
     public class LanguageViewModel
     {
         public int Id { get; set; }
         public string Language { get; set; }
+    }
+    public class TeritoryViewModel
+    {
+        public int Id { get; set; } 
+        public string TerritoryName { get; set; }
+        public string TerritoryContinent { get; set; } 
     }
 }

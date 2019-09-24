@@ -125,5 +125,9 @@ namespace TickettingSystem.Services.Implementations
         {
             return uow.LanguageRepository.GetAll().ToList();
         }
+        public List<Territories> GetAllEuropeanCountries()
+        {
+            return uow.TerritoriesRepository.Find(t => t.TerritoryContinent.ToLower() == "europe").ToList();
+        }
     }
 }

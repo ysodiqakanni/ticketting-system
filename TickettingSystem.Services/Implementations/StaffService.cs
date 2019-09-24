@@ -166,7 +166,7 @@ namespace TickettingSystem.Services.Implementations
             staffUpdate.Streetname1 = staff.Streetname1;
             staffUpdate.Streetname2 = staff.Streetname2;
             staffUpdate.Streetname3 = staff.Streetname3;
-            staffUpdate.Country = staff.Country;
+            staffUpdate.Countrycode = staff.Countrycode;
             staffUpdate.Dob = staff.Dob;
 
             uow.Save();

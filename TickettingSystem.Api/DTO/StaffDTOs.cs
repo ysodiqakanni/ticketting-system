@@ -26,6 +26,9 @@ namespace TickettingSystem.Api.DTO
         public DateTime FiredOn { get; set; }
         public DateTime ResignedOn { get; set; }
         public string HiredBy { get; set; }
+
+        public string[] Teritories { get; set; }
+        public string[] Languages { get; set; }
     }
 
     public class StaffDTO
@@ -77,7 +80,7 @@ namespace TickettingSystem.Api.DTO
             {
                 Id = staffDetails.Id,
                 DateOfBirth = staffDetails.Dob,
-                Nationality = staffDetails.Country,
+                Nationality = staffDetails.Countrycode,
                 FiredOn = staffDetails.Firedon.Value,
                 Email = staffDetails.Emailaddress,
                 JoinedOn = staffDetails.HiredOn == null ? default(DateTime) : staffDetails.HiredOn.Value,
@@ -90,7 +93,7 @@ namespace TickettingSystem.Api.DTO
                 Surname = staffDetails.Surname,
             };
 
-            result.HiredBy = "Human Rsource Mgr"; // _staffService.GetManagerById(staffDetails.Departmentid.Value);
+            result.HiredBy = staffDetails.Hiredbyid; // "Human Rsource Mgr"; // _staffService.GetManagerById(staffDetails.Departmentid.Value);
             result.Department = _staffService.GetDepartmentById(staffDetails.Departmentid.Value);
             result.Manager = _staffService.GetManagerById(staffDetails.Departmentid.Value);
 

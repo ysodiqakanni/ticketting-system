@@ -541,7 +541,7 @@ namespace TickettingSystem.Data.DbModel
 
                 entity.Property(e => e.Countrycode)
                     .HasColumnName("countrycode")
-                    .HasColumnType("int(5)");
+                    .HasMaxLength(3);
 
                 entity.Property(e => e.Departmentid).HasColumnType("int(11)");
 

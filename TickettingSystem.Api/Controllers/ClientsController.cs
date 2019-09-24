@@ -121,5 +121,12 @@ namespace TickettingSystem.Api.Controllers
             var languages =  _clientService.GetAllLanguages();
             return Ok(languages);
         }
+
+        [HttpGet("teritories")]
+        public async Task<IActionResult> GetEuropeanCountries()
+        {
+            var teritories = _clientService.GetAllEuropeanCountries();
+            return Ok(teritories);
+        }
     }
 }

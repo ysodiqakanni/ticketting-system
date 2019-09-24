@@ -61,6 +61,7 @@ namespace TickettingSystem.Controllers
             model.TicketConversations = new List<TicketConversationViewModel>();
             model.NotesForSelectedTicketClient = new List<NoteListViewModel>();
             model.Languages = await clientApi.GetAllLanguages();
+            model.Teritories = await clientApi.GetEuropeanCountries();
 
             return View(model);
         }

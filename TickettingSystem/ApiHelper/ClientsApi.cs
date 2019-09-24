@@ -127,6 +127,20 @@ namespace TickettingSystem.ApiHelper
             }
         }
 
+        public async Task<List<TeritoryViewModel>> GetEuropeanCountries()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("clients/teritories");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<TeritoryViewModel>>();
+
+                return responseBody;
+            }
+        }
+
     }
 
 }

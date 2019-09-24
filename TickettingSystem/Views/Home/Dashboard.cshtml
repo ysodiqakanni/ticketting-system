@@ -704,34 +704,32 @@
 
                                                             <select id="txtStaffNationality" name="txtStaffNationality">
                                                                 <option selected>None</option>
-                                                                <option>Austria</option>
-                                                                <option>Belgium</option>
-                                                                <option>Bulgaria</option>
-                                                                <option>Croatia</option>
-                                                                <option>Cyprus</option>
-                                                                <option>Czechia</option>
-                                                                <option>Denmark</option>
-                                                                <option>Estonia</option>
-                                                                <option>Finland</option>
-                                                                <option>France</option>
-                                                                <option>Germany</option>
-                                                                <option>Greece</option>
-                                                                <option>Hungary</option>
-                                                                <option>Ireland</option>
-                                                                <option>Italy</option>
-                                                                <option>Latvia</option>
-                                                                <option>Lithuania</option>
-                                                                <option>Luxembourg</option>
-                                                                <option>Malta</option>
-                                                                <option>Netherlands</option>
-                                                                <option>Poland</option>
-                                                                <option>Portugal</option>
-                                                                <option>Romania</option>
-                                                                <option>Slovakia</option>
-                                                                <option>Slovenia</option>
-                                                                <option>Spain</option>
-                                                                <option>Sweden</option>
-                                                                <option>United Kingdom</option>
+                                                                <option value="AT">Austrian</option>
+                                                                <option value="BE">Belgian</option>
+                                                                <option value="UK">British</option>
+                                                                <option value="BG">Bulgarian</option>
+                                                                <option value="HR">Croatian</option>
+                                                                <option value="CY">Cypriot</option>
+                                                                <option value="DK">Danish</option>
+                                                                <option value="EE">Estonian</option>
+                                                                <option value="FI">Finnish</option>
+                                                                <option value="FR">French</option>
+                                                                <option value="DE">German</option>
+                                                                <option value="GR">Greek</option>
+                                                                <option value="HU">Hungarian</option>
+                                                                <option value="IE">Irish</option>
+                                                                <option value="IT">Italian</option>
+                                                                <option value="LV">Latvian</option>
+                                                                <option value="LT">Lithuanian</option>
+                                                                <option value="LU">Luxembourg</option>
+                                                                <option value="MT">Maltese</option>
+                                                                <option value="PL">Polish</option>
+                                                                <option value="PT">Portuguese</option>
+                                                                <option value="RO">Romanian</option>
+                                                                <option value="SK">Slovak</option>
+                                                                <option value="SI">Slovenian</option>
+                                                                <option value="ES">Spanish</option>
+                                                                <option value="SE">Swedish</option> 
                                                             </select>
                                                         </div>
                                                     </div>
@@ -762,7 +760,7 @@
                                                             <select id="txtStaffHiredBy" name="txtStaffHiredBy">
                                                                 @foreach (var staff in ViewBag.AllStaff as List<StaffListViewModel>)
                                                                 {
-                                                                    <option>@staff.Name</option>
+                                                                    <option value="@staff.Id">@staff.Name</option>
                                                                 }
                                                             </select>
                                                         </div>
@@ -832,37 +830,12 @@
                                                             <div class="col-sm-6">
                                                                 <div class="sa-left">
                                                                     <h3>Territory</h3>
-                                                                    <div class="sa-left-content">
-                                                                        <select name="teritories" multiple="multiple" style="height: 130px;width: 100%;">
-                                                                            <option>None</option>
-                                                                            <option>Austria</option>
-                                                                            <option>Belgium</option>
-                                                                            <option>Bulgaria</option>
-                                                                            <option>Croatia</option>
-                                                                            <option>Cyprus</option>
-                                                                            <option>Czechia</option>
-                                                                            <option>Denmark</option>
-                                                                            <option>Estonia</option>
-                                                                            <option>Finland</option>
-                                                                            <option>France</option>
-                                                                            <option>Germany</option>
-                                                                            <option>Greece</option>
-                                                                            <option>Hungary</option>
-                                                                            <option>Ireland</option>
-                                                                            <option>Italy</option>
-                                                                            <option>Latvia</option>
-                                                                            <option>Lithuania</option>
-                                                                            <option>Luxembourg</option>
-                                                                            <option>Malta</option>
-                                                                            <option>Netherlands</option>
-                                                                            <option>Poland</option>
-                                                                            <option>Portugal</option>
-                                                                            <option>Romania</option>
-                                                                            <option>Slovakia</option>
-                                                                            <option>Slovenia</option>
-                                                                            <option>Spain</option>
-                                                                            <option>Sweden</option>
-                                                                            <option>United Kingdom</option>
+                                                                    <div class="sa-left-content"> 
+                                                                        <select name="teritories" id="teritories"  multiple="multiple" style="height: 130px;width: 100%;">
+                                                                            @foreach (var teritory in Model.Teritories)
+                                                                            {
+                                                                                <option value="@teritory.Id">@teritory.TerritoryName</option>
+                                                                            }
                                                                         </select>
 
                                                                     </div>
@@ -871,14 +844,12 @@
                                                             <div class="col-sm-6">
                                                                 <div class="sa-right">
                                                                     <h3>Languages</h3>
-                                                                    <div class="sa-right-content">
-                                                                        <select name="languages" multiple="multiple" style="height: 130px;width: 100%;">
-                                                                            <option>English</option>
-                                                                            <option>French</option>
-                                                                            <option>Chinese</option>
-                                                                            <option>German</option>
-                                                                            <option>Portuguese</option>
-                                                                            <option>Spanish</option>
+                                                                    <div class="sa-right-content"> 
+                                                                        <select id="txtStaffLanguages" multiple="multiple" style="height: 130px;width: 100%;">
+                                                                            @foreach (var lang in Model.Languages)
+                                                                            {
+                                                                                <option value="@lang.Id">@lang.Language</option>
+                                                                            }
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -886,8 +857,7 @@
                                                         </div>
                                                         <div class="finally-btn">
                                                             <a href="#" id="btnCreateNewStaff" style="background: #55C1FF;" class="reset-btn btn">New</a>
-                                                            <a href="#" id="btnUpdateStaff" style="background: #6FCF97;" class="update-btn btn disabled">Update</a>
-                                                            @*<input type="button" style="background: #6FCF97;" class="update-btn btn" disabled value="Update" /*@>
+                                                            <a href="#" id="btnUpdateStaff" style="background: #6FCF97;" class="update-btn btn disabled">Update</a> 
                                                         </div>
                                                     </div>
                                                 </div>
