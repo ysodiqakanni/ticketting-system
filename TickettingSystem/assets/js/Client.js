@@ -816,28 +816,6 @@ var searchMemberships = function (userId) {
     })
 }
 
-//var loadNotes = function () {
-//    var url = "/home/Notes";;
-//    $.ajax({
-//        url: url,
-//        type: "GET",
-//        url: url,
-//        contentType: "application/json",
-//        processData: false,
-//        success: function (response) {
-//            if (response) {
-//                $("#clientNotes").html(response);
-//            }
-//            else {
-//                alert("loading error");
-//            }
-//        },
-//        error: function () {
-//            alert("An unknown error has occured");
-//        },
-//    })
-//}
-
 var connectExchange = function (el) {
     var connected = $(el).attr('data-connected');
     if (String("true") == connected) {
