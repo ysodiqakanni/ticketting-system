@@ -142,6 +142,27 @@ namespace TickettingSystem.Controllers
             }
         }
 
+        [Route("updateClientNote/{note}/{noteId}")]
+        public async Task<IActionResult> UpdateClientNote(string note, string noteId)
+        {
+            if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
+            try
+            {
+                //string userId = "74"; // pass with js from the page
+                string createdBy = "system";
+                string modifiedBy = "system";
+                Dictionary<string, string> noteModel = new Dictionary<string, string>() { { "Note", note }, { "Modifiedby", modifiedBy }, { "NoteId", noteId } };
+
+                await clientApi.UpdateNote(JsonConvert.SerializeObject(noteModel));
+                return Json(new { success = true, msg = "Note saved!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Error creating note!" });
+            }
+        }
+
+
         [Route("SearchClients/{searchStr?}")]
         public async Task<PartialViewResult> SearchClients(string searchStr = "")
         {

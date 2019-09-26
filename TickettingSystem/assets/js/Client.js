@@ -235,7 +235,12 @@ $("#btnAddNote").on("click", function (e) {
     }
     e.preventDefault();
 
-    var url = "/home/createNote/" + note + "/" + clientId;
+    var url = "/home/createNote/" + note + "/" + clientId;  // assume it's an add operation
+    let noteId = $("#txtClientNoteId").val();
+    if (noteId) {
+        url = "/home/updateClientNote/" + note + "/" + noteId;
+    }
+
     $.ajax({
         url: url,
         type: "GET",
@@ -243,8 +248,11 @@ $("#btnAddNote").on("click", function (e) {
         contentType: "application/json",
         processData: false,
         success: function (response) {
-            if (response.success) { 
-                $("#txtNewNote").val("");
+            if (response.success) {
+                if (!noteId) {
+                    $("#txtNewNote").val("");
+                }
+               
                 // Todo: re-render notes partial
                 loadClientNotes(clientId);
             }
@@ -257,6 +265,31 @@ $("#btnAddNote").on("click", function (e) {
         },
     })
 })
+
+//triggered when client note modal is about to be shown
+$('#addNoteModal').on('show.bs.modal', function (e) {
+
+    //get data-id attribute of the clicked element
+    let noteId = $(e.relatedTarget).data('note-id');
+    if (!!noteId) {
+        // update operation
+        // populate the textarea
+        $(e.currentTarget).find('textarea[name="txtNewNote"]').val($(e.relatedTarget).text());
+        $(e.currentTarget).find('input[id="txtClientNoteId"]').val(noteId);
+
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Update Note";
+    }
+    else {
+        $(e.currentTarget).find('textarea[name="txtNewNote"]').val("");
+        $(e.currentTarget).find('input[id="txtClientNoteId"]').val("");
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Create a new note";
+    }
+
+   
+});
+
 
 // TRADES FUNCTIONS
 $("#btnSearchTrades").on("click", function () {

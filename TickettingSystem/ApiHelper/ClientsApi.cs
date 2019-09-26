@@ -84,8 +84,18 @@ namespace TickettingSystem.ApiHelper
                 var httpContent = new StringContent(noteData, Encoding.UTF8, "application/json");
                 HttpResponseMessage msg = await client.PostAsync("clients/notes", httpContent);
                 msg.EnsureSuccessStatusCode();
-            }
-
+            } 
+            return;
+        }
+        public async Task UpdateNote(string noteData)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var httpContent = new StringContent(noteData, Encoding.UTF8, "application/json");
+                HttpResponseMessage msg = await client.PutAsync("clients/notes", httpContent);
+                msg.EnsureSuccessStatusCode();
+            } 
             return;
         }
         public async Task<List<NoteListViewModel>> GetAllNotes()
