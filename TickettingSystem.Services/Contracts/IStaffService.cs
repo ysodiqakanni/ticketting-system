@@ -24,6 +24,7 @@ namespace TickettingSystem.Services.Contracts
         string GetManagerById(int departmentId);
         Task<IList<StaffNotes>> GetNotesByStaffId(int id);
         Task<StaffNotes> CreateNewNote(int staffId, string note);
+        StaffNotes UpdateNote(string note, string id, string modifiedBy);
 
         int GetLanguageIdByName(string language);
         void PostStaffLanguage(List<StaffLanguages> stLang);

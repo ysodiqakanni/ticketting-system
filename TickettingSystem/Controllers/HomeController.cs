@@ -165,6 +165,42 @@ namespace TickettingSystem.Controllers
             }
         }
 
+        [Route("updateTicketNote/{note}/{noteId}")]
+        public async Task<IActionResult> UpdateTicketNote(string note, string noteId)
+        {
+            if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
+            try
+            {  
+                string modifiedBy = "system";
+                Dictionary<string, string> noteModel = new Dictionary<string, string>() { { "Note", note }, { "Modifiedby", modifiedBy }, { "NoteId", noteId } };
+
+                await ticketsApi.UpdateNote(JsonConvert.SerializeObject(noteModel));
+                return Json(new { success = true, msg = "Note updated!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Error creating note!" });
+            }
+        }
+
+        [Route("updateStaffNote/{note}/{noteId}")]
+        public async Task<IActionResult> UpdateStaffNote(string note, string noteId)
+        {
+            if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
+            try
+            { 
+                string modifiedBy = "system";
+                Dictionary<string, string> noteModel = new Dictionary<string, string>() { { "Note", note }, { "Modifiedby", modifiedBy }, { "NoteId", noteId } };
+
+                await staffApi.UpdateNote(JsonConvert.SerializeObject(noteModel));
+                return Json(new { success = true, msg = "Note updated!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Error creating note!" });
+            }
+        }
+
 
         [Route("SearchClients/{searchStr?}")]
         public async Task<PartialViewResult> SearchClients(string searchStr = "")

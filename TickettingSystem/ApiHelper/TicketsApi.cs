@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using TickettingSystem.Models;
 using TickettingSystem.Utilities;
@@ -145,6 +146,17 @@ namespace TickettingSystem.ApiHelper
 
                 return responseBody;
             }
+        }
+        public async Task UpdateNote(string noteData)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var httpContent = new StringContent(noteData, Encoding.UTF8, "application/json");
+                HttpResponseMessage msg = await client.PutAsync("tickets/notes", httpContent);
+                msg.EnsureSuccessStatusCode();
+            }
+            return;
         }
 
         public async Task<List<NoteListViewModel>> GetAllNotesForTicketClient(int ticketId)

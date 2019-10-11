@@ -133,6 +133,23 @@ namespace TickettingSystem.Services.Implementations
             uow.Save();
             return data;
         }
+
+        public SupportTicketNotes UpdateNote(string note, string id, string modifiedBy)
+        {
+            int noteId = 0;
+            if (!int.TryParse(id, out noteId))
+            {
+                throw new Exception("Invalid note Id");
+            }
+            var theNote = uow.TicketNoteRepository.Get(noteId);
+            if (theNote == null)
+                throw new Exception("Not not found!");
+            theNote.Note = note; 
+            theNote.DtModified = DateTime.Now;
+
+            uow.Save();
+            return theNote;
+        }
     }
 }
 

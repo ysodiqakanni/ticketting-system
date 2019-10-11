@@ -199,6 +199,24 @@ namespace TickettingSystem.Services.Implementations
 
         }
 
+        public StaffNotes UpdateNote(string note, string id, string modifiedBy)
+        {
+            int noteId = 0;
+            if (!int.TryParse(id, out noteId))
+            {
+                throw new Exception("Invalid note Id");
+            }
+            var theNote = uow.StaffNoteRepository.Get(noteId);
+            if (theNote == null)
+                throw new Exception("Not not found!");
+            theNote.Note = note;
+            theNote.Modifiedby = modifiedBy;
+            theNote.DtModified = DateTime.Now;
+
+            uow.Save();
+            return theNote;
+        }
+
         public async Task<StaffDetails> UpdateStaff(int value, StaffDetails staff, List<string> langIds, List<string> territoryIds)
         {
             // save languages

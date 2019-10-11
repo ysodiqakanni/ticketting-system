@@ -131,6 +131,14 @@ namespace TickettingSystem.Api.Controllers
             return Ok(newNotes);
         }
 
+        [HttpPut("notes")]
+        public async Task<IActionResult> UpdateNote([FromBody] IDictionary<string, string> noteModel)
+        {
+            var note = _staffService.UpdateNote(noteModel["Note"], noteModel["NoteId"], noteModel["Modifiedby"]);
+            return Ok(note);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> CreateStaff([FromBody] StaffDTO staffModel)
         {

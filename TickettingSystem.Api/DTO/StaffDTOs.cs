@@ -156,7 +156,7 @@ namespace TickettingSystem.Api.DTO
             string count = string.Empty;
             var result = new StaffNoteResponseDTO
             {
-                Id = Convert.ToInt16(staffNotesDetail.Userid),
+                Id = staffNotesDetail.Id,
                 Content = staffNotesDetail.Note,
                 DateCreated = staffNotesDetail.DtCreated
             };

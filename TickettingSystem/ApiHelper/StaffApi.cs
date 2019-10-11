@@ -134,6 +134,18 @@ namespace TickettingSystem.ApiHelper
             } 
         }
 
+        public async Task UpdateNote(string noteData)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var httpContent = new StringContent(noteData, Encoding.UTF8, "application/json");
+                HttpResponseMessage msg = await client.PutAsync("staff/notes", httpContent);
+                msg.EnsureSuccessStatusCode();
+            }
+            return;
+        }
+
         public static async Task CreateNewStaff(StaffDTO staff)
         {
             using (HttpClient client = new HttpClient())

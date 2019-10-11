@@ -266,7 +266,7 @@ $("#btnAddNote").on("click", function (e) {
     })
 })
 
-//triggered when client note modal is about to be shown
+//triggered when client note modal is about to be shown  addTicketNoteModal
 $('#addNoteModal').on('show.bs.modal', function (e) {
 
     //get data-id attribute of the clicked element
@@ -285,9 +285,51 @@ $('#addNoteModal').on('show.bs.modal', function (e) {
         $(e.currentTarget).find('input[id="txtClientNoteId"]').val("");
         var title = $(e.currentTarget).find('h4')[0];
         title.innerText = "Create a new note";
-    }
+    } 
+});
 
-   
+//triggered when ticket note modal is about to be shown  
+$('#addTicketNoteModal').on('show.bs.modal', function (e) {
+
+    //get data-id attribute of the clicked element
+    let noteId = $(e.relatedTarget).data('note-id');
+    if (!!noteId) {
+        // update operation
+        // populate the textarea
+        $(e.currentTarget).find('textarea[name="txtNewTicketNote"]').val($(e.relatedTarget).text());
+        $(e.currentTarget).find('input[id="txtTicketNoteId"]').val(noteId);
+
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Update Note";
+    }
+    else {
+        $(e.currentTarget).find('textarea[name="txtNewTicketNote"]').val("");
+        $(e.currentTarget).find('input[id="txtTicketNoteId"]').val("");
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Create a new note";
+    }
+});
+
+//triggered when staff note modal is about to be shown  
+$('#addStaffNoteModal').on('show.bs.modal', function (e) {
+
+    //get data-id attribute of the clicked element
+    let noteId = $(e.relatedTarget).data('note-id');
+    if (!!noteId) {
+        // update operation
+        // populate the textarea
+        $(e.currentTarget).find('textarea[name="txtNewStaffNote"]').val($(e.relatedTarget).text());
+        $(e.currentTarget).find('input[id="txtStaffNoteId"]').val(noteId);
+
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Update Note";
+    }
+    else {
+        $(e.currentTarget).find('textarea[name="txtNewStaffNote"]').val("");
+        $(e.currentTarget).find('input[id="txtStaffNoteId"]').val("");
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Create a new note";
+    }
 });
 
 
@@ -407,7 +449,12 @@ $("#btnAddTicketNote").on("click", function (e) {
     }
     e.preventDefault();
      
-    var url = "/home/ticket/" + ticketId + "/createNote/" + note;
+    var url = "/home/ticket/" + ticketId + "/createNote/" + note; // for creating a new note
+
+    let noteId = $("#txtTicketNoteId").val();
+    if (noteId) {
+        url = "/home/updateTicketNote/" + note + "/" + noteId;  // update note
+    }
     $.ajax({
         url: url,
         type: "GET",
@@ -416,7 +463,10 @@ $("#btnAddTicketNote").on("click", function (e) {
         processData: false,
         success: function (response) {
             if (response.success) {
-                $("#txtNewTicketNote").val("");
+                if (!noteId) {
+                    $("#txtNewTicketNote").val("");
+                }
+               
                 // Todo: re-render notes partial
                 loadTicketDetails(ticketId);
             }
@@ -540,7 +590,7 @@ function loadTicketDetails(id) {
                 var notes = response.notes;
                 $("#clientTicketNotes").html("");
                 for (ind in notes) {
-                    $('#clientTicketNotes').append('<p data-toggle="popover" data-placement="top" data-content="' + notes[ind].content + '" >' + notes[ind].shortNote + '</p >')
+                   $('#clientTicketNotes').append('<p data-toggle="modal" data-target="#addTicketNoteModal" data-note-id="' + notes[ind].id + '" >' + notes[ind].shortNote + '</p >')
                 }
                 $('[data-toggle="popover"]').popover();
 
@@ -660,6 +710,10 @@ $("#btnAddStaffNote").on("click", function (e) {
     e.preventDefault();
 
     var url = "/home/staff/" + staffId + "/createNote/" + note;
+    let noteId = $("#txtStaffNoteId").val();
+    if (noteId) {
+        url = "/home/updateStaffNote/" + note + "/" + noteId;
+    }
     $.ajax({
         url: url,
         type: "GET",
@@ -667,8 +721,11 @@ $("#btnAddStaffNote").on("click", function (e) {
         contentType: "application/json",
         processData: false,
         success: function (response) {
-            if (response.success) { 
-                $("#txtNewStaffNote").val("");
+            if (response.success) {
+                if (!noteId) {
+                    $("#txtNewStaffNote").val("");
+                }
+               
                 // Todo: re-render notes partial
                 loadStaffNotes(staffId);
             }

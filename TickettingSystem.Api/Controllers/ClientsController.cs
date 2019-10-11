@@ -100,6 +100,7 @@ namespace TickettingSystem.Api.Controllers
             var addNote = await _clientNoteService.CreateNote(noteModel["Note"], noteModel["Userid"], noteModel["Createdby"], noteModel["Modifiedby"]);
             return Ok(addNote);
         }
+
         [HttpPut("notes")]
         public async Task<IActionResult> UpdateNote([FromBody] IDictionary<string, string> noteModel)
         {

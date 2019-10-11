@@ -215,6 +215,13 @@ namespace TickettingSystem.Api.Controllers
             return Ok(newNote);
         }
 
+        [HttpPut("notes")]
+        public async Task<IActionResult> UpdateNote([FromBody] IDictionary<string, string> noteModel)
+        {
+            var note = ticketSvc.UpdateNote(noteModel["Note"], noteModel["NoteId"], noteModel["Modifiedby"]);
+            return Ok(note);
+        }
+
         private async Task<TicketDTO> MapTicketToDto(SupportTicket ticket)
         {
             var result = new TicketDTO
