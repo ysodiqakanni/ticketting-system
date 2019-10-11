@@ -190,7 +190,7 @@ $(document).on("click", ".clientDataRow", function () {
                     tabCell4.innerHTML = trade.currencyPair;
 
                     var tabCell5 = tr.insertCell(-1);
-                    tabCell5.innerHTML = tabCell3.innerHTML = "$" + trade.price;
+                    tabCell5.innerHTML = "$" + trade.price;
 
                     var tabCell6 = tr.insertCell(-1);
                     tabCell6.innerHTML = trade.arbitrage; 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -16,6 +17,8 @@ using static TickettingSystem.Utilities.AuthorizeUserAttribute;
 namespace TickettingSystem.Controllers
 {
     [ClaimRequirement("session", "CanReadResource")]
+
+ 
     [Route("home")]
     public class HomeController : Controller
     {
@@ -192,7 +195,7 @@ namespace TickettingSystem.Controllers
             var trades = await tradesApi.SearchTrades(tradeSearch);
             var model = new DashboardViewModel();
             model.Trades = trades;
-            return PartialView("_TradeListPartial", model); 
+            return PartialView("_TradeListPartial", model);
         }
 
         [Route("exchanges/{userId?}")]
@@ -278,7 +281,7 @@ namespace TickettingSystem.Controllers
             }
             else if (string.Compare(type, "name", true) == 0)
             {
-                if(value == "*") // situation where user enters * to search for all tickets
+                if (value == "*") // situation where user enters * to search for all tickets
                 {
                     result = await ticketsApi.GetLastTenTickets();
                 }
@@ -309,7 +312,7 @@ namespace TickettingSystem.Controllers
             return PartialView("_ClientTicketsPartial", model);
         }
 
-        [Route("tickets/close/{id}")] 
+        [Route("tickets/close/{id}")]
         public async Task<IActionResult> CloseTicket(int id)
         {
             try
@@ -354,7 +357,7 @@ namespace TickettingSystem.Controllers
             if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
             try
             {
-                 await ticketsApi.CreateNewNote(staffid, note, id);
+                await ticketsApi.CreateNewNote(staffid, note, id);
                 return Json(new { success = true, msg = "Note saved!" });
             }
             catch (Exception)
@@ -514,7 +517,7 @@ namespace TickettingSystem.Controllers
             }
         }
 
-     
+
 
 
         [Route("")]
@@ -536,7 +539,7 @@ namespace TickettingSystem.Controllers
 
 
             return View();
-        } 
+        }
 
         public IActionResult Privacy()
         {
