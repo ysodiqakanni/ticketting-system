@@ -67,7 +67,9 @@ namespace TickettingSystem
 
 
 
-            services.AddSession();
+            services.AddSession( options => 
+                options.IdleTimeout = TimeSpan.FromMinutes(appSettings.SessionTimeout)   // set session timeout
+            );
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

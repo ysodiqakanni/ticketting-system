@@ -50,5 +50,19 @@ namespace TickettingSystem.Controllers
 
             return Redirect("~/Home/dashboard");
         }
+
+        [Route("Logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
+
+        [HttpPost]
+        public JsonResult KeepSessionAlive()
+        {
+
+            return Json(new { Data = "Success" });
+        }
     }
 }

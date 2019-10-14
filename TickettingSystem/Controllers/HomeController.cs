@@ -66,6 +66,8 @@ namespace TickettingSystem.Controllers
             model.Languages = await clientApi.GetAllLanguages();
             model.Teritories = await clientApi.GetEuropeanCountries();
 
+
+            ViewBag.SessionTimeout = _appSettings.SessionTimeout;
             return View(model);
         }
 
@@ -587,5 +589,7 @@ namespace TickettingSystem.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+       
     }
 }

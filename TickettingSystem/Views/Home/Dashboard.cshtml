@@ -328,11 +328,11 @@
                                                             <label for="name">Language</label>
                                                             @*<input type="text" id="txtClientLanguage">*@
                                                             <select id="txtClientLanguage" style="width:200px">
-                                                                @foreach(var lang in Model.Languages)
+                                                                @foreach (var lang in Model.Languages)
                                                                 {
                                                                     <option value="@lang.Id">@lang.Language</option>
                                                                 }
-                                                                </select>
+                                                            </select>
                                                         </div>
                                                     </div>
 
@@ -574,7 +574,7 @@
                                                     </div>
 
                                                     @*<a href="" class="note-btn">+ Add New Note</a>*@
-                                                    <a href="#" id="btnShowTicketModal" class="note-btn disabled" data-toggle="modal" data-target="#addTicketNoteModal">+ Add New Note</a> 
+                                                    <a href="#" id="btnShowTicketModal" class="note-btn disabled" data-toggle="modal" data-target="#addTicketNoteModal">+ Add New Note</a>
                                                 </div>
 
                                                 <!-- Add Notes Modal -->
@@ -637,11 +637,11 @@
 
                                                 <div class="custom-ticket-btn">
                                                     <a href="#" id="btnSendResponse" class="btn response-btn disabled">Send Response</a>
-                                                                                                    <a href="#" id="btnCloseTicket" class="btn close-btn disabled">Close Ticket</a>
-                                                        <a href="#" id="btnUpdateTicket" class="btn update-btn disabled">Update</a>
+                                                    <a href="#" id="btnCloseTicket" class="btn close-btn disabled">Close Ticket</a>
+                                                    <a href="#" id="btnUpdateTicket" class="btn update-btn disabled">Update</a>
                                                     @*<input type="button" id="btnSendResponse" class="btn response-btn btn-success" value="Send Response" disabled />
-                                                    <input type="button" id="btnCloseTicket" class="btn close-btn btn-danger" value="Close Ticket" disabled />
-                                                    <input type="button" id="btnUpdateTicket" class="btn update-btn btn-primary" value="Update" disabled />*@
+                                                        <input type="button" id="btnCloseTicket" class="btn close-btn btn-danger" value="Close Ticket" disabled />
+                                                        <input type="button" id="btnUpdateTicket" class="btn update-btn btn-primary" value="Update" disabled />*@
                                                 </div>
                                             </div>
                                         </div>
@@ -731,7 +731,7 @@
                                                                 <option value="SK">Slovak</option>
                                                                 <option value="SI">Slovenian</option>
                                                                 <option value="ES">Spanish</option>
-                                                                <option value="SE">Swedish</option> 
+                                                                <option value="SE">Swedish</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -833,8 +833,8 @@
                                                             <div class="col-sm-6">
                                                                 <div class="sa-left">
                                                                     <h3>Territory</h3>
-                                                                    <div class="sa-left-content"> 
-                                                                        <select name="teritories" id="teritories"  multiple="multiple" style="height: 130px;width: 100%;">
+                                                                    <div class="sa-left-content">
+                                                                        <select name="teritories" id="teritories" multiple="multiple" style="height: 130px;width: 100%;">
                                                                             @foreach (var teritory in Model.Teritories)
                                                                             {
                                                                                 <option value="@teritory.Id">@teritory.TerritoryName</option>
@@ -847,7 +847,7 @@
                                                             <div class="col-sm-6">
                                                                 <div class="sa-right">
                                                                     <h3>Languages</h3>
-                                                                    <div class="sa-right-content"> 
+                                                                    <div class="sa-right-content">
                                                                         <select id="txtStaffLanguages" multiple="multiple" style="height: 130px;width: 100%;">
                                                                             @foreach (var lang in Model.Languages)
                                                                             {
@@ -860,7 +860,7 @@
                                                         </div>
                                                         <div class="finally-btn">
                                                             <a href="#" id="btnCreateNewStaff" style="background: #55C1FF;" class="reset-btn btn">New</a>
-                                                            <a href="#" id="btnUpdateStaff" style="background: #6FCF97;" class="update-btn btn disabled">Update</a> 
+                                                            <a href="#" id="btnUpdateStaff" style="background: #6FCF97;" class="update-btn btn disabled">Update</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -876,6 +876,28 @@
         </div>
     </div>
 
+    <input type="hidden" id="txtSessionTimeout" value="@ViewBag.SessionTimeout" />
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Session Timeout!</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Your Session times out in: </p> <label id="stopTimeLbl"></label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="btnKeepAlive" data-dismiss="modal">Stay Logged In</button>
+                    <button type="button" class="btn btn-default" id="btnLoggOff" data-dismiss="modal">Logout</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <script src="~/assets/js/jquery.min.js"></script>
     <script src="~/assets/js/bootstrap.min.js"></script>
     <script src="~/assets/js/main.js"></script>
@@ -885,3 +907,4 @@
 </html>
 
 <script src="~/assets/js/Client.js"></script>
+<script src="~/assets/js/sessionTimeout.js"></script>
