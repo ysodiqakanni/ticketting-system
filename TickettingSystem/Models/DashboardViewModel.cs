@@ -12,7 +12,7 @@ namespace TickettingSystem.Models
         public List<ClientDTO> Clients { get; set; }
         public List<TradeDTO> Trades { get; set; }
 
-        public List<NoteListViewModel> Notes { get; set; }
+        public List<NoteListViewModel> NotesForSelectedClient { get; set; }
         public List<ExchangeListViewModel> Exchanges { get; set; }
 
         public Membership MembershipData { get; set; }
@@ -21,5 +21,19 @@ namespace TickettingSystem.Models
         public List<TicketsListViewModel> Tickets { get; set; }
         public List<TicketConversationViewModel> TicketConversations { get; set; }
         public List<NoteListViewModel> NotesForSelectedTicketClient { get; set; }
+
+        public List<LanguageViewModel> Languages { get; set; }
+        public List<TeritoryViewModel> Teritories { get; set; }
+    }
+    public class LanguageViewModel
+    {
+        public int Id { get; set; }
+        public string Language { get; set; }
+    }
+    public class TeritoryViewModel
+    {
+        public int Id { get; set; } 
+        public string TerritoryName { get; set; }
+        public string TerritoryContinent { get; set; } 
     }
 }

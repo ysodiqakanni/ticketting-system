@@ -3,71 +3,14 @@ $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 });
 
+
+// CLIENT FUNCTIONS
 $("#btnSearchClients").on("click", function () {
     searchClients($("#txtSearchClients").val());
 })
-
-
-
-$("#btnSearchTrades").on("click", function () {
-    var userId = $("#srchUserId").val();
-    var dateFrom = $("#tradeFromDate").val();
-    var dateTo = $("#tradeToDate").val();
-    var exchange = $("#tradeSrExch").val();
-    var currencyPair = $("#tradeSrCurr").val();
-    if (userId == "" && dateFrom == "" && dateTo == "" && exchange == "" && currencyPair == "") {
-        alert("Atleast one field must be entered");
-        return;
-    }
-
-    var getUserId = $("#srchUserId").val();
-
-    var getToDate = !!$("#tradeToDate").val() ? new Date($("#tradeToDate").val()) : null;
-    var getFromDate = !!$("#tradeFromDate").val() ? new Date($("#tradeFromDate").val()) : null;
-    var getExchange = $("#tradeSrExch").val();
-    if (getToDate != null && getFromDate != null) {
-        if (getToDate < getFromDate) {
-            alert("to date must come after from date");
-            return;
-        }
-    }
-    var searchObject = {};
-    if (getUserId) {
-        searchObject["userId"] = getUserId;
-    }
-    if (getExchange) {
-        searchObject["exchange"] = getExchange;
-    }
-    if (getToDate) {
-        searchObject["toDate"] = getToDate.toLocaleDateString();
-    }
-    if (getFromDate) {
-        searchObject["fromDate"] = getFromDate.toLocaleDateString();
-    }
-    var url = "/home/trades/search?" + $.param(searchObject, true);
-    $.ajax({
-        url: url,
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response) {
-
-                $("#tbTradeSearchResult").html(response);
-
-            }
-            else {
-                alert("searching error");
-            }
-        },
-        error: function () {
-            alert("An unknown error has ;occured");
-        },
-    })
-})
 $("#btnCancelClientSearch").on("click", function () {
     $("#txtSearchClients").val("");
+    $("#clientTableDiv").html("");
     const anyUnsavedChanges = true;
     if (anyUnsavedChanges) {
         if (confirm("Are You Sure That You Want to Abandon Changes?")) {
@@ -117,10 +60,10 @@ $("#btnUpdateClient").on("click", function () {
             StreetName3: $("#txtClientAddressLine4").val(),
             Nationality: $("#txtClientNationailty").val(),
             Language: $("#txtClientLanguage").val(),
-            DateOfBirth: $("#txtClientDOB").val()
+            Dob: $("#txtClientDOB").val()
         };
         // validate inputs
-        if (!clientData.HouseNumber || !clientData.Nationality || !clientData.Language || !clientData.DateOfBirth) {
+        if (!clientData.HouseNumber || !clientData.Nationality || !clientData.Language || !clientData.Dob) {
             alert("Fill in all required fields");
             return;
         }
@@ -183,6 +126,8 @@ $(document).on("click", ".clientDataRow", function () {
                 document.getElementById("txtClientDOB").valueAsDate = new Date(client.dateOfBirth);
                 document.getElementById("txtClientJoinedOn").valueAsDate = new Date(client.joinedDate);
                 document.getElementById("txtClientDate").valueAsDate = new Date();
+
+                loadClientNotes(id);
             }
             else {
                 alert(response.msg);
@@ -202,34 +147,7 @@ $(document).on("click", ".clientDataRow", function () {
         success: function (response) {
             if (response) {
 
-                $("#tblTrades").html(response)
-
-
-                //var searchResult = response.msg.result;
-                //var table = document.getElementById("tblTrades");  // tbTradeSearchResult
-                //for (var i = 2; i < table.rows.length; i++) {
-                //    table.deleteRow(i - 1);
-                //}
-                //$("#srchUserId").val(id);
-                //for (var i = 0; i < searchResult.length; i++) {
-                //    var tr = table.insertRow(-1); 
-                //    var tabCell1 = tr.insertCell(-1);
-                //    var date = new Date(searchResult[i].createdOn);
-
-                //    tabCell1.innerHTML = searchResult[i].userId; // date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
-
-                //    var tabCell2 = tr.insertCell(-1);
-                //    tabCell2.innerHTML = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();//  searchResult[i].exchange;
-                //    var tabCell3 = tr.insertCell(-1);
-                //    tabCell3.innerHTML = searchResult[i].exchange;
-                //    var tabCell4 = tr.insertCell(-1);
-                //    tabCell4.innerHTML = searchResult[i].operation;
-                //    var tabCell5 = tr.insertCell(-1);
-                //    tabCell5.innerHTML = "$" + searchResult[i].price;
-                //    //var tabCell6 = tr.insertCell(-1);
-                //    //tabCell6.innerHTML = "No";
-                //}
-
+                $("#tblTrades").html(response) 
 
             }
             else {
@@ -241,8 +159,8 @@ $(document).on("click", ".clientDataRow", function () {
         },
     })
 
-    $(document).on("dblclick", ".tradeDataRow", function () {
-        var id = $(this).find('td:first').html();
+    $(document).on("dblclick", ".tradeDataRow", function () { 
+        var id = $($(this).find('td:last').html()).val();
         var table = document.getElementById("tbTradeSearchResult");
 
 
@@ -267,14 +185,18 @@ $(document).on("click", ".clientDataRow", function () {
                     tabCell2.innerHTML = trade.exchange;
                     var tabCell3 = tr.insertCell(-1);
                     tabCell3.innerHTML = trade.operation;
+
                     var tabCell4 = tr.insertCell(-1);
-                    tabCell4.innerHTML = tabCell3.innerHTML = "$" + trade.price;
+                    tabCell4.innerHTML = trade.currencyPair;
 
                     var tabCell5 = tr.insertCell(-1);
-                    tabCell5.innerHTML = trade.arbitrage;
+                    tabCell5.innerHTML = "$" + trade.price;
 
                     var tabCell6 = tr.insertCell(-1);
-                    tabCell6.innerHTML = trade.social;
+                    tabCell6.innerHTML = trade.arbitrage; 
+
+                    var tabCell7 = tr.insertCell(-1);
+                    tabCell7.innerHTML = trade.social;
                 }
                 else {
                     alert('error fetching trade data!');
@@ -301,6 +223,11 @@ $(document).on("click", ".clientDataRow", function () {
 
 })
 $("#btnAddNote").on("click", function (e) {
+    var clientId = $("#hiddenClientID").val();
+    if (!clientId) {
+        alert("Not client selected!");
+        return;
+    }
     const note = $("#txtNewNote").val();
     if (!note) {
         alert("Note can not be empty!");
@@ -308,7 +235,12 @@ $("#btnAddNote").on("click", function (e) {
     }
     e.preventDefault();
 
-    var url = "/home/createNote/" + note;
+    var url = "/home/createNote/" + note + "/" + clientId;  // assume it's an add operation
+    let noteId = $("#txtClientNoteId").val();
+    if (noteId) {
+        url = "/home/updateClientNote/" + note + "/" + noteId;
+    }
+
     $.ajax({
         url: url,
         type: "GET",
@@ -317,10 +249,12 @@ $("#btnAddNote").on("click", function (e) {
         processData: false,
         success: function (response) {
             if (response.success) {
-                alert(response.msg);
-                $("#txtNewNote").val("");
+                if (!noteId) {
+                    $("#txtNewNote").val("");
+                }
+               
                 // Todo: re-render notes partial
-                loadNotes();
+                loadClientNotes(clientId);
             }
             else {
                 alert(response.msg);
@@ -332,6 +266,138 @@ $("#btnAddNote").on("click", function (e) {
     })
 })
 
+//triggered when client note modal is about to be shown  addTicketNoteModal
+$('#addNoteModal').on('show.bs.modal', function (e) {
+
+    //get data-id attribute of the clicked element
+    let noteId = $(e.relatedTarget).data('note-id');
+    if (!!noteId) {
+        // update operation
+        // populate the textarea
+        $(e.currentTarget).find('textarea[name="txtNewNote"]').val($(e.relatedTarget).text());
+        $(e.currentTarget).find('input[id="txtClientNoteId"]').val(noteId);
+
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Update Note";
+    }
+    else {
+        $(e.currentTarget).find('textarea[name="txtNewNote"]').val("");
+        $(e.currentTarget).find('input[id="txtClientNoteId"]').val("");
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Create a new note";
+    } 
+});
+
+//triggered when ticket note modal is about to be shown  
+$('#addTicketNoteModal').on('show.bs.modal', function (e) {
+
+    //get data-id attribute of the clicked element
+    let noteId = $(e.relatedTarget).data('note-id');
+    if (!!noteId) {
+        // update operation
+        // populate the textarea
+        $(e.currentTarget).find('textarea[name="txtNewTicketNote"]').val($(e.relatedTarget).text());
+        $(e.currentTarget).find('input[id="txtTicketNoteId"]').val(noteId);
+
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Update Note";
+    }
+    else {
+        $(e.currentTarget).find('textarea[name="txtNewTicketNote"]').val("");
+        $(e.currentTarget).find('input[id="txtTicketNoteId"]').val("");
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Create a new note";
+    }
+});
+
+//triggered when staff note modal is about to be shown  
+$('#addStaffNoteModal').on('show.bs.modal', function (e) {
+
+    //get data-id attribute of the clicked element
+    let noteId = $(e.relatedTarget).data('note-id');
+    if (!!noteId) {
+        // update operation
+        // populate the textarea
+        $(e.currentTarget).find('textarea[name="txtNewStaffNote"]').val($(e.relatedTarget).text());
+        $(e.currentTarget).find('input[id="txtStaffNoteId"]').val(noteId);
+
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Update Note";
+    }
+    else {
+        $(e.currentTarget).find('textarea[name="txtNewStaffNote"]').val("");
+        $(e.currentTarget).find('input[id="txtStaffNoteId"]').val("");
+        var title = $(e.currentTarget).find('h4')[0];
+        title.innerText = "Create a new note";
+    }
+});
+
+
+// TRADES FUNCTIONS
+$("#btnSearchTrades").on("click", function () {
+    var userId = $("#srchUserId").val();
+    var dateFrom = $("#tradeFromDate").val();
+    var dateTo = $("#tradeToDate").val();
+    var exchange = $("#tradeSrExch").val();
+    var currencyPair = $("#tradeSrCurr").val();
+    if (userId == "" && dateFrom == "" && dateTo == "" && exchange == "" && currencyPair == "") {
+        alert("Atleast one field must be entered");
+        return;
+    }
+
+    var getUserId = $("#srchUserId").val();
+
+    var getToDate = !!$("#tradeToDate").val() ? new Date($("#tradeToDate").val()) : null;
+    var getFromDate = !!$("#tradeFromDate").val() ? new Date($("#tradeFromDate").val()) : null;
+    var getExchange = $("#tradeSrExch").val();
+    if (getToDate != null && getFromDate != null) {
+        if (getToDate < getFromDate) {
+            alert("to date must come after from date");
+            return;
+        }
+    }
+    var searchObject = {};
+    if (getUserId) {
+        searchObject["userId"] = getUserId;
+    }
+    if (getExchange) {
+        searchObject["exchange"] = getExchange;
+    }
+    if (getToDate) {
+        searchObject["ToDateTime"] = getToDate.toISOString();  // https://github.com/Automattic/mongoose/issues/756#issuecomment-65924767
+    }
+    if (getFromDate) {
+        searchObject["FromDateTime"] = getFromDate.toLocaleDateString();
+    }
+    if (currencyPair) {
+        searchObject["currencyCode"] = currencyPair;
+    }
+
+    var url = "/home/trades/search?" + $.param(searchObject, true);
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) {
+
+                $("#tbTradeSearchResult").html(response);
+
+            }
+            else {
+                alert("searching error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has ;occured");
+        },
+    })
+})
+
+
+// EXCHANGE FUNCTIONS
 $("#btnSearchExchanges").on("click", function () {
     var userId = $("#txtUserIdForExchangeSearch").val();
     if (!userId) {
@@ -340,157 +406,34 @@ $("#btnSearchExchanges").on("click", function () {
     }
     searchExchanges(userId);
 })
-$("#btnSearchTickets").on("click", function () {
-    searchTickets($("#txtTicketSearchKeyword").val());
-})
-
 $("#btnCancelExchangeSearch").on("click", function () {
     // clear search textbox
     // refresh table
     $("#txtUserIdForExchangeSearch").val("");
     searchExchanges("");
 })
-$("#btnSearchStaff").on("click", function () {
-    var keyword = $("#txtStaffSearchKeyword").val();
-    if (!keyword) {
-        return;
-    }
-    searchStaff(keyword);
-})
-$("#btnCancelStaffSearch").on("click", function () {
-    $("#txtStaffSearchKeyword").val("*");
-    searchStaff("*");
-})
-$("#btnCancelStaffSearch").on("click", function () {
-    $("#txtStaffSearchKeyword").val("*");
-    searchStaff("*");
-})
 
+
+// TICKET FUNCTIONS
+$("#btnSearchTickets").on("click", function () {
+    searchTickets($("#txtTicketSearchKeyword").val());
+})
 $("#btnCancelTicketSearch").on("click", function () {
     $("#txtTicketSearchKeyword").val("*");
     searchTickets("*");
 })
-
-//$(".staffDataRow").live("click", function () {  
-$(document).on("click", ".staffDataRow", function () {  // https://stackoverflow.com/a/1207393/7162741
-    var id = $(this).find('td:first').html();
-    $("#hiddenSelectedStaffID").val(id);
-    var url = "/Home/staff/" + id;
-    // populate staff's details
-    $.ajax({
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response.success) {
-                var staff = response.msg;
-                $("#txtStaffName").val(staff.name);
-                $("#txtStaffSurname").val(staff.surname);
-                $("#txtStaffStreetNumber").val(staff.streetNumber);
-                $("#txtStaffStreetName1").val(staff.streetName1);
-                $("#txtStaffStreetName2").val(staff.streetName2);
-                $("#txtStaffStreetName3").val(staff.streetName3);
-                $("#txtStaffNationality").val(staff.nationality);
-                $("#txtStaffManager").val(staff.manager);
-                $("#txtStaffDepartment").val(staff.department);
-                $("#txtStaffHiredBy").val(staff.hiredBy);
-                document.getElementById("txtStaffHiredOnDate").valueAsDate = new Date(staff.hiredOn);
-                document.getElementById("txtStaffFiredOnDate").valueAsDate = new Date(staff.firedOn);
-                document.getElementById("txtStaffResignedOnDate").valueAsDate = new Date(staff.firedOn);
-                document.getElementById("txtStaffDOB").valueAsDate = new Date(staff.dateOfBirth);
-
-                loadStaffNotes(id);
-            }
-            else {
-                alert(response.msg);
-            }
-        },
-        error: function (e) {
-            alert("An error occured");
-        },
-    })
-
-})
-
-$("#formUpdateStaff :input").change(function () {
-    if ($("#hiddenSelectedStaffID").val()) {
-        $("#btnUpdateStaff").attr("disabled", false);
-    }
-
-});
-$("#btnAddStaffNote").on("click", function (e) {
-    var staffId = $("#hiddenSelectedStaffID").val();
-    if (!staffId) {
-        alert("No staff selected!");
-        return;
-    }
-    const note = $("#txtNewStaffNote").val();
-    if (!note) {
-        alert("Note can not be empty!");
-        return;
-    }
-    e.preventDefault();
-
-    var url = "/home/staff/" + staffId + "/createNote/" + note;
-    $.ajax({
-        url: url,
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response.success) {
-                alert(response.msg);
-                $("#txtNewStaffNote").val("");
-                // Todo: re-render notes partial
-                loadStaffNotes(staffId);
-            }
-            else {
-                alert(response.msg);
-            }
-        },
-        error: function () {
-            alert("An unknown error has occured");
-        },
-    })
-})
-$("#btnCreateNewStaff").on("click", function (e) {
-    resetStaffForm();
-})
-$("#btnUpdateStaff").on("click", function (e) {
-    // save or update opn
-    // check input fields
-    var id = $("#hiddenSelectedStaffID").val();
-    if (!id) id = "0";
-
-    let staff = {
-        Id: id,
-        Name: $("#txtStaffName").val(),
-        Surname: $("#txtStaffSurname").val(),
-        Department: $("#txtStaffDepartment").val(),
-        Manager: $("#txtStaffManager").val(),
-        StreetNumber: $("#txtStaffStreetNumber").val(),
-        HiredBy: $("#txtStaffHiredBy").val(),
-        Nationality: $("#txtStaffNationality").val()
-    };
-
-    if (!validateStaffInputFields(staff)) {
-        alert("Fill in all required fields!");
-        return;
-    }
-    // if selected id is null, Save
-    // else update
-    saveOrUpdateStaff(staff);
-
-    // reset form
-    // disable update button
-})
-
 $(document).on("click", ".ticketDataRow", function () {
     var id = $(this).find('td:first').html();
     $("#SelectedTicketId").val(id);
+    let name = ($(this).find('td')[4]).innerText;
+    $("#txtTicketAssignedTo").val(name);
     loadTicketDetails(id);
+
+    // unable the buttons
+    $("#btnSendResponse").removeClass("disabled");
+    $("#btnCloseTicket").removeClass("disabled");
+    $("#btnUpdateTicket").removeClass("disabled");
+    $("#btnShowTicketModal").removeClass("disabled");
 })
 
 $("#btnAddTicketNote").on("click", function (e) {
@@ -505,8 +448,13 @@ $("#btnAddTicketNote").on("click", function (e) {
         return;
     }
     e.preventDefault();
+     
+    var url = "/home/ticket/" + ticketId + "/createNote/" + note; // for creating a new note
 
-    var url = "/home/ticket/" + ticketId + "/createNote/" + note;
+    let noteId = $("#txtTicketNoteId").val();
+    if (noteId) {
+        url = "/home/updateTicketNote/" + note + "/" + noteId;  // update note
+    }
     $.ajax({
         url: url,
         type: "GET",
@@ -515,8 +463,10 @@ $("#btnAddTicketNote").on("click", function (e) {
         processData: false,
         success: function (response) {
             if (response.success) {
-                alert(response.msg);
-                $("#txtNewTicketNote").val("");
+                if (!noteId) {
+                    $("#txtNewTicketNote").val("");
+                }
+               
                 // Todo: re-render notes partial
                 loadTicketDetails(ticketId);
             }
@@ -529,14 +479,6 @@ $("#btnAddTicketNote").on("click", function (e) {
         },
     })
 })
-
-$("#btnTradesCancel").on("click", function () {
-    if (confirm("Are You Sure You Want to Clear inputs?")) {
-        removeTrades();
-    }
-})
-
-
 $("#btnCloseTicket").on("click", function () {
     if (confirm("Are You Sure You Want to Close this Ticket?")) {
         var id = $("#SelectedTicketId").val();
@@ -557,6 +499,12 @@ $("#btnUpdateTicket").on("click", function () {
         var staffId = $("#txtTicketReAssign").val();
         var note = "some dummy note";
         updateTicket(id, staffId, note);
+
+        // successful update
+        // reload ticket table
+        searchTickets("*");
+        // clear the selected ticket data
+        $("#txtTicketAssignedTo").val("");
     }
 })
 
@@ -570,7 +518,7 @@ function closeTicket(id) {
         processData: false,
         success: function (response) {
             if (response.success) {
-                alert(response.msg); 
+                alert(response.msg);
             }
             else {
                 alert(response.msg);
@@ -608,6 +556,245 @@ function updateTicket(id, assignedStaffId, note) {
         },
     })
 }
+var searchTickets = function (s) {
+    var url = "/home/tickets/search?s=" + s;
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) {
+                $("#divClientTickets").html(response);
+            }
+            else {
+                alert("loading error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+}
+function loadTicketDetails(id) {
+    var url = "/Home/tickets/" + id;
+    // populate ticket's details
+    $.ajax({
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                var notes = response.notes;
+                $("#clientTicketNotes").html("");
+                for (ind in notes) {
+                   $('#clientTicketNotes').append('<p data-toggle="modal" data-target="#addTicketNoteModal" data-note-id="' + notes[ind].id + '" >' + notes[ind].shortNote + '</p >')
+                }
+                $('[data-toggle="popover"]').popover();
+
+                var convos = response.convos;
+                $("#divTicketConversation").html("");
+                for (i in convos) {
+                    var d = new Date(convos[i].dateCreated)
+                    var t = d.getHours() + ":" + d.getMinutes();
+                    if (convos[i].createdByClient) {
+                        $("#divTicketConversation").append('<div class="single-comment">' +
+                            '<p class="text-danger">' + convos[i].content + '</p>' +
+                            '<p class="somoy">' + d.toDateString() + '   <span>' + t + '</span></p>' +
+                            ' </div>'
+                        )
+                    }
+                    else {
+                        $("#divTicketConversation").append('<div class="single-comment">' +
+                            '<p class="text-primary">' + convos[i].content + '</p>' +
+                            '<p class="somoy">' + d.toDateString() + '   <span>' + t + '</span></p>' +
+                            ' </div>'
+                        )
+                    }
+
+                }
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An error occured");
+        },
+    })
+}
+
+
+
+// STAFF FUNCTIONS
+$("#btnSearchStaff").on("click", function () {
+    var keyword = $("#txtStaffSearchKeyword").val();
+    if (!keyword) {
+        return;
+    }
+    searchStaff(keyword);
+})
+$("#btnCancelStaffSearch").on("click", function () {
+    $("#txtStaffSearchKeyword").val("*");
+    searchStaff("*");
+})
+$("#btnCancelStaffSearch").on("click", function () {
+    $("#txtStaffSearchKeyword").val("*");
+    searchStaff("*");
+})
+
+//$(".staffDataRow").live("click", function () {  
+$(document).on("click", ".staffDataRow", function () {  // https://stackoverflow.com/a/1207393/7162741
+    var id = $(this).find('td:first').html();
+    $("#hiddenSelectedStaffID").val(id);
+    var url = "/Home/staff/" + id;
+    // populate staff's details
+    $.ajax({
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                var staff = response.msg;
+                $("#txtStaffName").val(staff.name);
+                $("#txtStaffSurname").val(staff.surname);
+                $("#txtStaffStreetNumber").val(staff.streetNumber);
+                $("#txtStaffStreetName1").val(staff.streetName1);
+                $("#txtStaffStreetName2").val(staff.streetName2);
+                $("#txtStaffStreetName3").val(staff.streetName3);
+                $("#txtStaffNationality").val(staff.nationality);
+                $("#txtStaffManager").val(staff.manager);
+                $("#txtStaffDepartment").val(staff.department);
+                $("#txtStaffHiredBy").val(staff.hiredBy);
+                $("#txtStaffNationality").val(staff.nationality);
+                document.getElementById("txtStaffHiredOnDate").valueAsDate = new Date(staff.hiredOn);
+                document.getElementById("txtStaffFiredOnDate").valueAsDate = new Date(staff.firedOn);
+                document.getElementById("txtStaffResignedOnDate").valueAsDate = new Date(staff.firedOn);
+                document.getElementById("txtStaffDOB").valueAsDate = new Date(staff.dateOfBirth);
+                $("#teritories").val(staff.teritories);
+                $("#txtStaffLanguages").val(staff.languages);
+
+                loadStaffNotes(id);
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function (e) {
+            alert("An error occured");
+        },
+    })
+
+})
+
+$("#formUpdateStaff :input").change(function () {
+    if ($("#hiddenSelectedStaffID").val()) {
+        $("#btnUpdateStaff").removeClass("disabled");
+    }
+
+});
+$("#btnAddStaffNote").on("click", function (e) {
+    var staffId = $("#hiddenSelectedStaffID").val();
+    if (!staffId) {
+        alert("No staff selected!");
+        return;
+    }
+    const note = $("#txtNewStaffNote").val();
+    if (!note) {
+        alert("Note can not be empty!");
+        return;
+    }
+    e.preventDefault();
+
+    var url = "/home/staff/" + staffId + "/createNote/" + note;
+    let noteId = $("#txtStaffNoteId").val();
+    if (noteId) {
+        url = "/home/updateStaffNote/" + note + "/" + noteId;
+    }
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                if (!noteId) {
+                    $("#txtNewStaffNote").val("");
+                }
+               
+                // Todo: re-render notes partial
+                loadStaffNotes(staffId);
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+})
+$("#btnCreateNewStaff").on("click", function (e) {
+
+    $("#btnUpdateStaff").removeClass("disabled");
+    resetStaffForm();
+})
+$("#btnUpdateStaff").on("click", function (e) {
+    // save or update opn
+    // check input fields
+    var id = $("#hiddenSelectedStaffID").val();
+    if (!id) id = '0';
+
+    let staff = {
+        Id: id,
+        Name: $("#txtStaffName").val(),
+        Surname: $("#txtStaffSurname").val(),
+        Department: $("#txtStaffDepartment").val(),
+        Manager: $("#txtStaffManager").val(),
+        StreetNumber: $("#txtStaffStreetNumber").val(),
+        StreetName1: $("#txtStaffStreetName1").val(),
+        StreetName2: $("#txtStaffStreetName2").val(),
+        StreetName3: $("#txtStaffStreetName3").val(),
+        HiredBy: $("#txtStaffHiredBy").val(),
+        Nationality: $("#txtStaffNationality").val(),
+        Teritories: $("#teritories").val(),
+        Languages: $("#txtStaffLanguages").val(),
+        DateOfBirth: $("#txtStaffDOB").val(),
+        FiredOn: $("#txtStaffFiredOnDate").val(),
+        HiredOn: $("#txtStaffHiredOnDate").val(),
+        ResignedOn: $("#txtStaffResignedOnDate").val(),
+    };
+
+    if (!validateStaffInputFields(staff)) {
+        alert("Fill in all required fields!");
+        return;
+    }
+    // if selected id is null, Save
+    // else update
+    saveOrUpdateStaff(staff);
+
+    // reset form
+    // disable update button
+    if (!id) {  // "save" operation
+        $("#btnUpdateStaff").addClass("disabled");
+    }
+   
+})
+
+
+
+$("#btnTradesCancel").on("click", function () {
+    if (confirm("Are You Sure You Want to Clear inputs?")) {
+        removeTrades();
+    }
+})
+
+
+
 
 function ajaxGet(url, callBackFunction) {
     
@@ -632,6 +819,9 @@ function removeSelectedClientRecords() {
     $("#txtClientName").val("");
     $("#txtClientSurname").val("");
     $("#txtClientAddressLine1").val("");
+    $("#txtClientAddressLine2").val("");
+    $("#txtClientAddressLine3").val("");
+    $("#txtClientAddressLine4").val("");
     $("#txtClientNationailty").val("");
     $("#txtClientLanguage").val("");
     $("#txtClientSurname").val("");
@@ -643,6 +833,9 @@ function removeSelectedClientRecords() {
     document.getElementById("txtClientDOB").valueAsDate = new Date();
     document.getElementById("txtClientJoinedOn").valueAsDate = new Date();
     document.getElementById("txtClientDate").valueAsDate = new Date();
+
+    // clear notes
+    $("#clientNotes").html("");
 }
 
 
@@ -712,49 +905,6 @@ var searchMemberships = function (userId) {
         },
     })
 }
-var searchTickets = function (s) {
-    var url = "/home/tickets/search?s=" + s;
-    $.ajax({
-        url: url,
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response) {
-                $("#divClientTickets").html(response);
-            }
-            else {
-                alert("loading error");
-            }
-        },
-        error: function () {
-            alert("An unknown error has occured");
-        },
-    })
-}
-
-var loadNotes = function () {
-    var url = "/home/Notes";;
-    $.ajax({
-        url: url,
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response) {
-                $("#clientNotes").html(response);
-            }
-            else {
-                alert("loading error");
-            }
-        },
-        error: function () {
-            alert("An unknown error has occured");
-        },
-    })
-}
 
 var connectExchange = function (el) {
     var connected = $(el).attr('data-connected');
@@ -814,15 +964,42 @@ var loadStaffNotes = function (staffId) {
         },
     })
 }
+
+var loadClientNotes = function (clientId) {
+    var url = "/home/clients/" + clientId + "/Notes";
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response) {
+                $("#clientNotes").html(response);
+                $('[data-toggle="popover"]').popover();
+            }
+            else {
+                alert("loading error");
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
+}
+
 function resetStaffForm() {
     $("#formUpdateStaff")[0].reset();
     $("#hiddenSelectedStaffID").val("");
     $("#staffNotes").html("");
     document.getElementById("txtStaffHiredOnDate").valueAsDate = new Date();
+    document.getElementById("txtStaffDOB").valueAsDate = new Date();
+    document.getElementById("txtStaffFiredOnDate").valueAsDate = new Date();
+    document.getElementById("txtStaffResignedOnDate").valueAsDate = new Date();
 }
 
 function validateStaffInputFields(staff) {
-    if (staff.Nationality && staff.HiredBy) {  // check for other things
+    if (staff.Nationality && staff.HiredBy && staff.Name && staff.Surname && staff.Nationality && staff.StreetNumber && staff.DateOfBirth) {  // check for other things
         return true;
     }
     return false;
@@ -859,51 +1036,3 @@ function saveOrUpdateStaff(staff) {
     })
 }
 
-function loadTicketDetails(id) {
-    var url = "/Home/tickets/" + id;
-    // populate ticket's details
-    $.ajax({
-        type: "GET",
-        url: url,
-        contentType: "application/json",
-        processData: false,
-        success: function (response) {
-            if (response.success) {
-                var notes = response.notes;
-                $("#clientTicketNotes").html("");
-                for (ind in notes) {
-                    $('#clientTicketNotes').append('<p data-toggle="popover" data-placement="top" data-content="' + notes[ind].content + '" >' + notes[ind].shortNote + '</p >')
-                }
-                $('[data-toggle="popover"]').popover();
-
-                var convos = response.convos;
-                $("#divTicketConversation").html("");
-                for (i in convos) {
-                    var d = new Date(convos[i].dateCreated)
-                    var t = d.getHours() + ":" + d.getMinutes();
-                    if (convos[i].createdByClient) {
-                        $("#divTicketConversation").append('<div class="single-comment">' +
-                            '<p class="text-danger">' + convos[i].content + '</p>' +
-                            '<p class="somoy">' + d.toDateString() + '   <span>' + t + '</span></p>' +
-                            ' </div>'
-                        )
-                    }
-                    else {
-                        $("#divTicketConversation").append('<div class="single-comment">' +
-                            '<p class="text-primary">' + convos[i].content + '</p>' +
-                            '<p class="somoy">' + d.toDateString() + '   <span>' + t + '</span></p>' +
-                            ' </div>'
-                        )
-                    }
-
-                }
-            }
-            else {
-                alert(response.msg);
-            }
-        },
-        error: function () {
-            alert("An error occured");
-        },
-    })
-}

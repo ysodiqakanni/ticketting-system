@@ -77,8 +77,19 @@ namespace TickettingSystem.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateClient(UserDetails client)
+        public async Task<IActionResult> UpdateClient(ClientUpdateDTO dto)
         {
+            var client = new UserDetails
+            {
+                Id = dto.ID,
+                Countrycode = dto.Nationality,
+                Languageid = int.Parse(dto.Language),
+                Dob = dto.Dob,
+                Housenumber = dto.HouseNumber,
+                Streetname1 = dto.StreetName1,
+                Streetname2 = dto.StreetName2,
+                Streetname3 = dto.StreetName3
+            };
             var result = await _clientService.UpdateClient(client);
             return Ok(result);
         }
@@ -90,11 +101,39 @@ namespace TickettingSystem.Api.Controllers
             return Ok(addNote);
         }
 
+        [HttpPut("notes")]
+        public async Task<IActionResult> UpdateNote([FromBody] IDictionary<string, string> noteModel)
+        {
+            UserNotes note = _clientNoteService.UpdateNote(noteModel["Note"], noteModel["NoteId"], noteModel["Modifiedby"]);
+            return Ok(note);
+        }
+
         [HttpGet("notes")]
         public async Task<IActionResult> GetNotes()
         {
             var notes = await _clientNoteService.GetNotes();
             return Ok(notes);
+        }
+
+        [HttpGet("notes/{id}")]
+        public async Task<IActionResult> GetNotesByClientId(int id)
+        {
+            var notes = await _clientNoteService.GetNotesByClientId(id); 
+            return Ok(notes);
+        }
+
+        [HttpGet("languages")]
+        public async Task<IActionResult> GetAllLanguages()
+        {
+            var languages =  _clientService.GetAllLanguages();
+            return Ok(languages);
+        }
+
+        [HttpGet("teritories")]
+        public async Task<IActionResult> GetEuropeanCountries()
+        {
+            var teritories = _clientService.GetAllEuropeanCountries();
+            return Ok(teritories);
         }
     }
 }

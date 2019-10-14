@@ -50,7 +50,8 @@ namespace TickettingSystem.Services.Implementations
             toUpdate.Streetname1 = model.Streetname1;
             toUpdate.Streetname2 = model.Streetname2;
             toUpdate.Streetname3 = model.Streetname3;
-            toUpdate.Country = model.Country;
+            toUpdate.Languageid = model.Languageid;
+            toUpdate.Countrycode = model.Countrycode;  // countryCode col represents the nationality
             toUpdate.Dob = model.Dob;
 
             uow.Save();
@@ -119,7 +120,14 @@ namespace TickettingSystem.Services.Implementations
         {
             return "Not impl";
         }
-       
 
+        public List<Languages> GetAllLanguages()
+        {
+            return uow.LanguageRepository.GetAll().ToList();
+        }
+        public List<Territories> GetAllEuropeanCountries()
+        {
+            return uow.TerritoriesRepository.Find(t => t.TerritoryContinent.ToLower() == "europe").ToList();
+        }
     }
 }

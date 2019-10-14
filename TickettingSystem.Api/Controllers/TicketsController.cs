@@ -18,11 +18,13 @@ namespace TickettingSystem.Api.Controllers
         IUnitOfWork uow;
         ITicketService ticketSvc;
         IClientService clientSvc;
-        public TicketsController(IUnitOfWork _uow, ITicketService ticketService, IClientService _clientSvc)
+        IStaffService staffService;
+        public TicketsController(IUnitOfWork _uow, ITicketService ticketService, IClientService _clientSvc, IStaffService _staffService)
         {
             uow = _uow;
             ticketSvc = ticketService;
             clientSvc = _clientSvc;
+            staffService = _staffService;
         }
         [HttpGet]
         public async Task<IActionResult> GetTop10()
@@ -199,6 +201,27 @@ namespace TickettingSystem.Api.Controllers
             }
         }
 
+        [HttpGet("notes/{id}")]
+        public async Task<IActionResult> GetNotesByTicketId(int id)
+        {
+            var notes =  ticketSvc.GetNotesByTicketId(id); 
+            return Ok(notes);
+        }
+
+        [HttpGet("{id}/createnote/{staffId}/{note}")]
+        public async Task<IActionResult> CreateNewNote(int id, int? staffId, string note)
+        {
+            var newNote = ticketSvc.CreateNewNote(id, note, staffId.Value);
+            return Ok(newNote);
+        }
+
+        [HttpPut("notes")]
+        public async Task<IActionResult> UpdateNote([FromBody] IDictionary<string, string> noteModel)
+        {
+            var note = ticketSvc.UpdateNote(noteModel["Note"], noteModel["NoteId"], noteModel["Modifiedby"]);
+            return Ok(note);
+        }
+
         private async Task<TicketDTO> MapTicketToDto(SupportTicket ticket)
         {
             var result = new TicketDTO
@@ -211,6 +234,13 @@ namespace TickettingSystem.Api.Controllers
             };
             var client = await clientSvc.GetClientById(ticket.UserId);
             result.ClientName = client != null ? client.Firstname + " " + client.Surname : "";
+
+            if(ticket.AssignedTo != null)
+            {
+                var staff = await staffService.GetStaffById(ticket.AssignedTo.Value);
+                result.AssignedToStaffName = staff?.Firstname + " "+ staff?.Surname;
+            }
+          
 
             return result;
         }

@@ -25,6 +25,21 @@ namespace TickettingSystem.Api.DTO
         public string RefUrl { get; set; }
         public DateTime DateOfBirth { get; set; }
     }
+
+    public class ClientUpdateDTO
+    {
+        public int ID { get; set; }
+         
+        public string HouseNumber { get; set; }
+         
+        public string StreetName1 { get; set; } 
+        public string StreetName2 { get; set; } 
+        public string StreetName3 { get; set; } 
+        public string Nationality { get; set; } 
+        public string Language { get; set; } 
+        public DateTime Dob { get; set; }
+    }
+
     public class ClientMapper
     {
         private static IClientService _clientService; 
@@ -42,14 +57,14 @@ namespace TickettingSystem.Api.DTO
                 DateOfBirth = userDetails.Dob,
                 Email = userDetails.Emailaddress,
                 JoinedDate = userDetails.DtCreated,
-                
+                Language = userDetails.Languageid.ToString(),
                 Name = userDetails.Firstname,
-                Nationality = userDetails.Country,
+                Nationality = userDetails.Countrycode,
                 ReferredBy = userDetails.Referralcode,
                 Surname = userDetails.Surname, 
             };
 
-            result.Language = _clientService.GetLanguageById(userDetails.Languageid.Value);  // get language Id from updated db
+            // result.Language = _clientService.GetLanguageById(userDetails.Languageid.Value);  // get language Id from updated db
             result.KycLevel = _clientService.GetKycLevel(userDetails.Id);
             result.RefUrl = GetRefUrl(userDetails.Id);
             return result;

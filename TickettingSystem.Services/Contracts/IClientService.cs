@@ -21,5 +21,7 @@ namespace TickettingSystem.Services.Contracts
         List<int> GetIdsOfClientsWithNamesStart(string name);
         List<int> GetIdsOfClientsWithNamesEnd(string name);
         List<int> GetIdsOfClientsWithNamesContain(string name);
+        List<Languages> GetAllLanguages();
+        List<Territories> GetAllEuropeanCountries();
     }
 }

@@ -9,17 +9,31 @@ namespace TickettingSystem.Models
     public class ClientUpdateViewModel
     {
         public int ID { get; set; }
-       // [Required]
+       
+        [Display(Name ="House Number")]
+        [Required, MaxLength(10)]
         public string HouseNumber { get; set; }
+
+        [Display(Name = "Street name 1")]
+        [Required, MaxLength(45)]
         public string StreetName1 { get; set; }
+        [MaxLength(45)]
+
+        [Display(Name = "Street name 2")]
         public string StreetName2 { get; set; }
+
+        [Display(Name = "Street name 3")]
+        [MaxLength(45)]
         public string StreetName3 { get; set; }
+
         [Required]
         public string Nationality { get; set; }
         [Required]
         public string Language { get; set; }
-        [Required]
-        public DateTime DateOfBirth { get; set; }
+
+        [Display(Name = "Date of birth")]
+        [Required(ErrorMessage ="Date of birth is required")]
+        public DateTime Dob { get; set; }
     }
     public class ClientListViewModel
     {
@@ -38,6 +52,7 @@ namespace TickettingSystem.Models
     }
     public class NoteListViewModel
     {
+        public int ID { get; set; }
         public string Note { get; set; }
         public string ShortNote
         {

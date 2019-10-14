@@ -12,7 +12,8 @@ namespace TickettingSystem.Api.DTO
         public string Description { get; set; }
         public DateTime DateEnabled { get; set; }
         public decimal Price { get; set; }
-        public int AssignedToStaffId { get; set; } 
+        public int AssignedToStaffId { get; set; }
+        public string AssignedToStaffName { get; set; }
     }
     public class TicketConversationDTO
     {

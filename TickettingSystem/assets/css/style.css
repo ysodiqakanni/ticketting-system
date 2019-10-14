@@ -165,6 +165,7 @@ a.note-btn {
     padding: 6px 0;
     text-decoration: none;
 }
+ 
 .finally-btn .btn {
     background: #EB5757;
     color: #fff;
@@ -347,6 +348,11 @@ a.btn.close-btn {
     color: #fff;
 }
 
+/*https://stackoverflow.com/a/27057625/7162741*/
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+}
 
 
 

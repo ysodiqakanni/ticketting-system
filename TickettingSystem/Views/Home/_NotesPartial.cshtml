@@ -1,7 +1,7 @@
 ﻿@model TickettingSystem.Models.DashboardViewModel
 
-@foreach (var note in Model.Notes)
-{
-    <p data-toggle="popover" data-placement="top" data-content="@Html.Raw(note.Note)">@note.ShortNote</p>
-}
+@foreach (var note in Model.NotesForSelectedClient)
+{ 
+    <p data-toggle="modal" data-target="#addNoteModal" data-note-id="@note.ID">@note.ShortNote</p>
+ }
 

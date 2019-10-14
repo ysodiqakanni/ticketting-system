@@ -29,7 +29,7 @@ namespace TickettingSystem.Controllers
             //Authenticate user
             // call the api to authenticate 
             string msg = "";
-
+             
             try
             {
                 var authData = await StaffApi.Authenticate(model);
@@ -39,10 +39,11 @@ namespace TickettingSystem.Controllers
                     return View(model);
                 }
                 HttpContext.Session.SetString("JWToken", authData.Token);
+                HttpContext.Session.SetString("usrId_", authData.Id.ToString());
             }
             catch (Exception)
             {
-                ViewBag.Msg = "Invalid username or password";
+                ViewBag.Msg = "An error occured!";
                 return View(model);
             }
 

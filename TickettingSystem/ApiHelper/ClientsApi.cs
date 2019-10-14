@@ -84,8 +84,18 @@ namespace TickettingSystem.ApiHelper
                 var httpContent = new StringContent(noteData, Encoding.UTF8, "application/json");
                 HttpResponseMessage msg = await client.PostAsync("clients/notes", httpContent);
                 msg.EnsureSuccessStatusCode();
-            }
-
+            } 
+            return;
+        }
+        public async Task UpdateNote(string noteData)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var httpContent = new StringContent(noteData, Encoding.UTF8, "application/json");
+                HttpResponseMessage msg = await client.PutAsync("clients/notes", httpContent);
+                msg.EnsureSuccessStatusCode();
+            } 
             return;
         }
         public async Task<List<NoteListViewModel>> GetAllNotes()
@@ -99,6 +109,48 @@ namespace TickettingSystem.ApiHelper
                 return responseBody;
             }
         }
+        public async Task<List<NoteListViewModel>> GetNotesByClientId(int id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("clients/notes/" + id);
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<NoteListViewModel>>();
+
+                return responseBody;
+            }
+        }
+
+        public async Task<List<LanguageViewModel>> GetAllLanguages()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("clients/languages");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<LanguageViewModel>>();
+
+                return responseBody;
+            }
+        }
+
+        public async Task<List<TeritoryViewModel>> GetEuropeanCountries()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("clients/teritories");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<TeritoryViewModel>>();
+
+                return responseBody;
+            }
+        }
+
     }
 
 }

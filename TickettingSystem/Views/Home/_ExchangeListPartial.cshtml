@@ -9,7 +9,7 @@
     </tr>
     @foreach (var exchange in Model.Exchanges)
     {
-        var date = exchange.DateEnabled.ToString("dd/mm/yyyy");
+        var date = exchange.DateEnabled.ToString("dd/MM/yyyy");
         var api = exchange.APIsEntered ?? "NONE ENTERED";
         if (exchange.DateEnabled == default(DateTime))
         {
@@ -23,8 +23,5 @@
         </tr>
     }
 
-</table>
-
-@*<script src="~/assets/js/jquery.min.js"></script>*@
-@*<script src="~/assets/js/Client.js"></script>*@
+</table> 
 

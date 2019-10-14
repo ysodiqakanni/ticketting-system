@@ -32,6 +32,7 @@ namespace TickettingSystem.Data.DbModel
         public virtual DbSet<StaffTerritory> StaffTerritory { get; set; }
         public virtual DbSet<SupportDepartementType> SupportDepartementType { get; set; }
         public virtual DbSet<SupportTicket> SupportTicket { get; set; }
+        public virtual DbSet<SupportTicketNotes> SupportTicketNotes { get; set; }
         public virtual DbSet<Territories> Territories { get; set; }
         public virtual DbSet<TradeFollow> TradeFollow { get; set; }
         public virtual DbSet<TradeLog> TradeLog { get; set; }
@@ -540,7 +541,7 @@ namespace TickettingSystem.Data.DbModel
 
                 entity.Property(e => e.Countrycode)
                     .HasColumnName("countrycode")
-                    .HasColumnType("int(5)");
+                    .HasMaxLength(3);
 
                 entity.Property(e => e.Departmentid).HasColumnType("int(11)");
 
@@ -699,7 +700,7 @@ namespace TickettingSystem.Data.DbModel
 
             modelBuilder.Entity<StaffTerritory>(entity =>
             {
-                entity.HasKey(e => e.Staffuserid);
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("staff_territory", "ticketing_db");
 
@@ -781,6 +782,41 @@ namespace TickettingSystem.Data.DbModel
 
                 entity.Property(e => e.UserId)
                     .HasColumnName("userId")
+                    .HasColumnType("int(11)");
+            });
+
+            modelBuilder.Entity<SupportTicketNotes>(entity =>
+            {
+                entity.ToTable("support_ticket_notes", "ticketing_db");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("id_UNIQUE")
+                    .IsUnique();
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Createdbystaffid)
+                    .HasColumnName("createdbystaffid")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.DtCreated)
+                    .HasColumnName("dt_created")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.DtModified).HasColumnName("dt_modified");
+
+                entity.Property(e => e.Modifiedbystaffid)
+                    .HasColumnName("modifiedbystaffid")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.Note)
+                    .HasColumnName("note")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Ticketid)
+                    .HasColumnName("ticketid")
                     .HasColumnType("int(11)");
             });
 
@@ -1032,7 +1068,7 @@ namespace TickettingSystem.Data.DbModel
 
                 entity.Property(e => e.Countrycode)
                     .HasColumnName("countrycode")
-                    .HasColumnType("int(5)");
+                    .HasMaxLength(3);
 
                 entity.Property(e => e.Dob)
                     .HasColumnName("DOB")

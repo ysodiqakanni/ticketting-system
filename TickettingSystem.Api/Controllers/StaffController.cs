@@ -131,42 +131,66 @@ namespace TickettingSystem.Api.Controllers
             return Ok(newNotes);
         }
 
-        [HttpPost("createStaff")]
+        [HttpPut("notes")]
+        public async Task<IActionResult> UpdateNote([FromBody] IDictionary<string, string> noteModel)
+        {
+            var note = _staffService.UpdateNote(noteModel["Note"], noteModel["NoteId"], noteModel["Modifiedby"]);
+            return Ok(note);
+        }
+
+
+        [HttpPost]
         public async Task<IActionResult> CreateStaff([FromBody] StaffDTO staffModel)
         {
-            var staff = StaffMapper.MapDtoToStaffDetails(staffModel, _staffService);
-            var staffNew = await _staffService.CreateStaff(staff);
-            if (staffNew != null)
+            try
             {
-                var resp = new List<StaffResponseDTO>();
-                resp.Add(StaffMapper.MapStaffDetailsToDto(staffNew, _staffService));
-                return Ok(resp);
+                var staff = StaffMapper.MapDtoToStaffDetails(staffModel, _staffService);
+                var staffNew = await _staffService.CreateStaff(staff, staffModel.Languages, staffModel.Teritories);
+                return Ok(staff);
             }
-            return Ok(staffNew);
+            catch (Exception ex)
+            {
+                return BadRequest("Error saving staff!");
+            } 
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateStaff(int? value, [FromBody] StaffDTO staffModel)
+        public async Task<IActionResult> UpdateStaff(int? id, [FromBody] StaffDTO staffModel)
         {
-            /*
-             * Update ONLY::: Name: $("#txtStaffName").val(),
-            //Surname: $("#txtStaffSurname").val(),
-            //Department: $("#txtStaffDepartment").val(),
-            //Manager: $("#txtStaffManager").val(),
-            //StreetNumber: $("#txtStaffStreetNumber").val(),
-            //HiredBy: $("#txtStaffHiredBy").val(),
-            //Nationality: $("#txtStaffNationality").val()
 
-             */
-            var staff = StaffMapper.MapDtoToStaffDetails(staffModel, _staffService);
-            var staffUpdated = await _staffService.UpdateStaff(value.Value, staff);
-            if (staff != null)
+            // first get the staff and ensure it exists
+
+            try
             {
-                var resp = new List<StaffResponseDTO>();
-                resp.Add(StaffMapper.MapStaffDetailsToDto(staffUpdated, _staffService));
-                return Ok(resp);
+                var theStaff = await _staffService.GetStaffById(staffModel.Id);
+                if (theStaff == null)
+                    return NotFound();
+
+                theStaff.Dob = staffModel.DateOfBirth;
+                theStaff.Firedon = staffModel.FiredOn;
+                theStaff.Streetname1 = staffModel.StreetName1;
+                theStaff.Streetname2 = staffModel.StreetName2;
+                theStaff.Streetname3 = staffModel.StreetName3;
+                theStaff.Housenumber = staffModel.StreetNumber;
+                theStaff.Firstname = staffModel.Name;
+                theStaff.Surname = staffModel.Surname;
+                theStaff.DtModified = DateTime.Now;
+                theStaff.Countrycode = staffModel.Nationality;
+                theStaff.HiredOn = staffModel.HiredOn;
+                theStaff.Hiredbyid = staffModel.HiredBy;
+                theStaff.Resignedon = staffModel.ResignedOn;
+                theStaff.Hiredbyid = staffModel.HiredBy;  
+
+                var staffUpdated = await _staffService.UpdateStaff(0, theStaff, staffModel.Languages, staffModel.Teritories);
+
+                return Ok(staffUpdated);
+ 
             }
-            return Ok(staffUpdated);
+            catch (Exception ex)
+            {
+                return BadRequest("Error updating staff records");
+            }
+            
         }
 
     }

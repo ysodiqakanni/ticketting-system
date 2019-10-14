@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -16,6 +17,8 @@ using static TickettingSystem.Utilities.AuthorizeUserAttribute;
 namespace TickettingSystem.Controllers
 {
     [ClaimRequirement("session", "CanReadResource")]
+
+ 
     [Route("home")]
     public class HomeController : Controller
     {
@@ -44,7 +47,7 @@ namespace TickettingSystem.Controllers
             model.Clients = allClients; // await ClientsApi.GetAllClients();///.SearchClients("");
             model.Trades = new List<TradeDTO>(); // should be empty until a client is selected await TradesApi.GetAllTrades();
 
-            model.Notes = await clientApi.GetAllNotes();
+            model.NotesForSelectedClient = new List<NoteListViewModel>(); // No notes displayed when no client is selected! await clientApi.GetAllNotes();
             model.MembershipData = new Membership
             {
                 PackagesAvailable = new List<MembershipAvailablePackagesViewModel>(),
@@ -60,6 +63,8 @@ namespace TickettingSystem.Controllers
             model.Tickets = await ticketsApi.GetLastTenTickets();
             model.TicketConversations = new List<TicketConversationViewModel>();
             model.NotesForSelectedTicketClient = new List<NoteListViewModel>();
+            model.Languages = await clientApi.GetAllLanguages();
+            model.Teritories = await clientApi.GetEuropeanCountries();
 
             return View(model);
         }
@@ -72,6 +77,15 @@ namespace TickettingSystem.Controllers
             if (theClient == null) return Json(new { success = false, msg = "record not found!" });
             return Json(new { success = true, msg = theClient });
         }
+
+        [Route("clients/{id}/notes")]
+        public async Task<IActionResult> GetNotesByClientId(int? id)
+        {
+            var model = new DashboardViewModel();
+            model.NotesForSelectedClient = await clientApi.GetNotesByClientId(id.Value);
+            return PartialView("_NotesPartial", model);
+        }
+
         [Route("resetpassword/{id}")]
         public async Task<IActionResult> ResetPassword(int? id)
         {
@@ -103,16 +117,21 @@ namespace TickettingSystem.Controllers
                     return Json(new { success = false, msg = "an error occured while updating records!" });
                 }
             }
-            return Json(new { success = false, msg = "Fill in all required fields" });
+            string errorMsg = "";
+            foreach (var modelState in ModelState.Values)
+            {
+                errorMsg += "\n" + String.Join('\n', modelState.Errors.Select(e => e.ErrorMessage));
+            }
+            return Json(new { success = false, msg = errorMsg });
         }
 
-        [Route("createNote/{note}")]
-        public async Task<IActionResult> createNote(string note)
+        [Route("createNote/{note}/{userId}")]
+        public async Task<IActionResult> createNote(string note, string userId)
         {
             if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
             try
             {
-                string userId = "22341"; // pass with js from the page
+                //string userId = "74"; // pass with js from the page
                 string createdBy = "system";
                 string modifiedBy = "system";
                 Dictionary<string, string> noteModel = new Dictionary<string, string>() { { "Note", note }, { "Modifiedby", modifiedBy }, { "Createdby", createdBy }, { "Userid", userId } };
@@ -126,6 +145,63 @@ namespace TickettingSystem.Controllers
             }
         }
 
+        [Route("updateClientNote/{note}/{noteId}")]
+        public async Task<IActionResult> UpdateClientNote(string note, string noteId)
+        {
+            if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
+            try
+            {
+                //string userId = "74"; // pass with js from the page
+                string createdBy = "system";
+                string modifiedBy = "system";
+                Dictionary<string, string> noteModel = new Dictionary<string, string>() { { "Note", note }, { "Modifiedby", modifiedBy }, { "NoteId", noteId } };
+
+                await clientApi.UpdateNote(JsonConvert.SerializeObject(noteModel));
+                return Json(new { success = true, msg = "Note saved!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Error creating note!" });
+            }
+        }
+
+        [Route("updateTicketNote/{note}/{noteId}")]
+        public async Task<IActionResult> UpdateTicketNote(string note, string noteId)
+        {
+            if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
+            try
+            {  
+                string modifiedBy = "system";
+                Dictionary<string, string> noteModel = new Dictionary<string, string>() { { "Note", note }, { "Modifiedby", modifiedBy }, { "NoteId", noteId } };
+
+                await ticketsApi.UpdateNote(JsonConvert.SerializeObject(noteModel));
+                return Json(new { success = true, msg = "Note updated!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Error creating note!" });
+            }
+        }
+
+        [Route("updateStaffNote/{note}/{noteId}")]
+        public async Task<IActionResult> UpdateStaffNote(string note, string noteId)
+        {
+            if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
+            try
+            { 
+                string modifiedBy = "system";
+                Dictionary<string, string> noteModel = new Dictionary<string, string>() { { "Note", note }, { "Modifiedby", modifiedBy }, { "NoteId", noteId } };
+
+                await staffApi.UpdateNote(JsonConvert.SerializeObject(noteModel));
+                return Json(new { success = true, msg = "Note updated!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, msg = "Error creating note!" });
+            }
+        }
+
+
         [Route("SearchClients/{searchStr?}")]
         public async Task<PartialViewResult> SearchClients(string searchStr = "")
         {
@@ -134,13 +210,13 @@ namespace TickettingSystem.Controllers
             return PartialView("_ClientListPartial", model);
         }
 
-        [Route("notes")]
-        public async Task<PartialViewResult> Notes()
-        {
-            var model = new DashboardViewModel();
-            model.Notes = await clientApi.GetAllNotes();
-            return PartialView("_NotesPartial", model);
-        } 
+        //[Route("notes")]
+        //public async Task<PartialViewResult> Notes()
+        //{
+        //    var model = new DashboardViewModel();
+        //    model.NotesForSelectedClient = await clientApi.GetAllNotes();
+        //    return PartialView("_NotesPartial", model);
+        //} 
         [Route("trades/{id}")]
         public async Task<IActionResult> GetTradeById(int? id)
         {
@@ -155,7 +231,7 @@ namespace TickettingSystem.Controllers
             var trades = await tradesApi.SearchTrades(tradeSearch);
             var model = new DashboardViewModel();
             model.Trades = trades;
-            return PartialView("_TradeListPartial", model); 
+            return PartialView("_TradeListPartial", model);
         }
 
         [Route("exchanges/{userId?}")]
@@ -211,8 +287,8 @@ namespace TickettingSystem.Controllers
         [Route("tickets/search/{s?}")]
         public async Task<PartialViewResult> SearchTickets(string s)
         {
-            // process the search keywords
-            // by date, client name or client id
+            if (string.IsNullOrEmpty(s))
+                s = "*";  // return all tickets
 
             var result = new List<TicketsListViewModel>();
             // search by 
@@ -241,7 +317,7 @@ namespace TickettingSystem.Controllers
             }
             else if (string.Compare(type, "name", true) == 0)
             {
-                if(value == "*") // situation where user enters * to search for all tickets
+                if (value == "*") // situation where user enters * to search for all tickets
                 {
                     result = await ticketsApi.GetLastTenTickets();
                 }
@@ -272,7 +348,7 @@ namespace TickettingSystem.Controllers
             return PartialView("_ClientTicketsPartial", model);
         }
 
-        [Route("tickets/close/{id}")] 
+        [Route("tickets/close/{id}")]
         public async Task<IActionResult> CloseTicket(int id)
         {
             try
@@ -303,6 +379,37 @@ namespace TickettingSystem.Controllers
                 }
             }
             return Json(new { success = false, msg = "Fill in all required fields" });
+        }
+
+        [Route("ticket/{id}/createNote/{note}")]
+        public async Task<IActionResult> CreateTicketNote(int id, string note)
+        {
+            string sessionStaff = HttpContext.Session.GetString("usrId_");
+            int staffid = 0;
+            if (string.IsNullOrEmpty(sessionStaff) || !int.TryParse(sessionStaff, out staffid))
+            {
+                return Json(new { success = false, msg = "You have to be logged in!" });
+            }
+            if (String.IsNullOrEmpty(note)) throw new ArgumentNullException("Note cannot be null!");
+            try
+            {
+                await ticketsApi.CreateNewNote(staffid, note, id);
+                return Json(new { success = true, msg = "Note saved!" });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false, msg = "Error creating note!" });
+            }
+        }
+
+        [Route("tickets/{id}")]
+        public async Task<IActionResult> GetTicketDataById(int? id)
+        {
+            if (id == null) throw new ArgumentNullException("Invalid request sent!");
+
+            var convos = await ticketsApi.GetTicketConversations(id.Value);
+            var notes = await ticketsApi.GetAllNotesForTicketClient(id.Value);
+            return Json(new { success = true, notes = notes, convos = convos });
         }
 
         private string GetTicketSearchTypeAndValue(string s)
@@ -446,15 +553,7 @@ namespace TickettingSystem.Controllers
             }
         }
 
-        [Route("tickets/{id}")]
-        public async Task<IActionResult> GetTicketDataById(int? id)
-        {
-            if (id == null) throw new ArgumentNullException("Invalid request sent!");
 
-            var convos = await ticketsApi.GetTicketConversations(id.Value);
-            var notes = await ticketsApi.GetAllNotesForTicketClient(id.Value);
-            return Json(new { success = true, notes = notes, convos = convos });
-        }
 
 
         [Route("")]
@@ -476,7 +575,7 @@ namespace TickettingSystem.Controllers
 
 
             return View();
-        } 
+        }
 
         public IActionResult Privacy()
         {

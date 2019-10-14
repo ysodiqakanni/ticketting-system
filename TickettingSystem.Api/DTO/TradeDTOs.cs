@@ -11,6 +11,7 @@ namespace TickettingSystem.Api.DTO
     {
         public int ID { get; set; }  // = TradeId
         public decimal Price { get; set; }
+        public String CurrencyPair { get; set; }
         public String Operation { get; set; }
         public String Exchange { get; set; }
         public DateTime CreatedOn { get; set; }
@@ -33,7 +34,8 @@ namespace TickettingSystem.Api.DTO
                 Price = trade.Amount,
                 UserId = trade.TraderUid, 
                 Arbitrage = trade.WasArbitrageSuggestion,
-                Social = trade.Socialtrade
+                Social = trade.Socialtrade,
+                CurrencyPair = trade.CurrencyPair
             };
             result.Exchange = _tradeService.GetExchangeTypeById(trade.ExchangeFromTypeId.Value) + "/" + _tradeService.GetExchangeTypeById(trade.ExchangeToTypeId.Value);
             result.Operation = _tradeService.GetTradeOperationById(trade.TradeTypeId.Value);
