@@ -148,6 +148,7 @@ namespace TickettingSystem.ApiHelper
 
         public static async Task CreateNewStaff(StaffDTO staff)
         {
+            staff.PasswordHash = staff.Password;// Todo: hash the password
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri(baseUrl);
@@ -183,6 +184,31 @@ namespace TickettingSystem.ApiHelper
             }
         }
 
+        public async Task<List<DepartmentViewModel>> GetAllDepartments()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+
+                HttpResponseMessage msg = await client.GetAsync("staff/departments");
+                msg.EnsureSuccessStatusCode();
+                var responseBody = await msg.Content.ReadAsAsync<List<DepartmentViewModel>>();
+                return responseBody;
+            }
+
+        }
+
+        public static async Task UpdatePassword(int id, string old, string _new)
+        {
+            Dictionary<string, string> pwdModel = new Dictionary<string, string>() { { "OldPassword", old }, { "NewPassword", _new } };
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(baseUrl);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(pwdModel), Encoding.UTF8, "application/json");
+                HttpResponseMessage msg = await client.PutAsync("staff/update-password/"+id, httpContent);
+                msg.EnsureSuccessStatusCode();
+            }
+        }
     }
 
 }

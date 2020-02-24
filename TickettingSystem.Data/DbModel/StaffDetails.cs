@@ -30,8 +30,9 @@ namespace TickettingSystem.Data.DbModel
         public DateTime DtCreated { get; set; }
         public DateTime? DtModified { get; set; }
         public string PasswordHash { get; set; }
+        public string ManagedById { get; set; } 
 
-      [NotMapped]
+        [NotMapped]
         public string ACCESS_LEVEL { get; set; }
         [NotMapped]
         public string READ_ONLY { get; set; }

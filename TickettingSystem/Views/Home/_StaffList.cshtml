@@ -8,6 +8,7 @@
             <th>Referred by</th>
             <th>Joined On</th>
             <th class="round-2">KYC Level</th>
+            <th></th>
         </tr>
     </thead>
 
@@ -27,6 +28,8 @@
                     <td>@staff.ReferredBy</td>
                     <td>@staff.JoinedOn.ToString("dd/MM/yyyy")</td>
                     <td>@staff.KycLevel</td>
+                    <td>      <a href="#" class="note-btn" data-toggle="modal" data-target="#updateStaffPasswordModal">Pwd</a></td>
+                    @*<td><input type="button" value="Change Password" id="btnChangeStaffPassword" data-connected=false onclick="changeStaffPassword(this)" /></td>*@
                 </tr>
             }
         }

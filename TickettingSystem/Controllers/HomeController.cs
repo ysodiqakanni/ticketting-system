@@ -42,6 +42,7 @@ namespace TickettingSystem.Controllers
         {
             var allClients = await clientApi.GetAllClients();
             ViewBag.AllClients = allClients;
+            ViewBag.AllDepartments = await staffApi.GetAllDepartments();
 
             var model = new DashboardViewModel();
             model.Clients = allClients; // await ClientsApi.GetAllClients();///.SearchClients("");
@@ -555,6 +556,20 @@ namespace TickettingSystem.Controllers
             }
         }
 
+        [Route("staff/{id}/changepassword/{old}/{_new}")]
+        public async Task<IActionResult> ChangeStaffPassword(int id, string old, string _new)
+        {
+            if (String.IsNullOrEmpty(old) || String.IsNullOrEmpty(_new)) throw new ArgumentNullException("Old and new passwords cannot be null!");
+            try
+            {
+                await StaffApi.UpdatePassword(id, old, _new);
+                return Json(new { success = true, msg = "Password updated!" });
+            }
+            catch (Exception)
+            {
+                return Json(new { success = false, msg = "Error updating password!" });
+            }
+        }
 
 
 

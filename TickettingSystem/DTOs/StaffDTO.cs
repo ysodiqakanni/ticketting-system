@@ -24,6 +24,8 @@ namespace TickettingSystem.DTOs
         public DateTime FiredOn { get; set; }
         public DateTime ResignedOn { get; set; }
         public string HiredBy { get; set; }
+        public string Password { get; set; }
+        public string PasswordHash { get; set; } 
 
         public List<string> Teritories { get; set; }
         public List<string> Languages { get; set; }

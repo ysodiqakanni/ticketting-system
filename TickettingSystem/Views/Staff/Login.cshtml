@@ -7,14 +7,14 @@
     @if (User.Identity.IsAuthenticated)
     {
         <div class="row">
-            You are Logged in as
-            <span style="font-size:large;color:forestgreen;">
+            You are Logged in
+            @*<span style="font-size:large;color:forestgreen;">
                 @User.Identity.Name
-            </span>
+            </span>*@
         </div>
         <div class="row" style="padding-top:50px;">
-            @Html.ActionLink("Log Off", "Logoff",
-            "Staff", null, new { @class = "btn btn-primary btn-lg rph-login-button" })
+            @Html.ActionLink("Log Off", "dashboard",
+            "home", null, new { @class = "btn btn-primary btn-lg rph-login-button" })
         </div>
     }
     else

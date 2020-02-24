@@ -675,7 +675,7 @@ $(document).on("click", ".staffDataRow", function () {  // https://stackoverflow
                 document.getElementById("txtStaffResignedOnDate").valueAsDate = new Date(staff.firedOn);
                 document.getElementById("txtStaffDOB").valueAsDate = new Date(staff.dateOfBirth);
                 $("#teritories").val(staff.teritories);
-                $("#txtStaffLanguages").val(staff.languages);
+                $("#txtStaffLanguages").val(staff.languages); 
 
                 loadStaffNotes(id);
             }
@@ -749,6 +749,11 @@ $("#btnUpdateStaff").on("click", function (e) {
     var id = $("#hiddenSelectedStaffID").val();
     if (!id) id = '0';
 
+    if (id === '0' && $("#txtStaffPassword").val() != $("#txtStaffConfirmPassword").val()) {
+        alert("Password and confirm password do not match!");
+        return;
+    }
+
     let staff = {
         Id: id,
         Name: $("#txtStaffName").val(),
@@ -766,7 +771,8 @@ $("#btnUpdateStaff").on("click", function (e) {
         DateOfBirth: $("#txtStaffDOB").val(),
         FiredOn: $("#txtStaffFiredOnDate").val(),
         HiredOn: $("#txtStaffHiredOnDate").val(),
-        ResignedOn: $("#txtStaffResignedOnDate").val(),
+        ResignedOn: $("#txtStaffResignedOnDate").val(), 
+        Password: $("#txtStaffPassword").val(),
     };
 
     if (!validateStaffInputFields(staff)) {
@@ -783,6 +789,43 @@ $("#btnUpdateStaff").on("click", function (e) {
         $("#btnUpdateStaff").addClass("disabled");
     }
    
+})
+
+$("#btnUpdateStaffPassword").on("click", function (e) {
+    var staffId = $("#hiddenSelectedStaffID").val();
+    if (!staffId) {
+        alert("No staff selected!");
+        return;
+    }
+
+    var oldPassword = $("#txtOldStaffPassword").val();
+    var newpassword = $("#txtNewStaffPassword").val();
+    if (oldPassword.length < 5 || newpassword.length < 5) {
+        alert("A minimum of 5 character password is required!");
+        return;
+    }
+
+
+    var url = "/home/staff/" + staffId + "/changepassword/" + oldPassword + "/" + newpassword;
+
+    $.ajax({
+        url: url,
+        type: "GET",
+        url: url,
+        contentType: "application/json",
+        processData: false,
+        success: function (response) {
+            if (response.success) {
+                alert(response.msg);
+            }
+            else {
+                alert(response.msg);
+            }
+        },
+        error: function () {
+            alert("An unknown error has occured");
+        },
+    })
 })
 
 
@@ -999,11 +1042,18 @@ function resetStaffForm() {
 }
 
 function validateStaffInputFields(staff) {
+    if (staff.Id === '0' && (!staff.Password || staff.Password.length < 5)) {
+        alert("A minimum of 5 character password is required!");
+        return;
+    }
+
     if (staff.Nationality && staff.HiredBy && staff.Name && staff.Surname && staff.Nationality && staff.StreetNumber && staff.DateOfBirth) {  // check for other things
         return true;
     }
+
     return false;
 }
+
 function saveOrUpdateStaff(staff) {
     // after successful addition, reload staff list
 
@@ -1035,4 +1085,3 @@ function saveOrUpdateStaff(staff) {
         },
     })
 }
-

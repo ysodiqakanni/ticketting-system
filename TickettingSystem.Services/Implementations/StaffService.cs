@@ -99,6 +99,8 @@ namespace TickettingSystem.Services.Implementations
             staff.Staffuserid = userId;
             var staffD = await uow.StaffRepository.AddAsync(staff);
 
+            // save staff Password
+
             // save languages
             if (langIds != null && langIds.Any())
             {
@@ -353,6 +355,18 @@ namespace TickettingSystem.Services.Implementations
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
+        public async Task<IList<Departments>> GetAllDepartments()
+        {
+            var allDepartments = await uow.DepartmentRepository.GetAllAsync();
+            return allDepartments;
+        }
 
+        public bool UpdatePassword(int id, string v1, string v2)
+        {
+            return true;
+            // Todo:::
+            // verify that the old password is correct,
+            // if yes, hash the new pwd and save it against the staff
+        }
     }
 }

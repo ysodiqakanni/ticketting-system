@@ -179,7 +179,9 @@ namespace TickettingSystem.Api.Controllers
                 theStaff.HiredOn = staffModel.HiredOn;
                 theStaff.Hiredbyid = staffModel.HiredBy;
                 theStaff.Resignedon = staffModel.ResignedOn;
-                theStaff.Hiredbyid = staffModel.HiredBy;  
+                theStaff.Hiredbyid = staffModel.HiredBy;
+                theStaff.ManagedById = staffModel.Manager;
+                theStaff.Departmentid = Int32.Parse(staffModel.Department);
 
                 var staffUpdated = await _staffService.UpdateStaff(0, theStaff, staffModel.Languages, staffModel.Teritories);
 
@@ -191,6 +193,21 @@ namespace TickettingSystem.Api.Controllers
                 return BadRequest("Error updating staff records");
             }
             
+        }
+
+        [HttpGet("departments")]
+        public async Task<IActionResult> GetAllDepartment()
+        {
+            var departments = await _staffService.GetAllDepartments();
+            return Ok(departments);
+        }
+
+        [HttpPut("update-password/{id}")]
+        public async Task<IActionResult> UpdatePasswor(int id, [FromBody] IDictionary<string, string> passwordModel)
+        {
+            bool success =  _staffService.UpdatePassword(id, passwordModel["OldPassword"], passwordModel["NewPassword"]);
+            if (success) return Ok();
+            return BadRequest("Password update failed!");
         }
 
     }
