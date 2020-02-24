@@ -38,7 +38,7 @@ namespace TickettingSystem.Services.Contracts
         List<string> GetStaffTeritoryIds(string staffId);
         List<string> GetStaffLanguageIds(string staffId);
         Task<IList<Departments>> GetAllDepartments();
-        bool UpdatePassword(int id, string v1, string v2);
+        Task<bool> UpdatePassword(int id, string oldPassword, string newPassword);
     }
 }
  

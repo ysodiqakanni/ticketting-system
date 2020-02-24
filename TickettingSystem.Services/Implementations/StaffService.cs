@@ -10,6 +10,8 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace TickettingSystem.Services.Implementations
 {
@@ -22,16 +24,13 @@ namespace TickettingSystem.Services.Implementations
             uow = _uow;
             _appSettings = appSettings.Value;
         }
-        private List<StaffDetails> _users = new List<StaffDetails>
-        {
-            new StaffDetails { Id = 1, Firstname = "Test", Surname = "User", Staffuserid = "test", PasswordHash = "test" }
-        };
-
 
         public StaffDetails Authenticate(string username, string password, out string accessToken)
         {
             accessToken = "";
-            var user = _users.SingleOrDefault(x => x.Staffuserid == username && x.PasswordHash == password);
+            var allusers = GetAllStaffs().Result;
+            string hashed = HashPassword(password);
+            var user = allusers.SingleOrDefault(x => x.Staffuserid == username && x.PasswordHash == hashed);
 
             // return null if user not found
             if (user == null)
@@ -74,7 +73,7 @@ namespace TickettingSystem.Services.Implementations
         public IEnumerable<StaffDetails> GetAll()
         {
             // return users without passwords
-            return _users.Select(x =>
+            return GetAllStaffs().Result.Select(x =>
             {
                 x.PasswordHash = null;
                 return x;
@@ -94,8 +93,9 @@ namespace TickettingSystem.Services.Implementations
 
         public async Task<StaffDetails> CreateStaff(StaffDetails staff, List<string> langIds, List<string> territoryIds)
         {
-            string userId = RandomString(10);  
-
+            string userId = RandomString(10);
+            // the password needs to be hashed
+            staff.PasswordHash = HashPassword(staff.PasswordHash);
             staff.Staffuserid = userId;
             var staffD = await uow.StaffRepository.AddAsync(staff);
 
@@ -361,12 +361,37 @@ namespace TickettingSystem.Services.Implementations
             return allDepartments;
         }
 
-        public bool UpdatePassword(int id, string v1, string v2)
+        public async Task<bool> UpdatePassword(int id, string oldPassword, string newPassword)
+        { 
+            var staff = await GetStaffById(id);
+            if (staff == null) return false;
+            if (string.Compare(staff.PasswordHash, HashPassword(oldPassword)) != 0)
+                return false;  // old password not correct
+            staff.PasswordHash = HashPassword(newPassword);
+            uow.Save();
+            return true; 
+        }
+     
+        public string HashPassword(string password)
         {
-            return true;
-            // Todo:::
-            // verify that the old password is correct,
-            // if yes, hash the new pwd and save it against the staff
+            string EncryptionKey = "An aweSOm3 Ticketing System";
+            byte[] clearBytes = Encoding.Unicode.GetBytes(password);
+            using (Aes encryptor = Aes.Create())
+            {
+                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                encryptor.Key = pdb.GetBytes(32);
+                encryptor.IV = pdb.GetBytes(16);
+                using (System.IO.MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(clearBytes, 0, clearBytes.Length);
+                        cs.Close();
+                    }
+                    password = Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            return password;
         }
     }
 }

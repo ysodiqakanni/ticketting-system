@@ -203,9 +203,9 @@ namespace TickettingSystem.Api.Controllers
         }
 
         [HttpPut("update-password/{id}")]
-        public async Task<IActionResult> UpdatePasswor(int id, [FromBody] IDictionary<string, string> passwordModel)
+        public async Task<IActionResult> UpdatePassword(int id, [FromBody] IDictionary<string, string> passwordModel)
         {
-            bool success =  _staffService.UpdatePassword(id, passwordModel["OldPassword"], passwordModel["NewPassword"]);
+            bool success = await _staffService.UpdatePassword(id, passwordModel["OldPassword"], passwordModel["NewPassword"]);
             if (success) return Ok();
             return BadRequest("Password update failed!");
         }
