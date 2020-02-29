@@ -683,6 +683,12 @@
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="single-form-opt">
+                                                            <label class="address" for="address">Email</label>
+                                                            <input type="address" id="txtStaffEmailAddress" maxlength="10">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="single-form-opt">
                                                             <label class="address" for="address">House #</label>
                                                             <input type="address" id="txtStaffStreetNumber" maxlength="10">
                                                         </div>
@@ -776,14 +782,15 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="row"> 
+                                                <div class="row">
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="name">Department</label>
                                                             <select id="txtStaffDepartment" name="txtStaffDepartment">
                                                                 @foreach (var dept in ViewBag.AllDepartments as List<DepartmentViewModel>)
                                                                 {
-                                                                    <option value="@dept.Id">@dept.DeptName</option> 
+                                                                    <option value="@dept.Id">@dept.DeptName</option>
+
                                                                 }
                                                             </select>
                                                         </div>
@@ -800,7 +807,7 @@
                                                                 }
                                                             </select>
                                                         </div>
-                                                    </div> 
+                                                    </div>
                                                     <div class="col-sm-6">
                                                         <div class="single-form-opt">
                                                             <label for="user">Password</label>
@@ -863,7 +870,7 @@
                                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                                         <h4 class="modal-title">Change Password</h4>
                                                                     </div>
-                                                                    <div class="modal-body"> 
+                                                                    <div class="modal-body">
                                                                         <div class="single-form-opt">
                                                                             <div>
                                                                                 <label class="address">Old Password</label>
@@ -876,7 +883,7 @@
                                                                                 <input type="password" class="form-control" id="txtNewStaffPassword" name="txtNewStaffPassword" />
                                                                             </div>
                                                                         </div>
-                                                                      
+
 
 
                                                                     </div>

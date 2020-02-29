@@ -769,14 +769,14 @@ $("#btnUpdateStaff").on("click", function (e) {
         Teritories: $("#teritories").val(),
         Languages: $("#txtStaffLanguages").val(),
         DateOfBirth: $("#txtStaffDOB").val(),
-        FiredOn: $("#txtStaffFiredOnDate").val(),
+        FiredOn: $("#txtStaffFiredOnDate").val() ? $("#txtStaffFiredOnDate").val() : undefined,
         HiredOn: $("#txtStaffHiredOnDate").val(),
-        ResignedOn: $("#txtStaffResignedOnDate").val(), 
+        ResignedOn: $("#txtStaffResignedOnDate").val() ? $("#txtStaffResignedOnDate").val() : undefined,
         Password: $("#txtStaffPassword").val(),
+        Email: $("#txtStaffEmailAddress").val()
     };
 
     if (!validateStaffInputFields(staff)) {
-        alert("Fill in all required fields!");
         return;
     }
     // if selected id is null, Save
@@ -1046,11 +1046,20 @@ function validateStaffInputFields(staff) {
         alert("A minimum of 5 character password is required!");
         return;
     }
+    if (!staff.HiredOn || staff.HiredOn <= staff.DateOfBirth) {
+        alert("Hired on date must be greater than the date of birth");
+        return false;
+    }
+    if (staff.ResignedOn < staff.HiredOn || staff.FiredOn < staff.HiredOn) {
+        alert("Date hired must be greater than date fired or resigned");
+        return false;
+    } 
 
-    if (staff.Nationality && staff.HiredBy && staff.Name && staff.Surname && staff.Nationality && staff.StreetNumber && staff.DateOfBirth) {  // check for other things
+    if (staff.Nationality && staff.HiredBy && staff.Name && staff.Surname && staff.Nationality && staff.StreetNumber && staff.DateOfBirth && staff.Email) {  // check for other things
         return true;
     }
 
+    alert("Fill in all required fields!");
     return false;
 }
 

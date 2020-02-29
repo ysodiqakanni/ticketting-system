@@ -182,6 +182,7 @@ namespace TickettingSystem.Api.Controllers
                 theStaff.Hiredbyid = staffModel.HiredBy;
                 theStaff.ManagedById = staffModel.Manager;
                 theStaff.Departmentid = Int32.Parse(staffModel.Department);
+                theStaff.Emailaddress = staffModel.Email;
 
                 var staffUpdated = await _staffService.UpdateStaff(0, theStaff, staffModel.Languages, staffModel.Teritories);
 

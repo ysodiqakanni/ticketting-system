@@ -3,8 +3,8 @@
     <tr>
         <th class="round-1">User Id</th>
         <th>Name</th>
-        <th>Email</th>
-        <th>Referred by</th>
+        <th>Email</th> 
+        <th>Open Tickets</th>
         <th>Joined On</th>
         <th class="round-2">KYC Level</th>
     </tr>
@@ -20,7 +20,7 @@
                 <td>@client.ID</td>
                 <td>@client.Name</td>
                 <td>@client.Email</td>
-                <td>@client.ReferredBy</td>
+                <td>@client.NumberOfOpenTickets</td>
                 <td>@client.JoinedDate.ToString("MM/dd/yyyy")</td>
                 <td>@client.KycLevel</td>
             </tr>

@@ -129,5 +129,14 @@ namespace TickettingSystem.Services.Implementations
         {
             return uow.TerritoriesRepository.Find(t => t.TerritoryContinent.ToLower() == "europe").ToList();
         }
+
+        public int GetNumberOfOpenTicketsByClientId(int clientId)
+        {
+            return uow.TicketRepository.QueryAll()
+                  .Where(t => t.UserId == clientId
+                      && t.ParentTicketId == null
+                      && t.DtClosed != null)
+                  .Count();
+        } 
     }
 }

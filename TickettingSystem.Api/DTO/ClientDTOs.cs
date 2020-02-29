@@ -24,6 +24,7 @@ namespace TickettingSystem.Api.DTO
         public string Language { get; set; }
         public string RefUrl { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public int NumberOfOpenTickets { get; set; }
     }
 
     public class ClientUpdateDTO
@@ -62,6 +63,7 @@ namespace TickettingSystem.Api.DTO
                 Nationality = userDetails.Countrycode,
                 ReferredBy = userDetails.Referralcode,
                 Surname = userDetails.Surname, 
+                NumberOfOpenTickets = _clientService.GetNumberOfOpenTicketsByClientId(userDetails.Id)
             };
 
             // result.Language = _clientService.GetLanguageById(userDetails.Languageid.Value);  // get language Id from updated db

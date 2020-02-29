@@ -23,5 +23,6 @@ namespace TickettingSystem.Services.Contracts
         List<int> GetIdsOfClientsWithNamesContain(string name);
         List<Languages> GetAllLanguages();
         List<Territories> GetAllEuropeanCountries();
+        int GetNumberOfOpenTicketsByClientId(int clientId);
     }
 }

@@ -22,6 +22,6 @@ namespace TickettingSystem.Services.Contracts
 
         List<SupportTicketNotes> GetNotesByTicketId(int id);
         SupportTicketNotes CreateNewNote(int ticketId, string note, int? staffId);
-        SupportTicketNotes UpdateNote(string note, string id, string modifiedBy);
+        SupportTicketNotes UpdateNote(string note, string id, string modifiedBy); 
     }
 }

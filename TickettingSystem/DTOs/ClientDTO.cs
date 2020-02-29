@@ -21,7 +21,7 @@ namespace TickettingSystem.DTOs
         public string HouseNumber { get; set; }
         public string StreetName1 { get; set; }
         public string StreetName2 { get; set; }
-        public string StreetName3 { get; set; }
-       
+        public string StreetName3 { get; set; } 
+        public int NumberOfOpenTickets { get; set; }
     }
 }

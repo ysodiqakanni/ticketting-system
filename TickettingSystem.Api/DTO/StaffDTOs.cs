@@ -86,7 +86,7 @@ namespace TickettingSystem.Api.DTO
                 Id = staffDetails.Id,
                 DateOfBirth = staffDetails.Dob,
                 Nationality = staffDetails.Countrycode,
-                FiredOn = staffDetails.Firedon.Value,
+                FiredOn = staffDetails.Firedon == null ? default(DateTime) : staffDetails.Firedon.Value,
                 Email = staffDetails.Emailaddress,
                 JoinedOn = staffDetails.HiredOn == null ? default(DateTime) : staffDetails.HiredOn.Value,
                 ResignedOn = staffDetails.Resignedon == null ? default(DateTime) : staffDetails.Resignedon.Value,
@@ -101,13 +101,7 @@ namespace TickettingSystem.Api.DTO
             };
 
             result.HiredOn = result.JoinedOn;
-            result.HiredBy = staffDetails.Hiredbyid;
-            //if (staffDetails.Departmentid != null)
-            //{
-            //    result.Department = _staffService.GetDepartmentById(staffDetails.Departmentid.Value);
-            //    result.Manager = _staffService.GetManagerById(staffDetails.Departmentid.Value);
-            //}
-            // retrieve staff teritories and languages
+            result.HiredBy = staffDetails.Hiredbyid; 
             result.Languages = _staffService.GetStaffLanguageIds(staffDetails.Staffuserid);
             result.Teritories = _staffService.GetStaffTeritoryIds(staffDetails.Staffuserid);
 
@@ -122,7 +116,7 @@ namespace TickettingSystem.Api.DTO
             { 
                 Dob = staffDetails.DateOfBirth, //
                 DtCreated = DateTime.Now,
-                // Emailaddress = staffDetails.Email,
+                Emailaddress = staffDetails.Email,
                 Firedon = staffDetails.FiredOn, //
                 Streetname1 = staffDetails.StreetName1, //
                 Streetname2 = staffDetails.StreetName2, //

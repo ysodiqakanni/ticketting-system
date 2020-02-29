@@ -4,10 +4,8 @@
         <tr>
             <th class="round-1">User Id</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Referred by</th>
-            <th>Joined On</th>
-            <th class="round-2">KYC Level</th>
+            <th>Email</th> 
+            <th>Joined On</th> 
             <th></th>
         </tr>
     </thead>
@@ -24,12 +22,9 @@
                 <tr class="staffDataRow">
                     <td>@staff.Id</td>
                     <td>@staff.Name</td>
-                    <td>@staff.Email</td>
-                    <td>@staff.ReferredBy</td>
-                    <td>@staff.JoinedOn.ToString("dd/MM/yyyy")</td>
-                    <td>@staff.KycLevel</td>
-                    <td>      <a href="#" class="note-btn" data-toggle="modal" data-target="#updateStaffPasswordModal">Pwd</a></td>
-                    @*<td><input type="button" value="Change Password" id="btnChangeStaffPassword" data-connected=false onclick="changeStaffPassword(this)" /></td>*@
+                    <td>@staff.Email</td>  
+                    <td>@staff.JoinedOn.ToString("dd/MM/yyyy")</td> 
+                    <td>      <a href="#" class="note-btn" data-toggle="modal" data-target="#updateStaffPasswordModal">Change Password</a></td> 
                 </tr>
             }
         }
