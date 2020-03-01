@@ -20,6 +20,7 @@ namespace TickettingSystem.Api.DTO
         public string StreetName3 { get; set; }
         public string Email { get; set; }
         public string Nationality { get; set; }
+        public string StaffUserId { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string ReferredBy { get; set; }
         public DateTime JoinedOn { get; set; }
@@ -97,7 +98,8 @@ namespace TickettingSystem.Api.DTO
                 Name = staffDetails.Firstname + " " + staffDetails.Surname,
                 Surname = staffDetails.Surname,
                 Manager = staffDetails.ManagedById,
-                Department = staffDetails.Departmentid.ToString()
+                Department = staffDetails.Departmentid.ToString(),
+                StaffUserId = staffDetails.Staffuserid
             };
 
             result.HiredOn = result.JoinedOn;
@@ -133,10 +135,7 @@ namespace TickettingSystem.Api.DTO
                 PasswordHash = staffDetails.PasswordHash,
                 Departmentid = Int32.Parse(staffDetails.Department),
                 ManagedById = staffDetails.Manager
-            };
-
-            //result.Hiredbyid = _staffService.GetHiredByIdFromDepartmentName(staffDetails.Department);
-            result.Departmentid = _staffService.GetDepartmentIdFromName(staffDetails.Department);
+            }; 
             return result;
         }
     }

@@ -10,6 +10,7 @@ namespace TickettingSystem.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public string StaffUserId { get; set; }
         public string ReferredBy { get; set; }
         public DateTime JoinedOn { get; set; }
         public string KycLevel { get; set; }

@@ -552,7 +552,7 @@ namespace TickettingSystem.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, msg = "Error updating staff records!" });
+                return Json(new { success = false, msg = ex.Message });
             }
         }
 

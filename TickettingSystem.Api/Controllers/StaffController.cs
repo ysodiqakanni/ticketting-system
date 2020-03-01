@@ -191,7 +191,7 @@ namespace TickettingSystem.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest("Error updating staff records");
+                return BadRequest(ex.InnerException.Message);
             }
             
         }

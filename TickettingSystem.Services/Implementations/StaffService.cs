@@ -221,6 +221,13 @@ namespace TickettingSystem.Services.Implementations
 
         public async Task<StaffDetails> UpdateStaff(int value, StaffDetails staff, List<string> langIds, List<string> territoryIds)
         {
+            // check email uniqueness
+            if(!(await IsUniqueEmail(staff.Id, staff.Emailaddress)))
+            {
+                throw new Exception("Staff email address must be unique");
+            }
+
+
             // save languages
             if (langIds != null && langIds.Any())
             {
@@ -289,6 +296,18 @@ namespace TickettingSystem.Services.Implementations
             var HiredById = uow.DepartmentRepository
                 .Find(x => x.DeptName.ToLower().Equals(department.ToLower())).FirstOrDefault()?.DeptMgr;
             return HiredById;
+        }
+
+        private async Task<bool> IsUniqueEmail(int staffId, string newEmail)
+        {
+            var staff = await uow.StaffRepository.GetAsync(staffId);
+            if (staff == null) return false;
+
+            if (string.Compare(staff.Emailaddress, newEmail, true) == 0) return true;
+
+            if (uow.StaffRepository.QueryAll().Any(s => string.Compare(s.Emailaddress, newEmail, true) == 0)) return false;
+
+            return true;
         }
 
         public int GetLanguageIdByName(string language)

@@ -164,8 +164,12 @@ namespace TickettingSystem.ApiHelper
             {
                 client.BaseAddress = new Uri(baseUrl);
                 var httpContent = new StringContent(JsonConvert.SerializeObject(staff), Encoding.UTF8, "application/json");
-                HttpResponseMessage msg = await client.PutAsync("staff", httpContent);
-                msg.EnsureSuccessStatusCode();
+                HttpResponseMessage response = await client.PutAsync("staff", httpContent);
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorMsg = await response.Content.ReadAsStringAsync();
+                    throw new Exception(errorMsg);
+                }
             }
         }
 

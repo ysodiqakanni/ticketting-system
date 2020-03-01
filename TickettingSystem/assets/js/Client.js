@@ -675,8 +675,8 @@ $(document).on("click", ".staffDataRow", function () {  // https://stackoverflow
                 document.getElementById("txtStaffResignedOnDate").valueAsDate = new Date(staff.firedOn);
                 document.getElementById("txtStaffDOB").valueAsDate = new Date(staff.dateOfBirth);
                 $("#teritories").val(staff.teritories);
-                $("#txtStaffLanguages").val(staff.languages); 
-
+                $("#txtStaffLanguages").val(staff.languages);
+                $("#txtStaffEmailAddress").val(staff.email); 
                 loadStaffNotes(id);
             }
             else {
@@ -1055,7 +1055,7 @@ function validateStaffInputFields(staff) {
         return false;
     } 
 
-    if (staff.Nationality && staff.HiredBy && staff.Name && staff.Surname && staff.Nationality && staff.StreetNumber && staff.DateOfBirth && staff.Email) {  // check for other things
+    if (staff.Nationality && staff.HiredBy && staff.Name && staff.Surname && staff.Nationality && staff.StreetNumber && staff.DateOfBirth && staff.Email && staff.Manager && staff.Department) {  // check for other things
         return true;
     }
 

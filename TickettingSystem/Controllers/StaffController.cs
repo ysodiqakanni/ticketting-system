@@ -35,7 +35,7 @@ namespace TickettingSystem.Controllers
                 var authData = await StaffApi.Authenticate(model);
                 if (authData == null || authData.Token == null)
                 {
-                    ViewBag.Msg = "Incorrect username oor password";
+                    ViewBag.Msg = "Incorrect username or password";
                     return View(model);
                 }
                 HttpContext.Session.SetString("JWToken", authData.Token);
@@ -43,7 +43,7 @@ namespace TickettingSystem.Controllers
             }
             catch (Exception)
             {
-                ViewBag.Msg = "An error occured!";
+                ViewBag.Msg = "Incorrect username or password!";
                 return View(model);
             }
 
