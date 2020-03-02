@@ -380,12 +380,28 @@ namespace TickettingSystem.Services.Implementations
             return allDepartments;
         }
 
+        /// <summary>
+        /// Change staff password by passing old staff password or the admin password
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="oldPassword">Correct Old staff password or admin password</param>
+        /// <param name="newPassword">New Password for the staff</param>
+        /// <returns></returns>
         public async Task<bool> UpdatePassword(int id, string oldPassword, string newPassword)
-        { 
+        {  
             var staff = await GetStaffById(id);
             if (staff == null) return false;
             if (string.Compare(staff.PasswordHash, HashPassword(oldPassword)) != 0)
-                return false;  // old password not correct
+            {
+                // an admin user can change anyone's password by entering the admin password
+
+                // check if old password is admin password
+                var admin = uow.StaffRepository.QueryAll().FirstOrDefault(s => s.Staffuserid.Equals("admin"));
+                if (admin == null) return false;
+
+                if (!admin.PasswordHash.Equals(HashPassword(oldPassword))) return false; 
+            }
+               
             staff.PasswordHash = HashPassword(newPassword);
             uow.Save();
             return true; 
